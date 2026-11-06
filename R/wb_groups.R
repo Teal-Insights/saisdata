@@ -1,0 +1,56 @@
+#' The World Bank's country groups: region, income level and lending type
+#'
+#' The World Bank's classification of 217 countries, as its data service
+#' served it on 3 November 2026: one row per country, with its region, its
+#' income level and the World Bank lender it borrows from. Join it to [weo] by
+#' `code` to compare countries by income level or region.
+#'
+#' The World Bank revises income levels every 1 July, from each country's
+#' gross national income per person.
+#'
+#' The table holds countries only, no aggregates, so a join to `weo` leaves
+#' out the IMF's group rows. 21 countries are here and not in the WEO, and one
+#' WEO country, Taiwan Province of China, is in the WEO and not here.
+#'
+#' @format A tibble with 217 rows and 6 variables:
+#' \describe{
+#'   \item{code}{chr The country's three-letter code, the same code the IMF uses, so it joins to the `code` column of [weo].}
+#'   \item{wb_code}{chr The World Bank's own code. It differs from `code` for two countries only: Kosovo (`XKX`) and West Bank and Gaza (`PSE`).}
+#'   \item{country}{chr The country's name, as the World Bank writes it, such as "Egypt, Arab Rep.".}
+#'   \item{region}{chr The World Bank's region, one of seven, such as "Sub-Saharan Africa" or "South Asia".}
+#'   \item{income_level}{chr The World Bank's income level: "Low income", "Lower middle income", "Upper middle income" or "High income".}
+#'   \item{lending_type}{chr Which World Bank lender the country borrows from: "IDA" (the concessional arm, for the poorest countries), "IBRD", "Blend" (both), or "Not classified".}
+#' }
+#'
+#' @section Credit:
+#' Print this line under every chart you make from these data:
+#'
+#' Source: International Monetary Fund, World Economic Outlook Database,
+#' October 2026, <https://data.imf.org/en/datasets/IMF.RES:WEO>. Country
+#' groups: World Bank (CC BY 4.0). Net interest is the primary balance minus
+#' the overall balance, calculated for this workshop.
+#'
+#' Drop the third sentence if your chart shows no net interest.
+#'
+#' @section Terms of use:
+#' The World Bank publishes these data under the Creative Commons Attribution
+#' 4.0 International license (CC BY 4.0): you may copy, share and adapt them,
+#' commercially too, if you credit the World Bank and say what you changed.
+#' See <https://datacatalog.worldbank.org/public-licenses> and
+#' <https://creativecommons.org/licenses/by/4.0/>. What the workshop changed:
+#' it kept the 217 countries (not the World Bank's aggregates such as
+#' "Sub-Saharan Africa"), renamed the columns, and used the IMF's codes for
+#' Kosovo (`KOS`) and West Bank and Gaza (`WBG`), so that one join matches
+#' every country; the World Bank's own code stays in `wb_code`. These data are
+#' not an official World Bank product.
+#'
+#' @source World Bank, country and lending groups, retrieved through
+#'   `wbwdi::wdi_get_entities()` on 3 November 2026, CC BY 4.0. Built by
+#'   `data-raw/wb_groups.R` from the workshop's file `wb_country_groups.csv`.
+#'
+#' @seealso [weo], the panel this table joins to.
+#'
+#' @examples
+#' # The first six countries
+#' head(wb_groups)
+"wb_groups"
