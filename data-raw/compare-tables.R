@@ -61,6 +61,11 @@ column_types <- function(x) { # one row per column: its name, class and storage 
   )
 }
 
+sorted_attributes <- function(x) { # attributes by name: their order carries no meaning
+  found <- attributes(x)
+  found[order(names(found))]
+}
+
 encodings <- function(x) { # the encoding of every string, by column
   text <- vapply(x, is.character, logical(1))
   lapply(x[text], Encoding)
@@ -105,7 +110,7 @@ for (name in tables) { # compare one table at a time
   same_identical <- identical(old, new)
   same_all_equal <- isTRUE(all.equal(old, new, tolerance = 0))
   same_types <- identical(column_types(old), column_types(new))
-  same_attributes <- identical(attributes(old), attributes(new))
+  same_attributes <- identical(sorted_attributes(old), sorted_attributes(new))
   same_encodings <- identical(encodings(old), encodings(new))
 
   cat("\n== ", name, " ==\n", sep = "")

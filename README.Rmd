@@ -32,6 +32,8 @@ install.packages("saisdata", repos = "https://teal-insights.r-universe.dev")
 
 You do not need a GitHub account, devtools, a compiler or a manual download. The package holds only data and depends on no other package, so that one repository is all R needs.
 
+R-universe builds ready-made copies for recent versions of R. On an older or newer R, the same line installs from the source package instead. That still needs no compiler, because the package holds only data.
+
 ## What is inside
 
 | Dataset | What one row is | Rows | Help page |
