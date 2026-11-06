@@ -1,0 +1,102 @@
+Baseline: tarball saisdata_0.1.0.tar.gz 
+  SHA-256: 72aa9823fa50a8ddff1bb16362d03c6f07bdbbf159b3b1fd0ec7e01093431968 
+Rebuilt:  data/*.rda in this checkout
+R version: 4.4.2 
+  readr 2.1.5
+  dplyr 1.1.4
+  tidyr 1.3.1
+  stringr 1.5.1
+  usethis 3.2.1
+Source files:
+  43a4962b1768d3989ef738f62a310ed92604e5153adc24408771c54362c06967  wb_country_groups.csv
+  fb20d827faf2faf66eabbe53280d23ca643d3b5547e0d7756e56b1cc5073e879  weo_2026oct_extract.csv
+  8d3839febedb99b21501af6e7a87f3c87e9a763a3f564fe0a828f34a9f703e31  weo_panel.csv
+
+== weo ==
+Rows and columns, baseline: 6720 9  rebuilt: 6720 9 
+Class, baseline: tbl_df tbl data.frame  rebuilt: tbl_df tbl data.frame 
+identical():                  TRUE 
+all.equal(tolerance = 0):     TRUE 
+Column names and types match: TRUE 
+Attributes match:             TRUE 
+String encodings match:       TRUE 
+data/weo.rda SHA-256: fbe6aa3c225002ea55319b15b2da1fcc3906271801c0b827e69c80ee7a74068c
+Column by column (name, class, typeof, missing values, baseline == rebuilt):
+          column     class    typeof missing same
+            code character character       0 TRUE
+            name character character       0 TRUE
+            year   integer   integer       0 TRUE
+      gross_debt   numeric    double     375 TRUE
+ primary_balance   numeric    double     502 TRUE
+ overall_balance   numeric    double     253 TRUE
+      gdp_usd_bn   numeric    double     114 TRUE
+   latest_actual   integer   integer     384 TRUE
+     fiscal_year character character     384 TRUE
+
+== weo_groups ==
+Rows and columns, baseline: 6 36  rebuilt: 6 36 
+Class, baseline: tbl_df tbl data.frame  rebuilt: tbl_df tbl data.frame 
+identical():                  TRUE 
+all.equal(tolerance = 0):     TRUE 
+Column names and types match: TRUE 
+Attributes match:             TRUE 
+String encodings match:       TRUE 
+data/weo_groups.rda SHA-256: a8d6336c1e0606b1ee398dc4e7f4013d35b2d6dea0a220cb0730e9e052b54749
+Column by column (name, class, typeof, missing values, baseline == rebuilt):
+         column     class    typeof missing same
+     group_code character character       0 TRUE
+          group character character       0 TRUE
+      indicator character character       0 TRUE
+ indicator_name character character       0 TRUE
+          units character character       0 TRUE
+           2001   numeric    double       0 TRUE
+           2002   numeric    double       0 TRUE
+           2003   numeric    double       0 TRUE
+           2004   numeric    double       0 TRUE
+           2005   numeric    double       0 TRUE
+           2006   numeric    double       0 TRUE
+           2007   numeric    double       0 TRUE
+           2008   numeric    double       0 TRUE
+           2009   numeric    double       0 TRUE
+           2010   numeric    double       0 TRUE
+           2011   numeric    double       0 TRUE
+           2012   numeric    double       0 TRUE
+           2013   numeric    double       0 TRUE
+           2014   numeric    double       0 TRUE
+           2015   numeric    double       0 TRUE
+           2016   numeric    double       0 TRUE
+           2017   numeric    double       0 TRUE
+           2018   numeric    double       0 TRUE
+           2019   numeric    double       0 TRUE
+           2020   numeric    double       0 TRUE
+           2021   numeric    double       0 TRUE
+           2022   numeric    double       0 TRUE
+           2023   numeric    double       0 TRUE
+           2024   numeric    double       0 TRUE
+           2025   numeric    double       0 TRUE
+           2026   numeric    double       0 TRUE
+           2027   numeric    double       0 TRUE
+           2028   numeric    double       0 TRUE
+           2029   numeric    double       0 TRUE
+           2030   numeric    double       0 TRUE
+           2031   numeric    double       0 TRUE
+
+== wb_groups ==
+Rows and columns, baseline: 217 6  rebuilt: 217 6 
+Class, baseline: tbl_df tbl data.frame  rebuilt: tbl_df tbl data.frame 
+identical():                  TRUE 
+all.equal(tolerance = 0):     TRUE 
+Column names and types match: TRUE 
+Attributes match:             TRUE 
+String encodings match:       TRUE 
+data/wb_groups.rda SHA-256: 3bb1f0f084472a0174e55456284d9c40247dd6aae7d26e48942ed45f484c51ea
+Column by column (name, class, typeof, missing values, baseline == rebuilt):
+       column     class    typeof missing same
+         code character character       0 TRUE
+      wb_code character character       0 TRUE
+      country character character       0 TRUE
+       region character character       0 TRUE
+ income_level character character       0 TRUE
+ lending_type character character       0 TRUE
+
+Result: SAME 
