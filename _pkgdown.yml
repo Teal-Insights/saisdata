@@ -1,0 +1,24 @@
+url: https://teal-insights.github.io/saisdata/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [intro, reference, terms, news]
+    right: [search, github]
+  components:
+    terms:
+      text: Data terms
+      href: LICENSE-data.html
+
+reference:
+  - title: Datasets
+    desc: The three course tables. Each help page says what one row is, the units, the source, the vintage and what was changed.
+    contents:
+      - weo
+      - weo_groups
+      - wb_groups
+  - title: The package
+    contents:
+      - saisdata-package

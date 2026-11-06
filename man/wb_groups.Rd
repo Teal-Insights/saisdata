@@ -7,7 +7,7 @@
 \format{
 A tibble with 217 rows and 6 variables:
 \describe{
-\item{code}{chr The country's three-letter code, the same code the IMF uses, so it joins to the \code{code} column of \code{\link{weo}}.}
+\item{code}{chr The country's three-letter code, the same code the IMF uses, so it joins to the \code{code} column of \link{weo}.}
 \item{wb_code}{chr The World Bank's own code. It differs from \code{code} for two countries only: Kosovo (\code{XKX}) and West Bank and Gaza (\code{PSE}).}
 \item{country}{chr The country's name, as the World Bank writes it, such as "Egypt, Arab Rep.".}
 \item{region}{chr The World Bank's region, one of seven, such as "Sub-Saharan Africa" or "South Asia".}
@@ -16,18 +16,20 @@ A tibble with 217 rows and 6 variables:
 }
 }
 \source{
-World Bank, country and lending groups, retrieved through
-\code{wbwdi::wdi_get_entities()} on 3 November 2026, CC BY 4.0. Built by
-\code{data-raw/wb_groups.R} from the workshop's file \code{wb_country_groups.csv}.
+The World Bank: World Development Indicators: country and lending
+groups, \url{https://datacatalog.worldbank.org/search/dataset/0037712/world-development-indicators},
+retrieved through \code{wbwdi::wdi_get_entities()} on 3 November 2026, CC BY 4.0.
+Built by \code{data-raw/wb_groups.R} from \code{data-raw/source/wb_country_groups.csv}.
 }
 \usage{
 wb_groups
 }
 \description{
-The World Bank's classification of 217 countries, as its data service
-served it on 3 November 2026: one row per country, with its region, its
-income level and the World Bank lender it borrows from. Join it to \code{\link{weo}} by
-\code{code} to compare countries by income level or region.
+The World Bank's classification of 217 countries, as its data service served
+it on 3 November 2026. One row is one country, with its region, its income
+level and the World Bank lender it borrows from. There are no numeric units:
+every column is a code or a label. Join it to \link{weo} by \code{code} to compare
+countries by income level or region.
 }
 \details{
 The World Bank revises income levels every 1 July, from each country's
@@ -37,30 +39,51 @@ The table holds countries only, no aggregates, so a join to \code{weo} leaves
 out the IMF's group rows. 21 countries are here and not in the WEO, and one
 WEO country, Taiwan Province of China, is in the WEO and not here.
 }
+\section{Vintage}{
+
+The classification the World Bank's data service served on 3 November 2026.
+This table is a frozen snapshot: it does not change when the World Bank revises
+its groups.
+}
+
+\section{Transformations}{
+
+The World Bank's list came through \code{wbwdi::wdi_get_entities()}. The file
+\code{data-raw/source/wb_country_groups.csv} keeps the 217 countries and drops the
+World Bank's aggregates such as "Sub-Saharan Africa", renames the columns, and
+uses the IMF's codes for Kosovo (\code{KOS}) and West Bank and Gaza (\code{WBG}), so that
+one join matches every country. The World Bank's own code stays in \code{wb_code}.
+\code{data-raw/wb_groups.R} then changes no value.
+}
+
 \section{Credit}{
 
 Print this line under every chart you make from these data:
 
 Source: International Monetary Fund, World Economic Outlook Database,
 October 2026, \url{https://data.imf.org/en/datasets/IMF.RES:WEO}. Country
-groups: World Bank (CC BY 4.0). Net interest is the primary balance minus
-the overall balance, calculated for this workshop.
+groups: The World Bank: World Development Indicators: country and lending
+groups (CC BY 4.0). Net interest is the primary balance minus the overall
+balance, calculated for this workshop.
 
 Drop the third sentence if your chart shows no net interest.
 }
 
 \section{Terms of use}{
 
-The World Bank publishes these data under the Creative Commons Attribution
-4.0 International license (CC BY 4.0): you may copy, share and adapt them,
-commercially too, if you credit the World Bank and say what you changed.
-See \url{https://datacatalog.worldbank.org/public-licenses} and
-\url{https://creativecommons.org/licenses/by/4.0/}. What the workshop changed:
-it kept the 217 countries (not the World Bank's aggregates such as
-"Sub-Saharan Africa"), renamed the columns, and used the IMF's codes for
-Kosovo (\code{KOS}) and West Bank and Gaza (\code{WBG}), so that one join matches
-every country; the World Bank's own code stays in \code{wb_code}. These data are
-not an official World Bank product.
+The package's MIT license does not cover these data. The World Bank publishes
+them under the Creative Commons Attribution 4.0 International license (CC BY
+4.0), with the added terms in its Terms of Use for Datasets,
+\url{https://www.worldbank.org/ext/en/legal/terms-conditions/datasets} (read on 6
+November 2026). You may copy, share and adapt them, commercially too, if you
+credit the World Bank in its format, say what you changed and link to the
+license, \url{https://creativecommons.org/licenses/by/4.0/}. When you share the
+data, pass on the same attribution requirement; giving the web address of those
+terms is enough. Do not imply that the World Bank takes part in, sponsors or
+endorses your use. Disputes go to mediation and then arbitration. See
+\code{system.file("LICENSE-data.md", package = "saisdata")}.
+
+This package is not an official IMF or World Bank product.
 }
 
 \examples{
@@ -68,6 +91,6 @@ not an official World Bank product.
 head(wb_groups)
 }
 \seealso{
-\code{\link{weo}}, the panel this table joins to.
+\link{weo}, the panel this table joins to.
 }
 \keyword{datasets}

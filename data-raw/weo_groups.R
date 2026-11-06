@@ -1,11 +1,11 @@
 # Rebuild `weo_groups`: the IMF's own layout for its two big country groups.
 #
-# Run it from the package folder, package/saisdata:
+# Run it from the package folder:
 #   LANG=en_US.UTF-8 Rscript data-raw/weo_groups.R
-# It reads starter/data/weo_2026oct_extract.csv, the workshop's extract of the
-# IMF's workbook WEOOct2026all.xlsx, and writes data/weo_groups.rda. It keeps
-# six rows and the years 2001 to 2031, renames five columns and writes the
-# IMF's SCALE and UNIT in plain words. It changes no number.
+# It reads data-raw/source/weo_2026oct_extract.csv, an extract of the IMF's
+# workbook WEOOct2026all.xlsx, and writes data/weo_groups.rda. It keeps six rows
+# and the years 2001 to 2031, renames five columns and writes the IMF's SCALE and
+# UNIT in plain words. It changes no number.
 
 library(readr) # read_csv() reads a CSV file into a tibble
 library(dplyr) # filter(), mutate(), case_when() and select()
@@ -16,7 +16,7 @@ library(usethis) # use_data() saves the tibble into data/
 here::i_am("data-raw/weo_groups.R") # tell here() where this script lives
 
 extract <- read_csv( # read the whole extract, every year as a number
-  file = here("..", "..", "starter", "data", "weo_2026oct_extract.csv"),
+  file = here("data-raw", "source", "weo_2026oct_extract.csv"),
   col_types = cols( # name each type, so readr guesses nothing
     .default = col_double(), # the 32 year columns hold numbers
     COUNTRY.ID = col_character(), # the IMF's code for the entity

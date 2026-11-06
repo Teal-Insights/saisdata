@@ -1,0 +1,28 @@
+citHeader("To cite the saisdata package and the data it holds, use these. Credit the IMF and the World Bank for the data; see LICENSE-data.md for their terms.")
+
+bibentry(
+  bibtype = "Manual",
+  title = "saisdata: Course Data for the SAIS MIEF R Workshop",
+  author = person("Teal", "Emery"),
+  year = "2026",
+  note = paste("R package version", meta$Version),
+  url = "https://teal-insights.github.io/saisdata/"
+)
+
+bibentry(
+  bibtype = "Misc",
+  title = "World Economic Outlook Database, October 2026",
+  author = person("International Monetary Fund"),
+  year = "2026",
+  address = "Washington, DC",
+  url = "https://data.imf.org/en/datasets/IMF.RES:WEO"
+)
+
+bibentry(
+  bibtype = "Misc",
+  title = "World Development Indicators: country and lending groups",
+  author = person("The World Bank"),
+  year = "2026",
+  note = "Retrieved on 3 November 2026. CC BY 4.0",
+  url = "https://datacatalog.worldbank.org/search/dataset/0037712/world-development-indicators"
+)

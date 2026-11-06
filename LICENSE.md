@@ -20,6 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-This license covers the package's code and documentation. The data in `data/`
-keep their own terms: the IMF's terms of use for `weo` and `weo_groups`, and
-CC BY 4.0 for the World Bank's `wb_groups`. See `README.md`.
+## What this license does not cover
+
+This license covers the package's code and documentation only. It does not
+cover the data in `data/` or `data-raw/source/`. The data keep their own terms:
+the IMF's terms for statistical data for `weo` and `weo_groups`, and CC BY 4.0
+with the World Bank's added terms for `wb_groups`. See
+[`LICENSE-data.md`](LICENSE-data.md).

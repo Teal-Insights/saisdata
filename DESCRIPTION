@@ -9,12 +9,27 @@ Description: Ready-to-use data for the two-day R workshop of the Master of
     tidy country panel, the same source in the IMF's own layout for its two
     largest country groups, and the World Bank's country groups. One line,
     library(saisdata), loads them all. The code is MIT licensed; the data keep
-    their own terms (the IMF's terms of use, and CC BY 4.0 for the World
-    Bank's data).
+    their own terms, set out in the file LICENSE-data.md (the IMF's terms for
+    statistical data, and CC BY 4.0 with the World Bank's added terms). This
+    package is not an official IMF or World Bank product.
 License: MIT + file LICENSE
+URL: https://teal-insights.github.io/saisdata/,
+    https://github.com/Teal-Insights/saisdata
+BugReports: https://github.com/Teal-Insights/saisdata/issues
 Encoding: UTF-8
+Language: en-US
 Depends:
-    R (>= 3.5)
+    R (>= 3.5.0)
+Suggests:
+    dplyr,
+    ggplot2,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    tidyr
+VignetteBuilder: knitr
+Config/testthat/edition: 3
 LazyData: true
 LazyDataCompression: xz
 Roxygen: list(markdown = TRUE)
+Config/roxygen2/version: 8.1.1

@@ -1,0 +1,13 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+docs/
+*.tar.gz
+*.Rcheck/
+inst/doc
+vignettes/*.html
+vignettes/*.R
+vignettes/*_files/
+README.html

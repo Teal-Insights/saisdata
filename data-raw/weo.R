@@ -1,9 +1,9 @@
 # Rebuild `weo`: the tidy World Economic Outlook panel, October 2026.
 #
-# Run it from the package folder, package/saisdata:
+# Run it from the package folder:
 #   LANG=en_US.UTF-8 Rscript data-raw/weo.R
-# It reads starter/data/weo_panel.csv (made by starter/prep/prepare_data.R)
-# and writes data/weo.rda. It changes no value: same rows, same columns.
+# It reads data-raw/source/weo_panel.csv (made by data-raw/weo_panel.R) and writes
+# data/weo.rda. It changes no value: same rows, same columns.
 
 library(readr) # read_csv() reads a CSV file into a tibble
 library(dplyr) # as_tibble() and n_distinct() for the checks
@@ -13,7 +13,7 @@ library(usethis) # use_data() saves the tibble into data/
 here::i_am("data-raw/weo.R") # tell here() where this script lives
 
 weo <- read_csv( # read the panel, giving every column its type
-  file = here("..", "..", "starter", "data", "weo_panel.csv"), # the file
+  file = here("data-raw", "source", "weo_panel.csv"), # the file
   col_types = cols( # name each type, so readr guesses nothing
     code = col_character(), # the entity's code, such as KEN or G110
     name = col_character(), # the entity's name, as the IMF writes it
