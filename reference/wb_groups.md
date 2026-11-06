@@ -1,0 +1,135 @@
+# The World Bank's country groups: region, income level and lending type
+
+The World Bank's classification of 217 countries, as its data service
+served it on 3 November 2026. One row is one country, with its region,
+its income level and the World Bank lender it borrows from. There are no
+numeric units: every column is a code or a label. Join it to
+[weo](https://teal-insights.github.io/saisdata/reference/weo.md) by
+`code` to compare countries by income level or region.
+
+## Usage
+
+``` r
+wb_groups
+```
+
+## Format
+
+A tibble with 217 rows and 6 variables:
+
+- code:
+
+  chr The country's three-letter code, the same code the IMF uses, so it
+  joins to the `code` column of
+  [weo](https://teal-insights.github.io/saisdata/reference/weo.md).
+
+- wb_code:
+
+  chr The World Bank's own code. It differs from `code` for two
+  countries only: Kosovo (`XKX`) and West Bank and Gaza (`PSE`).
+
+- country:
+
+  chr The country's name, as the World Bank writes it, such as "Egypt,
+  Arab Rep.".
+
+- region:
+
+  chr The World Bank's region, one of seven, such as "Sub-Saharan
+  Africa" or "South Asia".
+
+- income_level:
+
+  chr The World Bank's income level: "Low income", "Lower middle
+  income", "Upper middle income" or "High income".
+
+- lending_type:
+
+  chr Which World Bank lender the country borrows from: "IDA" (the
+  concessional arm, for the poorest countries), "IBRD", "Blend" (both),
+  or "Not classified".
+
+## Source
+
+The World Bank: World Development Indicators: country and lending
+groups,
+<https://datacatalog.worldbank.org/search/dataset/0037712/world-development-indicators>,
+retrieved through `wbwdi::wdi_get_entities()` on 3 November 2026, CC BY
+4.0. Built by `data-raw/wb_groups.R` from
+`data-raw/source/wb_country_groups.csv`.
+
+## Details
+
+The World Bank revises income levels every 1 July, from each country's
+gross national income per person.
+
+The table holds countries only, no aggregates, so a join to `weo` leaves
+out the IMF's group rows. 21 countries are here and not in the WEO, and
+one WEO country, Taiwan Province of China, is in the WEO and not here.
+
+## Vintage
+
+The classification the World Bank's data service served on 3 November
+2026. This table is a frozen snapshot: it does not change when the World
+Bank revises its groups.
+
+## Transformations
+
+The World Bank's list came through `wbwdi::wdi_get_entities()`. The file
+`data-raw/source/wb_country_groups.csv` keeps the 217 countries and
+drops the World Bank's aggregates such as "Sub-Saharan Africa", renames
+the columns, and uses the IMF's codes for Kosovo (`KOS`) and West Bank
+and Gaza (`WBG`), so that one join matches every country. The World
+Bank's own code stays in `wb_code`. `data-raw/wb_groups.R` then changes
+no value.
+
+## Credit
+
+Print this line under every chart you make from these data:
+
+Source: International Monetary Fund, World Economic Outlook Database,
+October 2026, <https://data.imf.org/en/datasets/IMF.RES:WEO>. Country
+groups: The World Bank: World Development Indicators: country and
+lending groups (CC BY 4.0). Net interest is the primary balance minus
+the overall balance, calculated for this workshop.
+
+Drop the third sentence if your chart shows no net interest.
+
+## Terms of use
+
+The package's MIT license does not cover these data. The World Bank
+publishes them under the Creative Commons Attribution 4.0 International
+license (CC BY 4.0), with the added terms in its Terms of Use for
+Datasets,
+<https://www.worldbank.org/ext/en/legal/terms-conditions/datasets> (read
+on 6 November 2026). You may copy, share and adapt them, commercially
+too, if you credit the World Bank in its format, say what you changed
+and link to the license, <https://creativecommons.org/licenses/by/4.0/>.
+When you share the data, pass on the same attribution requirement;
+giving the web address of those terms is enough. Do not imply that the
+World Bank takes part in, sponsors or endorses your use. Disputes go to
+mediation and then arbitration. See
+`system.file("LICENSE-data.md", package = "saisdata")`.
+
+This package is not an official IMF or World Bank product.
+
+## See also
+
+[weo](https://teal-insights.github.io/saisdata/reference/weo.md), the
+panel this table joins to.
+
+## Examples
+
+``` r
+# The first six countries
+head(wb_groups)
+#> # A tibble: 6 × 6
+#>   code  wb_code country              region            income_level lending_type
+#>   <chr> <chr>   <chr>                <chr>             <chr>        <chr>       
+#> 1 ABW   ABW     Aruba                Latin America & … High income  Not classif…
+#> 2 AFG   AFG     Afghanistan          Middle East, Nor… Low income   IDA         
+#> 3 AGO   AGO     Angola               Sub-Saharan Afri… Lower middl… IBRD        
+#> 4 ALB   ALB     Albania              Europe & Central… Upper middl… IBRD        
+#> 5 AND   AND     Andorra              Europe & Central… High income  Not classif…
+#> 6 ARE   ARE     United Arab Emirates Middle East, Nor… High income  Not classif…
+```
