@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r: ['4.3', '4.4', '4.5', 'release', 'devel']
+        r: ['4.1', '4.3', '4.4', '4.5', 'release', 'devel']
     steps:
       - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
@@ -52,11 +52,17 @@ jobs:
           $env:R_LIBS_USER = $env:STUDENT_LIB
           $env:PATH = "$env:STUDENT_RBIN;C:\Windows\System32;C:\Windows"
           foreach ($tool in 'gcc','make','g++','clang') { if (Get-Command $tool -ErrorAction SilentlyContinue) { throw "$tool is on the PATH" } }
-          Set-Content -Path student-line.R -Value 'install.packages("saisdata", repos = "https://teal-insights.r-universe.dev")'
+          Set-Content -Path student-line.R -Value 'cat("interactive session:", interactive(), "\n")'
+          Add-Content -Path student-line.R -Value 'install.packages("saisdata", repos = "https://teal-insights.r-universe.dev")'
           Add-Content -Path student-line.R -Value 'q("no")'
-          cmd /c "`"$env:STUDENT_RBIN\Rterm.exe`" --interactive --vanilla < student-line.R > student-line.log 2>&1"
+          # Rterm lives in bin\x64. Its --ess flag is how it treats piped input as interactive use.
+          $rterm = Join-Path $env:STUDENT_RBIN 'x64\Rterm.exe'
+          cmd /c "$rterm --ess --vanilla < student-line.R > student-line.log 2>&1"
+          $code = $LASTEXITCODE
           Get-Content student-line.log
-          if (Select-String -Path student-line.log -Pattern 'Would you like|Yes/no/cancel|Selection:') { throw 'The install stopped to prompt' }
+          if ($code -ne 0) { throw "R exited with status $code" }
+          if (-not (Select-String -Path student-line.log -SimpleMatch 'interactive session: TRUE')) { throw 'The session was not interactive, so the prompt check proves nothing' }
+          if (Select-String -Path student-line.log -Pattern 'Would you like|Yes/no/cancel|Selection:|Do you want') { throw 'The install stopped to prompt' }
       - name: Load the data, open the help pages, run the example, in a fresh session
         shell: pwsh
         env:
@@ -76,7 +82,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r: ['4.4', '4.5', 'release', 'devel']
+        r: ['4.3', '4.4', '4.5', 'release', 'devel']
     steps:
       - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
@@ -95,9 +101,12 @@ jobs:
           done
           export PATH="$RUNNER_TEMP/trap:$PATH"
           export R_LIBS_USER="$RUNNER_TEMP/empty-student-library"
-          printf '%s\n%s\n' 'install.packages("saisdata", repos = "https://teal-insights.r-universe.dev")' 'q("no")' > student-line.R
+          printf '%s\n%s\n%s\n' 'cat("interactive session:", interactive(), "\n")' 'install.packages("saisdata", repos = "https://teal-insights.r-universe.dev")' 'q("no")' > student-line.R
           R --interactive --vanilla < student-line.R 2>&1 | tee student-line.log
-          if grep -E 'Would you like|Yes/no/cancel|Selection:' student-line.log; then echo 'The install stopped to prompt'; exit 1; fi
+          code=${PIPESTATUS[0]}
+          if [ "$code" -ne 0 ]; then echo "R exited with status $code"; exit 1; fi
+          if ! grep -q 'interactive session: TRUE' student-line.log; then echo 'The session was not interactive, so the prompt check proves nothing'; exit 1; fi
+          if grep -E 'Would you like|Yes/no/cancel|Selection:|Do you want' student-line.log; then echo 'The install stopped to prompt'; exit 1; fi
           if [ -s "$RUNNER_TEMP/compiler-calls.log" ]; then cat "$RUNNER_TEMP/compiler-calls.log"; echo 'A compiler was called'; exit 1; fi
           echo 'No compiler was called'
       - name: Load the data, open the help pages, run the example, in a fresh session

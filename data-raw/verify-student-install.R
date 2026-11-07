@@ -81,6 +81,11 @@ if (nzchar(expect_sha)) {
 check(identical(dim(weo), c(6720L, 9L)), "weo is 6,720 rows by 9 columns")
 check(identical(dim(weo_groups), c(6L, 36L)), "weo_groups is 6 rows by 36 columns")
 check(identical(dim(wb_groups), c(217L, 6L)), "wb_groups is 217 rows by 6 columns")
+check(
+  isTRUE(all.equal(sum(weo$gdp_usd_bn, na.rm = TRUE), 11900143.713, tolerance = 1e-9)) &&
+    isTRUE(all.equal(sum(weo$gross_debt, na.rm = TRUE), 355348.611, tolerance = 1e-9)),
+  "the values in weo match the release (two column totals)"
+)
 
 # Open the help pages, and read them as text.
 pages <- c("weo", "weo_groups", "wb_groups", "saisdata-package")
