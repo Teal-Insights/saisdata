@@ -1,0 +1,18 @@
+Installed version: 0.1.0 
+Installed from: https://teal-insights.r-universe.dev 
+Commit: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+
+weo
+  identical(): TRUE 
+  all.equal(tolerance = 0): TRUE 
+  column types match: TRUE 
+weo_groups
+  identical(): TRUE 
+  all.equal(tolerance = 0): TRUE 
+  column types match: TRUE 
+wb_groups
+  identical(): TRUE 
+  all.equal(tolerance = 0): TRUE 
+  column types match: TRUE 
+
+Result: SAME 

@@ -1,0 +1,417 @@
+# Key lines from each job of verify-install run 42325320567, on commit a7cfa74 of main.
+# https://github.com/Teal-Insights/saisdata/actions/runs/42325320567
+# The jobs check what R-universe serves for tag v0.1.0. Rterm --ess on Windows does not echo
+# input, so R's '> ' prompt starts the first output line there.
+
+## macos-latest (R 4.3): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128042
+interactive session: TRUE 
+installing the source package ‘saisdata’
+trying URL 'https://teal-insights.r-universe.dev/src/contrib/saisdata_0.1.0.tar.gz
+No compiler was called
+R: 4.3.3 | platform: aarch64-apple-darwin20 
+pkgType: mac.binary.big-sur-arm64 
+Version: 0.1.0 
+Built: R 4.3.3; ; 2026-11-07 01:41:30 UTC; unix 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## macos-latest (R 4.4): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128258
+interactive session: TRUE 
+installing the source package ‘saisdata’
+trying URL 'https://teal-insights.r-universe.dev/src/contrib/saisdata_0.1.0.tar.gz
+No compiler was called
+R: 4.4.3 | platform: aarch64-apple-darwin20 
+pkgType: mac.binary.big-sur-arm64 
+Version: 0.1.0 
+Built: R 4.4.3; ; 2026-11-07 01:41:36 UTC; unix 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## macos-latest (R 4.5): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128230
+interactive session: TRUE 
+trying URL 'https://teal-insights.r-universe.dev/bin/macosx/big-sur-arm64/contrib/4.5/saisdata_0.1.0.tgz
+No compiler was called
+R: 4.5.3 | platform: aarch64-apple-darwin20 
+pkgType: mac.binary.big-sur-arm64 
+Version: 0.1.0 
+Built: R 4.5.3; ; 2026-11-06 23:17:51 UTC; unix 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## macos-latest (R devel): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128425
+interactive session: TRUE 
+##[warning]Warning: unable to access index for repository https://teal-insights.r-universe.dev/bin/macos/arm64/contrib/4.7:
+installing the source package ‘saisdata’
+trying URL 'https://teal-insights.r-universe.dev/src/contrib/saisdata_0.1.0.tar.gz
+No compiler was called
+R: 4.7.0 | platform: aarch64-apple-darwin23 
+pkgType: macos.binary.arm64 
+Version: 0.1.0 
+Built: R 4.7.0; ; 2026-11-07 01:41:29 UTC; unix 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## macos-latest (R release): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128181
+interactive session: TRUE 
+trying URL 'https://teal-insights.r-universe.dev/bin/macosx/sonoma-arm64/contrib/4.6/saisdata_0.1.0.tgz
+package ‘saisdata’ successfully unpacked and SHA256 sums checked
+No compiler was called
+R: 4.6.2 | platform: aarch64-apple-darwin23 
+pkgType: mac.binary.sonoma-arm64 
+Version: 0.1.0 
+Built: R 4.6.2; ; 2026-11-06 23:17:45 UTC; unix 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## windows-latest (R 4.1): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128231
+> interactive session: TRUE 
+installing the source package 'saisdata'
+trying URL 'https://teal-insights.r-universe.dev/src/contrib/saisdata_0.1.0.tar.gz
+R: 4.1.3 | platform: x86_64-w64-mingw32 
+pkgType: win.binary 
+Version: 0.1.0 
+Built: R 4.1.3; ; 2026-11-07 01:42:29 UTC; windows 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## windows-latest (R 4.3): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128298
+> interactive session: TRUE 
+installing the source package 'saisdata'
+trying URL 'https://teal-insights.r-universe.dev/src/contrib/saisdata_0.1.0.tar.gz
+R: 4.3.3 | platform: x86_64-w64-mingw32 
+pkgType: win.binary 
+Version: 0.1.0 
+Built: R 4.3.3; ; 2026-11-07 01:43:25 UTC; windows 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## windows-latest (R 4.4): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128157
+> interactive session: TRUE 
+installing the source package 'saisdata'
+trying URL 'https://teal-insights.r-universe.dev/src/contrib/saisdata_0.1.0.tar.gz
+R: 4.4.3 | platform: x86_64-w64-mingw32 
+pkgType: win.binary 
+Version: 0.1.0 
+Built: R 4.4.3; ; 2026-11-07 01:43:14 UTC; windows 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## windows-latest (R 4.5): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128256
+> interactive session: TRUE 
+trying URL 'https://teal-insights.r-universe.dev/bin/windows/contrib/4.5/saisdata_0.1.0.zip
+package 'saisdata' successfully unpacked and MD5 sums checked
+R: 4.5.3 | platform: x86_64-w64-mingw32 
+pkgType: win.binary 
+Version: 0.1.0 
+Built: R 4.5.3; ; 2026-11-06 23:17:20 UTC; windows 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## windows-latest (R devel): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128310
+> interactive session: TRUE 
+trying URL 'https://teal-insights.r-universe.dev/bin/windows/contrib/4.7/saisdata_0.1.0.zip
+package 'saisdata' successfully unpacked and MD5 sums checked
+R: 4.7.0 | platform: x86_64-w64-mingw32 
+pkgType: win.binary 
+Version: 0.1.0 
+Built: R 4.7.0; ; 2026-11-06 23:17:08 UTC; windows 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+
+## windows-latest (R release): success
+https://github.com/Teal-Insights/saisdata/actions/runs/42325320567/job/128259128246
+> interactive session: TRUE 
+trying URL 'https://teal-insights.r-universe.dev/bin/windows/contrib/4.6/saisdata_0.1.0.zip
+package 'saisdata' successfully unpacked and MD5 sums checked
+R: 4.6.2 | platform: x86_64-w64-mingw32 
+pkgType: win.binary 
+Version: 0.1.0 
+Built: R 4.6.2; ; 2026-11-06 23:17:02 UTC; windows 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+saisdata is the only package in the library
+

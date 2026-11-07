@@ -1,0 +1,608 @@
+== This machine
+27.0.1
+arm64
+R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
+pkgType option: both 
+binary type: mac.binary.big-sur-arm64 
+tokens in the session environment: none, it starts from env -i
+
+== 1. The exact line, non-interactive, in an empty library
+install.packages("saisdata", repos = "https://teal-insights.r-universe.dev")
+R: 4.4.2 | platform: aarch64-apple-darwin20 
+pkgType: mac.binary.big-sur-arm64 
+interactive(): FALSE 
+PASS  the library starts empty: lib-rscript
+PASS  no GitHub token in the environment
+tibble in another library on this machine: TRUE 
+Installing package into ‘<tmp>/lib-rscript’
+(as ‘lib’ is unspecified)
+installing the source package ‘saisdata’
+
+trying URL 'https://teal-insights.r-universe.dev/src/contrib/saisdata_0.1.0.tar.gz?sha256=85b299a39e128e35b513636c1e73f2b11347fedf323918583978efbf486df5a2&file=/saisdata_0.1.0.tar.gz'
+Content type 'application/gzip' length 299595 bytes (292 KB)
+==================================================
+downloaded 292 KB
+
+* installing *source* package ‘saisdata’ ...
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (saisdata)
+
+The downloaded source packages are in
+	‘<tmp>/tmp/RtmpNRc49v/downloaded_packages’
+PASS  saisdata installed
+PASS  saisdata is the only package it installed
+PASS  Rscript install exits 0
+
+== 2. The exact line, in an interactive session, in a second empty library
+cat("interactive session:", interactive(), "\n")
+interactive session: TRUE 
+install.packages("saisdata", repos = "https://teal-insights.r-universe.dev")
+Installing package into ‘<tmp>/lib-interactive’
+(as ‘lib’ is unspecified)
+installing the source package ‘saisdata’
+
+trying URL 'https://teal-insights.r-universe.dev/src/contrib/saisdata_0.1.0.tar.gz?sha256=85b299a39e128e35b513636c1e73f2b11347fedf323918583978efbf486df5a2&file=/saisdata_0.1.0.tar.gz'
+Content type 'application/gzip' length 299595 bytes (292 KB)
+==================================================
+downloaded 292 KB
+
+* installing *source* package ‘saisdata’ ...
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (saisdata)
+
+The downloaded source packages are in
+	‘<tmp>/tmp/RtmpM0Q5dt/downloaded_packages’
+q("no")
+PASS  the interactive session exits 0
+PASS  the session really was interactive, so the prompt check means something
+PASS  saisdata is installed in the second library
+PASS  it did not stop to prompt
+PASS  it gave no warning
+
+== 3. What the install needed
+hosts contacted during both installs:
+  r2.ropensci.org
+  teal-insights.r-universe.dev
+PASS  the proxy saw the R-universe host, so R did use it
+PASS  only R-universe and its file store were contacted, so no CRAN and no GitHub
+PASS  no compiler or make was called
+
+== 4. Network denied: the control
+curl to R-universe inside the sandbox exited 6
+PASS  the sandbox does block the network
+
+== 5. A fresh session, network denied: load, help pages, example
+R: 4.4.2 | platform: aarch64-apple-darwin20 
+pkgType: mac.binary.big-sur-arm64 
+interactive(): FALSE 
+Version: 0.1.0 
+Built: R 4.4.2; ; 2026-11-07 00:22:59 UTC; unix 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+RemoteRef: v0.1.0 
+Packaged: 2026-11-06 23:15:58 UTC; root 
+NeedsCompilation: no 
+PASS  the package needs no compiler
+PASS  it came from the R-universe repository
+PASS  version is 0.1.0
+PASS  commit is 3f5fa806daedb171f091f60d5652d88b7af08fc3
+PASS  weo is 6,720 rows by 9 columns
+PASS  weo_groups is 6 rows by 36 columns
+PASS  wb_groups is 217 rows by 6 columns
+PASS  the values in weo match the release (two column totals)
+PASS  ?weo is found
+PASS  ?weo opens and carries the not-official sentence
+PASS  ?weo_groups is found
+PASS  ?weo_groups opens and carries the not-official sentence
+PASS  ?wb_groups is found
+PASS  ?wb_groups opens and carries the not-official sentence
+PASS  ?saisdata-package is found
+PASS  ?saisdata-package opens and carries the not-official sentence
+     year gross_debt net_interest
+5589 2020     67.959        3.925
+5590 2021     68.232        4.091
+5591 2022     67.800        4.374
+5592 2023     73.405        4.786
+5593 2024     67.306        5.247
+5594 2025     71.269        5.447
+PASS  Kenya's 2025 net interest is 5.447 percent of GDP
+PASS  example(weo) runs
+PASS  weo in 2025 joins to wb_groups for 196 countries
+PASS  LICENSE-data.md is installed
+PASS  the Getting Started vignette is installed
+PASS  citation() gives three entries
+PASS  it all worked without loading tibble
+All checks passed.
+PASS  the use step exits 0 with the network denied
+
+== 6. The same in the library the interactive install made
+Version: 0.1.0 
+Repository: https://teal-insights.r-universe.dev 
+RemoteSha: 3f5fa806daedb171f091f60d5652d88b7af08fc3 
+RemoteRef: v0.1.0 
+All checks passed.
+PASS  the use step exits 0 for the interactive library too
+
+== 7. What a student types, in an interactive session, network denied
+
+R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(saisdata)
+> ?weo
+weo                  package:saisdata                  R Documentation
+
+World Economic Outlook, October 2026: the tidy country panel
+
+Description:
+
+     Four indicators from the IMF's World Economic Outlook (WEO)
+     database of October 2026, laid out tidy. One row is one entity in
+     one year, and each variable has its own column. An entity is one
+     of 197 countries or one of 13 IMF country groups, and the years
+     run from 2000 to 2031, so the panel has 6,720 rows.
+
+Usage:
+
+     weo
+
+Format:
+
+     A tibble with 6,720 rows and 9 variables:
+
+     code chr The entity's code. A country has its three-letter ISO
+          code (the IMF uses KOS for Kosovo and WBG for West Bank
+          and Gaza); an IMF group has a code that starts with G and a
+          digit or an X, such as G110 for Advanced Economies.
+
+     name chr The entity's name, as the IMF writes it, such as "Egypt,
+          Arab Republic of".
+
+     year int The year, 2000 to 2031.
+
+     gross_debt dbl Gross debt of the general government, everything it
+          owes, in percent of GDP (the IMF's GGXWDG_NGDP).
+
+     primary_balance dbl The primary balance: revenue minus spending,
+          with interest left out on both sides, in percent of GDP
+          (GGXONLB_NGDP). Negative means a deficit.
+
+     overall_balance dbl The overall balance: revenue minus all
+          spending, interest included, in percent of GDP
+          (GGXCNL_NGDP). Negative means a deficit.
+
+     gdp_usd_bn dbl GDP at current prices, in billions of US dollars
+          (NGDPD).
+
+     latest_actual int The last year with actual fiscal data; later
+          years are IMF estimates or projections. Missing (NA) for 12
+          of the 13 IMF groups.
+
+     fiscal_year chr The months of the year the WEO shows the fiscal
+          numbers in: "January/December" for most countries, and others
+          such as "July/June" for Pakistan. Missing for 12 of the 13
+          IMF groups.
+
+Details:
+
+     The WEO mixes actual data and IMF projections in one row.
+     latest_actual marks where the actual data stop. For most
+     countries the fiscal numbers are actual through 2025, and from
+     2026 on almost every value is an IMF projection.
+
+     Net interest is not a column. It is one line of arithmetic,
+     primary_balance - overall_balance: the interest the government
+     pays minus the interest it receives, in percent of GDP. For Japan
+     in 2025 that is -0.511 minus -0.709, which is 0.198.
+
+     To tell a group from a country, look at the code. An IMF group's
+     code starts with G and then a digit or an X (G110); a country's
+     second character is a letter (Ghana is GHA).
+
+Vintage:
+
+     The IMF's World Economic Outlook database of October 2026. This
+     table is a frozen snapshot of that release: it does not change
+     when the IMF publishes a new WEO or revises these numbers.
+
+Transformations:
+
+     The IMF's workbook WEOOct2026all.xlsx went through two steps.
+     First, an extract stacked its Countries and Country Groups sheets,
+     kept 13 of 44 indicators, the years 2000 to 2031 and 9 of 29
+     descriptive columns, and wrote each number in its shortest form.
+     Second, data-raw/weo_panel.R kept the four indicators here, gave
+     them plain names, reshaped them to one row per entity and year,
+     and rounded them to three decimals. It also added two columns from
+     the IMF's labels. fiscal_year is the IMF's own label.
+     latest_actual turns the IMF's label, such as FY2024/25, into one
+     calendar year, following the rule in the IMF's notes for that
+     country.
+
+Credit:
+
+     Print this line under every chart you make from these data:
+
+     Source: International Monetary Fund, World Economic Outlook
+     Database, October 2026,
+     <https://data.imf.org/en/datasets/IMF.RES:WEO>. Country groups:
+     The World Bank: World Development Indicators: country and lending
+     groups (CC BY 4.0). Net interest is the primary balance minus the
+     overall balance, calculated for this workshop.
+
+     Drop the second sentence if your chart uses no World Bank groups,
+     and the third if it shows no net interest.
+
+Terms of use:
+
+     The package's MIT license does not cover these data. They are
+     under the special terms for statistical data on the IMF's
+     Copyright and Usage page,
+     <https://www.imf.org/en/About/copyright-and-terms> (effective 11
+     October 2024, read on 6 November 2026), which name the World
+     Economic Outlook database. You may download, extract, copy, build
+     on, publish and distribute the data if you credit the IMF in the
+     form above, do not alter the data in a way that intentionally
+     affects their nature or accuracy, and say so next to the credit
+     when you materially transform them. If you pass the data on, make
+     reasonable efforts to tell your users about these terms. The IMF
+     gives no warranty. For any potential commercial reuse, ask
+     copyright@imf.org first. The IMF's general terms still apply where
+     the data terms are silent: imply no endorsement, and do not use
+     its content to train large language models without its explicit
+     permission. See system.file("LICENSE-data.md", package =
+     "saisdata").
+
+     This package is not an official IMF or World Bank product.
+
+Source:
+
+     International Monetary Fund, World Economic Outlook Database,
+     October 2026, <https://data.imf.org/en/datasets/IMF.RES:WEO>.
+     Built by data-raw/weo.R from data-raw/source/weo_panel.csv,
+     which data-raw/weo_panel.R makes from
+     data-raw/source/weo_2026oct_extract.csv, an extract of the IMF's
+     workbook WEOOct2026all.xlsx.
+
+See Also:
+
+     weo_groups for the IMF's own layout of its two big groups;
+     wb_groups to add the World Bank's income levels and regions.
+
+Examples:
+
+     # Rows, then columns
+     dim(weo)
+
+     # The first six rows
+     head(weo)
+
+     # Kenya since 2020, with its net interest bill in percent of GDP
+     kenya <- subset(weo, code == "KEN" & year >= 2020 & year <= 2025)
+     kenya$net_interest <- kenya$primary_balance - kenya$overall_balance
+     kenya[, c("year", "gross_debt", "net_interest")]
+
+
+> ?weo_groups
+weo_groups              package:saisdata               R Documentation
+
+World Economic Outlook, October 2026: the two big groups, as the IMF
+lays them out
+
+Description:
+
+     Six rows from the IMF's World Economic Outlook (WEO) database of
+     October 2026, in the layout the IMF publishes. One row is one
+     country group and one indicator, with the years across as columns.
+     The two groups, Advanced Economies and Emerging Market and
+     Developing Economies, together cover the world. The three
+     indicators, the primary balance, the overall balance and GDP, are
+     all you need to work out what the world's governments pay in
+     interest.
+
+Usage:
+
+     weo_groups
+
+Format:
+
+     A tibble with 6 rows and 36 variables:
+
+     group_code chr The IMF's code for the group: G110 for Advanced
+          Economies, G200 for Emerging Market and Developing
+          Economies (COUNTRY.ID in the IMF's file).
+
+     group chr The group's name, as the IMF writes it (COUNTRY).
+
+     indicator chr The IMF's code for the indicator (INDICATOR.ID):
+          GGXONLB_NGDP is the primary balance, GGXCNL_NGDP the
+          overall balance, and NGDPD GDP at current prices.
+
+     indicator_name chr The indicator's full name, as the IMF writes it
+          (INDICATOR), such as "Net lending (+) / net borrowing (-),
+          General government, Percent of GDP".
+
+     units chr How to read the numbers: "Percent of GDP" for the two
+          balances and "Billions of US dollars" for GDP (the IMF's
+          SCALE and UNIT columns, in plain words).
+
+     2001 to 2031 dbl One column per year, holding the indicator's
+          value that year. From 2026 on the values are IMF projections.
+          The names are numbers, so wrap them in backticks when you use
+          them: `2025`.
+
+Details:
+
+     This is what data look like in the wild. To work with them in R
+     you tidy them first: tidyr::pivot_longer() turns the year
+     columns into rows, and tidyr::pivot_wider() turns the indicators
+     into columns.
+
+     Net interest in billions of US dollars is the primary balance
+     minus the overall balance, times GDP, divided by 100. Added up
+     over the two groups it comes to about USD 849 billion in 2001 and
+     USD 2,371.2 billion in 2025. The groups' balances are averages of
+     their members' balances, weighted by GDP, so this total is an
+     approximation.
+
+     The years start in 2001, the first year the IMF gives a primary
+     balance for both groups.
+
+Vintage:
+
+     The IMF's World Economic Outlook database of October 2026. This
+     table is a frozen snapshot of that release: it does not change
+     when the IMF publishes a new WEO or revises these numbers.
+
+Transformations:
+
+     The IMF's workbook WEOOct2026all.xlsx went through two steps.
+     First, an extract stacked its Countries and Country Groups sheets,
+     kept 13 of 44 indicators, the years 2000 to 2031 and 9 of 29
+     descriptive columns, and wrote each number in its shortest form.
+     Second, data-raw/weo_groups.R kept these six rows and the years
+     2001 to 2031, renamed five columns, and wrote the IMF's SCALE
+     and UNIT in plain words. No number was changed.
+
+Credit:
+
+     Print this line under every chart you make from these data:
+
+     Source: International Monetary Fund, World Economic Outlook
+     Database, October 2026,
+     <https://data.imf.org/en/datasets/IMF.RES:WEO>. Country groups:
+     The World Bank: World Development Indicators: country and lending
+     groups (CC BY 4.0). Net interest is the primary balance minus the
+     overall balance, calculated for this workshop.
+
+     Drop the second sentence if your chart uses no World Bank groups,
+     and the third if it shows no net interest.
+
+Terms of use:
+
+     The package's MIT license does not cover these data. They are
+     under the special terms for statistical data on the IMF's
+     Copyright and Usage page,
+     <https://www.imf.org/en/About/copyright-and-terms> (effective 11
+     October 2024, read on 6 November 2026), which name the World
+     Economic Outlook database. You may download, extract, copy, build
+     on, publish and distribute the data if you credit the IMF in the
+     form above, do not alter the data in a way that intentionally
+     affects their nature or accuracy, and say so next to the credit
+     when you materially transform them. If you pass the data on, make
+     reasonable efforts to tell your users about these terms. The IMF
+     gives no warranty. For any potential commercial reuse, ask
+     copyright@imf.org first. The IMF's general terms still apply where
+     the data terms are silent: imply no endorsement, and do not use
+     its content to train large language models without its explicit
+     permission. See system.file("LICENSE-data.md", package =
+     "saisdata").
+
+     This package is not an official IMF or World Bank product.
+
+Source:
+
+     International Monetary Fund, World Economic Outlook Database,
+     October 2026, <https://data.imf.org/en/datasets/IMF.RES:WEO>.
+     Built by data-raw/weo_groups.R from
+     data-raw/source/weo_2026oct_extract.csv, an extract of the IMF's
+     workbook WEOOct2026all.xlsx.
+
+See Also:
+
+     weo for every country and group, one row per entity and year.
+
+Examples:
+
+     # Six rows: two groups times three indicators
+     nrow(weo_groups)
+
+     # Five columns that describe each row, then one column per year
+     names(weo_groups)
+
+
+> ?wb_groups
+wb_groups               package:saisdata               R Documentation
+
+The World Bank's country groups: region, income level and lending type
+
+Description:
+
+     The World Bank's classification of 217 countries, as its data
+     service served it on 3 November 2026. One row is one country, with
+     its region, its income level and the World Bank lender it borrows
+     from. There are no numeric units: every column is a code or a
+     label. Join it to weo by code to compare countries by income
+     level or region.
+
+Usage:
+
+     wb_groups
+
+Format:
+
+     A tibble with 217 rows and 6 variables:
+
+     code chr The country's three-letter code, the same code the IMF
+          uses, so it joins to the code column of weo.
+
+     wb_code chr The World Bank's own code. It differs from code for
+          two countries only: Kosovo (XKX) and West Bank and Gaza
+          (PSE).
+
+     country chr The country's name, as the World Bank writes it, such
+          as "Egypt, Arab Rep.".
+
+     region chr The World Bank's region, one of seven, such as
+          "Sub-Saharan Africa" or "South Asia".
+
+     income_level chr The World Bank's income level: "Low income",
+          "Lower middle income", "Upper middle income" or "High
+          income".
+
+     lending_type chr Which World Bank lender the country borrows from:
+          "IDA" (the concessional arm, for the poorest countries),
+          "IBRD", "Blend" (both), or "Not classified".
+
+Details:
+
+     The World Bank revises income levels every 1 July, from each
+     country's gross national income per person.
+
+     The table holds countries only, no aggregates, so a join to weo
+     leaves out the IMF's group rows. 21 countries are here and not in
+     the WEO, and one WEO country, Taiwan Province of China, is in the
+     WEO and not here.
+
+Vintage:
+
+     The classification the World Bank's data service served on 3
+     November 2026. This table is a frozen snapshot: it does not change
+     when the World Bank revises its groups.
+
+Transformations:
+
+     The World Bank's list came through wbwdi::wdi_get_entities().
+     The file data-raw/source/wb_country_groups.csv keeps the 217
+     countries and drops the World Bank's aggregates such as
+     "Sub-Saharan Africa", renames the columns, and uses the IMF's
+     codes for Kosovo (KOS) and West Bank and Gaza (WBG), so that
+     one join matches every country. The World Bank's own code stays in
+     wb_code. data-raw/wb_groups.R then changes no value.
+
+Credit:
+
+     Print this line under every chart you make from these data:
+
+     Source: International Monetary Fund, World Economic Outlook
+     Database, October 2026,
+     <https://data.imf.org/en/datasets/IMF.RES:WEO>. Country groups:
+     The World Bank: World Development Indicators: country and lending
+     groups (CC BY 4.0). Net interest is the primary balance minus the
+     overall balance, calculated for this workshop.
+
+     Drop the third sentence if your chart shows no net interest.
+
+Terms of use:
+
+     The package's MIT license does not cover these data. The World
+     Bank publishes them under the Creative Commons Attribution 4.0
+     International license (CC BY 4.0), with the added terms in its
+     Terms of Use for Datasets,
+     <https://www.worldbank.org/ext/en/legal/terms-conditions/datasets>
+     (read on 6 November 2026). You may copy, share and adapt them,
+     commercially too, if you credit the World Bank in its format, say
+     what you changed and link to the license,
+     <https://creativecommons.org/licenses/by/4.0/>. When you share the
+     data, pass on the same attribution requirement; giving the web
+     address of those terms is enough. Do not imply that the World Bank
+     takes part in, sponsors or endorses your use. Disputes go to
+     mediation and then arbitration. See
+     system.file("LICENSE-data.md", package = "saisdata").
+
+     This package is not an official IMF or World Bank product.
+
+Source:
+
+     The World Bank: World Development Indicators: country and lending
+     groups,
+     <https://datacatalog.worldbank.org/search/dataset/0037712/world-development-indicators>,
+     retrieved through wbwdi::wdi_get_entities() on 3 November 2026,
+     CC BY 4.0. Built by data-raw/wb_groups.R from
+     data-raw/source/wb_country_groups.csv.
+
+See Also:
+
+     weo, the panel this table joins to.
+
+Examples:
+
+     # The first six countries
+     head(wb_groups)
+
+
+> head(as.data.frame(weo), 3)
+  code                     name year gross_debt primary_balance overall_balance
+1  AND Andorra, Principality of 2000         NA              NA              NA
+2  AND Andorra, Principality of 2001     15.774           1.475           0.658
+3  AND Andorra, Principality of 2002     15.266           1.676           0.978
+  gdp_usd_bn latest_actual      fiscal_year
+1      1.429          2025 January/December
+2      1.547          2025 January/December
+3      1.758          2025 January/December
+> kenya <- subset(weo, code == "KEN" & year >= 2020 & year <= 2025)
+> kenya$net_interest <- kenya$primary_balance - kenya$overall_balance
+> as.data.frame(kenya[, c("year", "gross_debt", "net_interest")])
+     year gross_debt net_interest
+5589 2020     67.959        3.925
+5590 2021     68.232        4.091
+5591 2022     67.800        4.374
+5592 2023     73.405        4.786
+5593 2024     67.306        5.247
+5594 2025     71.269        5.447
+> file.exists(system.file("doc", "saisdata.html", package = "saisdata"))
+[1] TRUE
+> q("no")
+PASS  the student session exits 0
+PASS  the student session printed no error
+
+Result: ALL PASSED
