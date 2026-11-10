@@ -11,8 +11,14 @@
 #
 # The script needs only base R, tools and git. It exits with status 1 on any
 # difference, so a caller can act on its exit code.
+#
+# Version 0.3.0 widened `weo` with eight columns and added three tables. The
+# baseline has neither. So `weo` is compared on the baseline's nine columns,
+# which must be identical, and the added columns and new tables are listed with
+# their shapes and file hashes.
 
-tables <- c("weo", "weo_groups", "wb_groups") # the three datasets
+tables <- c("weo", "weo_groups", "wb_groups") # the three datasets with a baseline
+new_tables <- c("weo_full", "weo_indicators", "weo_mini") # added in 0.3.0
 
 read_from_rda <- function(dir) { # load the three tables from .rda files in a folder
   out <- list()
@@ -107,6 +113,12 @@ failed <- FALSE
 for (name in tables) { # compare one table at a time
   old <- baseline[[name]]
   new <- rebuilt[[name]]
+  added <- setdiff(names(new), names(old)) # columns the baseline does not have
+  if (length(added) > 0) { # compare on the baseline's columns, in its order
+    cat("\n", name, " has ", length(added), " columns the baseline lacks: ",
+      paste(added, collapse = ", "), "\n", sep = "")
+    new <- new[names(old)]
+  }
   same_identical <- identical(old, new)
   same_all_equal <- isTRUE(all.equal(old, new, tolerance = 0))
   same_types <- identical(column_types(old), column_types(new))
@@ -137,6 +149,17 @@ for (name in tables) { # compare one table at a time
     cat("DIFFERENT:", name, "\n")
     print(all.equal(old, new, tolerance = 0))
   }
+}
+
+cat("\n== Tables with no baseline ==\n")
+for (name in new_tables) { # list each new table: its shape and its file's hash
+  env <- new.env()
+  load(file.path("data", paste0(name, ".rda")), envir = env)
+  cat(sprintf(
+    "%s: %d rows, %d columns, data/%s.rda SHA-256: %s\n",
+    name, nrow(env[[name]]), ncol(env[[name]]), name,
+    sha256(file.path("data", paste0(name, ".rda")))
+  ))
 }
 
 cat("\nResult:", if (failed) "DIFFERENT" else "SAME", "\n")

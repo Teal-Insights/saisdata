@@ -1,10 +1,17 @@
 #' World Economic Outlook, October 2026: the tidy country panel
 #'
-#' Four indicators from the IMF's World Economic Outlook (WEO) database of
+#' Twelve indicators from the IMF's World Economic Outlook (WEO) database of
 #' October 2026, laid out tidy. One row is one entity in one year, and each
 #' variable has its own column. An entity is one of 197 countries or one of 13
 #' IMF country groups, and the years run from 2000 to 2031, so the panel has
 #' 6,720 rows.
+#'
+#' The columns cover what a student of international economics asks first:
+#' how fast an economy grows, how fast its prices rise, who has work, what it
+#' earns from and pays to the rest of the world, how its people live, and what
+#' its government takes in, spends and owes. [weo_full] has the IMF's other 32
+#' indicators, and [weo_indicators] says what each one measures. [weo_mini] is
+#' twelve rows of this table that fit on one screen.
 #'
 #' The WEO mixes actual data and IMF projections in one row. `latest_actual`
 #' marks where the actual data stop. For most countries the fiscal numbers are
@@ -20,7 +27,7 @@
 #' starts with G and then a digit or an X (`G110`); a country's second
 #' character is a letter (Ghana is `GHA`).
 #'
-#' @format A tibble with 6,720 rows and 9 variables:
+#' @format A tibble with 6,720 rows and 17 variables:
 #' \describe{
 #'   \item{code}{chr The entity's code. A country has its three-letter ISO code (the IMF uses `KOS` for Kosovo and `WBG` for West Bank and Gaza); an IMF group has a code that starts with G and a digit or an X, such as `G110` for Advanced Economies.}
 #'   \item{name}{chr The entity's name, as the IMF writes it, such as "Egypt, Arab Republic of".}
@@ -31,6 +38,14 @@
 #'   \item{gdp_usd_bn}{dbl GDP at current prices, in billions of US dollars (`NGDPD`).}
 #'   \item{latest_actual}{int The last year with actual fiscal data; later years are IMF estimates or projections. Missing (`NA`) for 12 of the 13 IMF groups.}
 #'   \item{fiscal_year}{chr The months of the year the WEO shows the fiscal numbers in: "January/December" for most countries, and others such as "July/June" for Pakistan. Missing for 12 of the 13 IMF groups.}
+#'   \item{real_gdp_growth}{dbl Real GDP growth: how much more the economy produced than the year before, with inflation taken out, in percent (`NGDP_RPCH`).}
+#'   \item{inflation}{dbl Inflation: how much consumer prices rose on average over the year, in percent (`PCPIPCH`).}
+#'   \item{unemployment_rate}{dbl The unemployment rate, in percent of the labor force (`LUR`). The IMF reports it for 118 of the 197 countries.}
+#'   \item{current_account_balance}{dbl The current account balance: what the country earns from the rest of the world minus what it pays, in percent of GDP (`BCA_NGDPD`). Negative means a deficit.}
+#'   \item{gdp_per_capita_usd}{dbl GDP per person at current prices, in US dollars (`NGDPDPC`). Missing for the IMF groups.}
+#'   \item{population_mn}{dbl Population, in millions of people (`LP`). Missing for the IMF groups.}
+#'   \item{revenue}{dbl General government revenue, in percent of GDP (`GGR_NGDP`).}
+#'   \item{expenditure}{dbl General government spending, interest included, in percent of GDP (`GGX_NGDP`). Revenue minus expenditure is the overall balance.}
 #' }
 #'
 #' @section Vintage:
@@ -39,15 +54,23 @@
 #' new WEO or revises these numbers.
 #'
 #' @section Transformations:
-#' The IMF's workbook `WEOOct2026all.xlsx` went through two steps. First, an
-#' extract stacked its Countries and Country Groups sheets, kept 13 of 44
-#' indicators, the years 2000 to 2031 and 9 of 29 descriptive columns, and wrote
-#' each number in its shortest form. Second, `data-raw/weo_panel.R` kept the four
-#' indicators here, gave them plain names, reshaped them to one row per entity and
-#' year, and rounded them to three decimals. It also added two columns from the
-#' IMF's labels. `fiscal_year` is the IMF's own label. `latest_actual` turns the
-#' IMF's label, such as FY2024/25, into one calendar year, following the rule in
-#' the IMF's notes for that country.
+#' The first nine columns come from the IMF's workbook `WEOOct2026all.xlsx`, in
+#' two steps. First, an extract stacked its Countries and Country Groups sheets,
+#' kept 13 of 44 indicators, the years 2000 to 2031 and 9 of 29 descriptive
+#' columns, and wrote each number in its shortest form. Second,
+#' `data-raw/weo_panel.R` kept four indicators, gave them plain names, reshaped
+#' them to one row per entity and year, and rounded them to three decimals. It
+#' also added two columns from the IMF's labels. `fiscal_year` is the IMF's own
+#' label. `latest_actual` turns the IMF's label, such as FY2024/25, into one
+#' calendar year, following the rule in the IMF's notes for that country.
+#'
+#' The last eight columns, added in version 0.3.0, come from the same release
+#' downloaded with the [imfweo](https://github.com/Teal-Insights/r-imfweo)
+#' package, given plain names and rounded to three decimals. `data-raw/weo.R`
+#' checks the download against the workbook, cell by cell, for every indicator
+#' they share: no number differs. It also checks that revenue minus
+#' expenditure equals the overall balance for every country and year, to
+#' rounding. No value in the first nine columns changed.
 #'
 #' @section Credit:
 #' Print this line under every chart you make from these data:
@@ -82,10 +105,14 @@
 #'   October 2026, <https://data.imf.org/en/datasets/IMF.RES:WEO>. Built by
 #'   `data-raw/weo.R` from `data-raw/source/weo_panel.csv`, which
 #'   `data-raw/weo_panel.R` makes from `data-raw/source/weo_2026oct_extract.csv`,
-#'   an extract of the IMF's workbook `WEOOct2026all.xlsx`.
+#'   an extract of the IMF's workbook `WEOOct2026all.xlsx`, and from
+#'   `data-raw/source/weo_2026oct_imfweo.csv.gz`, the same release as
+#'   `imfweo::weo_get()` returned it.
 #'
-#' @seealso [weo_groups] for the IMF's own layout of its two big groups;
-#'   [wb_groups] to add the World Bank's income levels and regions.
+#' @seealso [weo_mini] for twelve rows of this table that fit on one screen;
+#'   [weo_full] for all 44 of the IMF's indicators, and [weo_indicators] for what
+#'   each one measures; [weo_groups] for the IMF's own layout of its two big
+#'   groups; [wb_groups] to add the World Bank's income levels and regions.
 #'
 #' @examplesIf requireNamespace("tidyverse", quietly = TRUE)
 #' library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
@@ -101,6 +128,12 @@
 #'     net_interest = primary_balance - overall_balance # net interest
 #'   ) |>                                   # and then
 #'   select(year, gross_debt, net_interest) # keep the columns to read
+#'
+#' # Growth and inflation in the same years, for a few countries
+#' weo |>                                   # start with the panel, and then
+#'   filter(code %in% c("KEN", "GHA", "NGA")) |> # keep a few countries
+#'   filter(year >= 2022, year <= 2025) |>  # and a few years, and then
+#'   select(name, year, real_gdp_growth, inflation) # keep the columns to read
 #'
 #' # The typical country's debt in each year
 #' weo |>                                   # start with the panel, and then

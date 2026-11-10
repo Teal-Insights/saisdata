@@ -6,17 +6,25 @@
 \alias{saisdata-package}
 \title{saisdata: course data for the SAIS MIEF R workshop}
 \description{
-Three datasets, ready to use once you run \code{library(saisdata)}:
+Six datasets, ready to use once you run \code{library(saisdata)}:
 }
 \details{
 \itemize{
 \item \link{weo}: the IMF's World Economic Outlook of October 2026, one row per
-country (or IMF group) and year.
+country (or IMF group) and year, with twelve indicators as columns:
+growth, inflation, unemployment, the current account, GDP per person,
+population, and the government's revenue, spending, balances and debt.
+\item \link{weo_mini}: twelve rows of \code{weo} that fit on one screen.
+\item \link{weo_full}: all 44 of the IMF's indicators for every country, long.
+\item \link{weo_indicators}: what each of those indicators measures, in plain words.
 \item \link{weo_groups}: the same source for the IMF's two big country groups,
 laid out as the IMF publishes it, with the years across.
 \item \link{wb_groups}: the World Bank's region, income level and lending type for
 217 countries.
 }
+
+For Day 2, \code{\link[=copy_course_files]{copy_course_files()}} copies a spreadsheet and eight saved
+series into your project, so you can practice importing files.
 
 Type \code{?weo}, or the name of any dataset after a question mark, to open its
 help page. \code{vignette("saisdata")} has a short worked example that runs
@@ -43,7 +51,7 @@ third if it shows no net interest.
 
 The package's code and documentation are MIT licensed. That license does not
 cover the data. The data keep their own terms: the IMF's terms for statistical
-data for \code{weo} and \code{weo_groups}, and CC BY 4.0 with the World Bank's added
+data for the five \code{weo} tables, and CC BY 4.0 with the World Bank's added
 terms for \code{wb_groups}. Each dataset's help page summarizes them. The full
 summary is in the file \code{LICENSE-data.md}, installed with the package; find it
 with \code{system.file("LICENSE-data.md", package = "saisdata")}.

@@ -77,8 +77,11 @@ if (nzchar(expect_sha)) {
   check(identical(description$RemoteSha, expect_sha), paste("commit is", expect_sha))
 }
 
-# Load all three datasets.
-check(identical(dim(weo), c(6720L, 9L)), "weo is 6,720 rows by 9 columns")
+# Load all six datasets.
+check(identical(dim(weo), c(6720L, 17L)), "weo is 6,720 rows by 17 columns")
+check(identical(dim(weo_mini), c(12L, 9L)), "weo_mini is 12 rows by 9 columns")
+check(identical(dim(weo_full), c(238459L, 7L)), "weo_full is 238,459 rows by 7 columns")
+check(identical(dim(weo_indicators), c(44L, 7L)), "weo_indicators is 44 rows by 7 columns")
 check(identical(dim(weo_groups), c(6L, 36L)), "weo_groups is 6 rows by 36 columns")
 check(identical(dim(wb_groups), c(217L, 6L)), "wb_groups is 217 rows by 6 columns")
 check(
@@ -88,7 +91,7 @@ check(
 )
 
 # Open the help pages, and read them as text.
-pages <- c("weo", "weo_groups", "wb_groups", "saisdata-package")
+pages <- c("weo", "weo_mini", "weo_full", "weo_indicators", "weo_groups", "wb_groups", "saisdata-package")
 for (page in pages) {
   found <- do.call(utils::help, list(topic = page, package = "saisdata"))
   check(length(found) == 1, paste0("?", page, " is found"))

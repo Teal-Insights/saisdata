@@ -7,12 +7,16 @@
 
 stopifnot( # stop here if this is not the package folder
   file.exists("DESCRIPTION"),
-  file.exists(file.path("data-raw", "source", "weo_2026oct_extract.csv"))
+  file.exists(file.path("data-raw", "source", "weo_2026oct_extract.csv")),
+  file.exists(file.path("data-raw", "source", "weo_2026oct_imfweo.csv.gz"))
 )
 
-scripts <- c( # in this order: the panel comes before the table made from it
+scripts <- c( # in this order: a table comes after the ones it is made from
   "weo_panel.R", # extract to data-raw/source/weo_panel.csv
-  "weo.R", # panel to data/weo.rda
+  "weo.R", # panel and imfweo download to data/weo.rda
+  "weo_mini.R", # twelve rows of weo to data/weo_mini.rda
+  "weo_full.R", # imfweo download to data/weo_full.rda
+  "weo_indicators.R", # weo_full and the notes to data/weo_indicators.rda
   "weo_groups.R", # extract to data/weo_groups.rda
   "wb_groups.R" # World Bank file to data/wb_groups.rda
 )

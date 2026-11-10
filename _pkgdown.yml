@@ -14,9 +14,12 @@ navbar:
 
 reference:
   - title: Datasets
-    desc: The three course tables. Each help page says what one row is, the units, the source, the vintage and what was changed.
+    desc: The six course tables. Each help page says what one row is, the units, the source, the vintage and what was changed.
     contents:
       - weo
+      - weo_mini
+      - weo_full
+      - weo_indicators
       - weo_groups
       - wb_groups
   - title: Files for Day 2

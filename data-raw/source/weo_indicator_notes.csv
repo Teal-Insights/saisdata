@@ -1,0 +1,45 @@
+indicator,topic,units,description,weo_column
+NGDP_RPCH,Growth and size,Percent change,"Real GDP growth: how much more the economy produced than the year before, with inflation taken out.",real_gdp_growth
+NGDPD,Growth and size,Billions of US dollars,"The size of the economy: everything it produced in the year, converted to US dollars at the year's average exchange rate.",gdp_usd_bn
+PPPGDP,Growth and size,Billions of international dollars,"The size of the economy at purchasing power parity, which adjusts for prices differing between countries.",
+PPPSH,Growth and size,Percent of world GDP,"The country's share of the world economy, at purchasing power parity.",
+NGDP,Growth and size,Billions of national currency,"Everything the economy produced in the year, at that year's prices, in the country's own currency.",
+NGDP_R,Growth and size,Billions of national currency,"GDP with inflation taken out, in the country's own currency. Real growth is its percent change.",
+NGDP_FY,Growth and size,Billions of national currency,"GDP at current prices over the government's fiscal year, the base for fiscal ratios where that year is not the calendar year.",
+NGAP_NPGDP,Growth and size,Percent of potential GDP,The output gap: how far the economy runs above (positive) or below (negative) what it could produce. Reported for some advanced economies.,
+NGDPDPC,Living standards,US dollars,GDP in US dollars divided by population: a rough measure of average income.,gdp_per_capita_usd
+PPPPC,Living standards,International dollars,"GDP per person at purchasing power parity, which adjusts for prices differing between countries: the usual measure for comparing living standards.",
+NGDPRPPPPC,Living standards,2021 international dollars,"GDP per person at purchasing power parity with inflation taken out, for comparing living standards over time.",
+NGDPPC,Living standards,National currency,"GDP per person at current prices, in the country's own currency.",
+NGDPRPC,Living standards,National currency,"GDP per person with inflation taken out, in the country's own currency.",
+PPPEX,Living standards,National currency per international dollar,The purchasing power parity rate: how many units of the country's currency buy what one US dollar buys in the United States.,
+PCPIPCH,Prices,Percent change,Inflation: how much consumer prices rose on average over the year. The headline measure.,inflation
+PCPIEPCH,Prices,Percent change,Inflation measured from the end of one year to the end of the next.,
+PCPI,Prices,Index,"The level of consumer prices, averaged over the year.",
+PCPIE,Prices,Index,The level of consumer prices at the end of the year.,
+NGDP_D,Prices,Index,The price level of everything in GDP. Its change is a broad measure of inflation.,
+LP,People and jobs,Millions of people,The number of people living in the country.,population_mn
+LUR,People and jobs,Percent of the labor force,The unemployment rate: the share of people who want a job and do not have one. Many lower-income countries do not report it.,unemployment_rate
+LE,People and jobs,Millions of people,The number of people with a job. Reported mostly for advanced economies.,
+BCA_NGDPD,Trade and payments,Percent of GDP,The current account balance as a share of the economy: what the country earns from the rest of the world minus what it pays. Negative means a deficit.,current_account_balance
+BCA,Trade and payments,Billions of US dollars,"The current account balance in dollars: trade in goods and services, income and transfers with the rest of the world.",
+TX_RPCH,Trade and payments,Percent change,Growth in the volume of goods and services the country exports.,
+TXG_RPCH,Trade and payments,Percent change,Growth in the volume of goods the country exports.,
+TM_RPCH,Trade and payments,Percent change,Growth in the volume of goods and services the country imports.,
+TMG_RPCH,Trade and payments,Percent change,Growth in the volume of goods the country imports.,
+NGSD_NGDP,Saving and investment,Percent of GDP,"National savings: what households, firms and the government save together, as a share of the economy.",
+NID_NGDP,Saving and investment,Percent of GDP,"Investment: spending on buildings, machines, infrastructure and inventories, as a share of the economy.",
+GGR_NGDP,Government finances,Percent of GDP,"Government revenue as a share of the economy: taxes, social contributions, grants and other income.",revenue
+GGX_NGDP,Government finances,Percent of GDP,"Government spending as a share of the economy, interest included.",expenditure
+GGXCNL_NGDP,Government finances,Percent of GDP,"The overall balance: government revenue minus all spending, as a share of the economy. Negative means a deficit.",overall_balance
+GGXONLB_NGDP,Government finances,Percent of GDP,"The primary balance: the overall balance with interest left out, both the interest the government pays and the interest it earns. Primary minus overall is net interest.",primary_balance
+GGSB_NPGDP,Government finances,Percent of potential GDP,The structural balance: the government's balance adjusted for the ups and downs of the business cycle. Reported for fewer than half of countries.,
+GGXWDG_NGDP,Government finances,Percent of GDP,Gross government debt as a share of the economy: everything the government owes. The most quoted measure of public debt.,gross_debt
+GGXWDN_NGDP,Government finances,Percent of GDP,Net government debt as a share of the economy: gross debt minus the government's financial assets. Reported for fewer than half of countries.,
+GGR,Government finances,Billions of national currency,"Government revenue, in the country's own currency.",
+GGX,Government finances,Billions of national currency,"Government spending, interest included, in the country's own currency.",
+GGXCNL,Government finances,Billions of national currency,"The overall balance, in the country's own currency. Negative means a deficit, which the government borrows to cover.",
+GGXONLB,Government finances,Billions of national currency,"The primary balance, in the country's own currency.",
+GGSB,Government finances,Billions of national currency,"The structural balance, in the country's own currency.",
+GGXWDG,Government finances,Billions of national currency,"Gross government debt, in the country's own currency.",
+GGXWDN,Government finances,Billions of national currency,"Net government debt, in the country's own currency.",

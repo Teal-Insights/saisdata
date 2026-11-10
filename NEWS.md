@@ -1,3 +1,13 @@
+# saisdata 0.3.0
+
+International economic data, not only debt data.
+
+- `weo` gains eight columns: `real_gdp_growth`, `inflation`, `unemployment_rate`, `current_account_balance`, `gdp_per_capita_usd`, `population_mn`, `revenue` and `expenditure`. Its first nine columns are unchanged, to the last number, so code written for 0.2.0 gives the same answers.
+- `weo_full` is new: all 44 indicators the IMF publishes for the 197 countries, 2000 to 2031, tidy and long (238,459 rows).
+- `weo_indicators` is new: one row per indicator, with its topic, its units in plain words, a one-line description, how many countries report it, and its column in `weo` where it has one.
+- `weo_mini` is new: twelve rows of `weo` (six countries, two years, six indicators) that fit on one screen.
+- The new numbers come from the same October 2026 release, downloaded with the imfweo package. The build checks the download against the IMF's workbook, cell by cell, for the 13 indicators they share: no number differs.
+
 # saisdata 0.2.0
 
 Files for Day 2, so the course needs no download.

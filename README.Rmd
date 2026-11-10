@@ -38,11 +38,14 @@ R-universe builds ready-made copies for recent versions of R. On an older or new
 
 | Dataset | What one row is | Rows | Help page |
 |---|---|---|---|
-| `weo` | one country (or IMF group) in one year, 2000 to 2031: gross debt, primary balance, overall balance, GDP | 6,720 | `?weo` |
+| `weo` | one country (or IMF group) in one year, 2000 to 2031, with twelve indicators as columns: growth, inflation, unemployment, the current account, GDP, GDP per person, population, and the government's revenue, spending, balances and debt | 6,720 | `?weo` |
+| `weo_mini` | twelve rows of `weo` that fit on one screen: six countries, two years, six indicators | 12 | `?weo_mini` |
+| `weo_full` | one country, one indicator and one year: all 44 indicators the IMF publishes for countries | 238,459 | `?weo_full` |
+| `weo_indicators` | one indicator, with its topic, units and a plain-language description | 44 | `?weo_indicators` |
 | `weo_groups` | one IMF country group and one indicator, with the years across, the way the IMF publishes it | 6 | `?weo_groups` |
 | `wb_groups` | one country, with its World Bank region, income level and lending type | 217 | `?wb_groups` |
 
-`weo` and `weo_groups` come from the IMF's World Economic Outlook database of October 2026. `wb_groups` comes from the World Bank, as served on 3 November 2026. The tables are a frozen snapshot: they do not change when either institution publishes new numbers. Every help page says what each column means, the units, the source and what was changed.
+The five `weo` tables come from the IMF's World Economic Outlook database of October 2026. `wb_groups` comes from the World Bank, as served on 3 November 2026. The tables are a frozen snapshot: they do not change when either institution publishes new numbers. Every help page says what each column means, the units, the source and what was changed.
 
 The data arrive as tibbles, the tidyverse's tables. The package itself needs nothing but R, so it installs fast. The examples on this site use the tidyverse, as the course does.
 
@@ -73,6 +76,24 @@ weo |>                                   # start with the panel, and then
     net_interest = primary_balance - overall_balance # net interest
   ) |>                                   # and then
   select(year, gross_debt, net_interest) # keep the columns to read
+```
+
+The data are not only about debt. `weo_indicators` says what you can ask, by topic:
+
+```{r indicators}
+weo_indicators |>                       # start with the indicators, and then
+  filter(topic == "Trade and payments") |> # keep one topic, and then
+  select(indicator, units, description) # keep the columns to read
+```
+
+Twelve indicators are already columns of `weo`. This asks where prices rose fastest in 2025, among countries that also grew:
+
+```{r inflation}
+weo |>                                  # start with the panel, and then
+  filter(str_length(code) == 3) |>      # keep countries, not IMF groups
+  filter(year == 2025, real_gdp_growth > 0) |> # 2025, with a growing economy
+  arrange(desc(inflation)) |>           # sort, highest inflation first
+  select(name, inflation, real_gdp_growth, current_account_balance) # to read
 ```
 
 `wb_groups` joins to `weo` by `code`. This gives the typical country's debt in 2025 at each income level.

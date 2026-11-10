@@ -1,9 +1,14 @@
 #' saisdata: course data for the SAIS MIEF R workshop
 #'
-#' Three datasets, ready to use once you run `library(saisdata)`:
+#' Six datasets, ready to use once you run `library(saisdata)`:
 #'
 #' * [weo]: the IMF's World Economic Outlook of October 2026, one row per
-#'   country (or IMF group) and year.
+#'   country (or IMF group) and year, with twelve indicators as columns:
+#'   growth, inflation, unemployment, the current account, GDP per person,
+#'   population, and the government's revenue, spending, balances and debt.
+#' * [weo_mini]: twelve rows of `weo` that fit on one screen.
+#' * [weo_full]: all 44 of the IMF's indicators for every country, long.
+#' * [weo_indicators]: what each of those indicators measures, in plain words.
 #' * [weo_groups]: the same source for the IMF's two big country groups,
 #'   laid out as the IMF publishes it, with the years across.
 #' * [wb_groups]: the World Bank's region, income level and lending type for
@@ -34,7 +39,7 @@
 #' @section Terms of use:
 #' The package's code and documentation are MIT licensed. That license does not
 #' cover the data. The data keep their own terms: the IMF's terms for statistical
-#' data for `weo` and `weo_groups`, and CC BY 4.0 with the World Bank's added
+#' data for the five `weo` tables, and CC BY 4.0 with the World Bank's added
 #' terms for `wb_groups`. Each dataset's help page summarizes them. The full
 #' summary is in the file `LICENSE-data.md`, installed with the package; find it
 #' with `system.file("LICENSE-data.md", package = "saisdata")`.

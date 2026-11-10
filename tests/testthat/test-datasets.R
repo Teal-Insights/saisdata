@@ -3,13 +3,16 @@
 column_types <- function(x) vapply(x, typeof, character(1))
 
 test_that("weo has the panel's shape and column types", {
-  expect_identical(dim(weo), c(6720L, 9L))
+  expect_identical(dim(weo), c(6720L, 17L))
   expect_identical(
     column_types(weo),
     c(
       code = "character", name = "character", year = "integer",
       gross_debt = "double", primary_balance = "double", overall_balance = "double",
-      gdp_usd_bn = "double", latest_actual = "integer", fiscal_year = "character"
+      gdp_usd_bn = "double", latest_actual = "integer", fiscal_year = "character",
+      real_gdp_growth = "double", inflation = "double", unemployment_rate = "double",
+      current_account_balance = "double", gdp_per_capita_usd = "double",
+      population_mn = "double", revenue = "double", expenditure = "double"
     )
   )
   expect_identical(class(weo), c("tbl_df", "tbl", "data.frame"))
@@ -45,6 +48,98 @@ test_that("weo's totals have not moved", {
   expect_identical(sum(is.na(weo$primary_balance)), 502L)
   expect_identical(sum(is.na(weo$overall_balance)), 253L)
   expect_identical(sum(is.na(weo$gdp_usd_bn)), 114L)
+})
+
+test_that("weo's eight added columns hold the numbers the help pages quote", {
+  kenya <- subset(weo, code == "KEN" & year == 2025)
+  expect_identical(kenya$real_gdp_growth, 4.633)
+  expect_identical(kenya$inflation, 4.068)
+  expect_identical(kenya$current_account_balance, -2.769)
+  expect_identical(kenya$gdp_per_capita_usd, 2547.502)
+  expect_identical(kenya$population_mn, 53.354)
+  expect_identical(kenya$revenue, 17.482)
+  expect_identical(kenya$expenditure, 23.972)
+  expect_true(is.na(kenya$unemployment_rate))
+  reporting <- unique(weo$code[!is.na(weo$unemployment_rate) & !grepl("^G[0-9X]", weo$code)])
+  expect_identical(length(reporting), 118L)
+})
+
+test_that("in weo, revenue minus expenditure is the overall balance for every country", {
+  countries <- weo[!grepl("^G[0-9X]", weo$code), ]
+  gap <- abs(countries$revenue - countries$expenditure - countries$overall_balance)
+  expect_lte(max(gap, na.rm = TRUE), 0.0021)
+})
+
+test_that("weo's added columns are missing where the help page says", {
+  groups <- grepl("^G[0-9X]", weo$code)
+  expect_true(all(is.na(weo$gdp_per_capita_usd[groups])))
+  expect_true(all(is.na(weo$population_mn[groups])))
+  expect_identical(sum(is.na(weo$real_gdp_growth)), 123L)
+  expect_identical(sum(is.na(weo$inflation)), 148L)
+  expect_identical(sum(is.na(weo$unemployment_rate)), 3084L)
+})
+
+test_that("weo_mini is twelve rows of weo, with nothing changed", {
+  expect_identical(dim(weo_mini), c(12L, 9L))
+  expect_identical(class(weo_mini), c("tbl_df", "tbl", "data.frame"))
+  expect_setequal(weo_mini$code, c("BRA", "DEU", "GHA", "KEN", "NGA", "PAK"))
+  expect_setequal(weo_mini$year, c(2015L, 2025L))
+  expect_false(anyNA(weo_mini))
+  from_weo <- weo[weo$code %in% weo_mini$code & weo$year %in% c(2015L, 2025L), names(weo_mini)]
+  from_weo <- from_weo[order(from_weo$code, from_weo$year), ]
+  expect_identical(as.data.frame(from_weo), as.data.frame(weo_mini))
+})
+
+test_that("weo_full has one row per country, indicator and year with a value", {
+  expect_identical(dim(weo_full), c(238459L, 7L))
+  expect_identical(
+    column_types(weo_full),
+    c(
+      code = "character", name = "character", indicator = "character",
+      indicator_name = "character", units = "character", year = "integer",
+      value = "double"
+    )
+  )
+  expect_identical(class(weo_full), c("tbl_df", "tbl", "data.frame"))
+  expect_identical(length(unique(weo_full$code)), 197L)
+  expect_identical(length(unique(weo_full$indicator)), 44L)
+  expect_identical(range(weo_full$year), c(2000L, 2031L))
+  expect_false(anyNA(weo_full))
+  expect_false(any(duplicated(weo_full[, c("code", "indicator", "year")])))
+})
+
+test_that("weo_full agrees with weo wherever they overlap", {
+  columns <- weo_indicators[!is.na(weo_indicators$weo_column), ]
+  expect_identical(nrow(columns), 12L)
+  countries <- weo[!grepl("^G[0-9X]", weo$code), ]
+  for (i in seq_len(nrow(columns))) {
+    long <- weo_full[weo_full$indicator == columns$indicator[i], c("code", "year", "value")]
+    wide <- countries[!is.na(countries[[columns$weo_column[i]]]), c("code", "year", columns$weo_column[i])]
+    both <- merge(long, wide, by = c("code", "year"), all = TRUE)
+    expect_identical(nrow(both), nrow(long), info = columns$indicator[i])
+    expect_identical(both$value, both[[columns$weo_column[i]]], info = columns$indicator[i])
+  }
+})
+
+test_that("weo_indicators describes every indicator in weo_full", {
+  expect_identical(dim(weo_indicators), c(44L, 7L))
+  expect_identical(
+    names(weo_indicators),
+    c("indicator", "indicator_name", "topic", "units", "description", "countries", "weo_column")
+  )
+  expect_setequal(weo_indicators$indicator, unique(weo_full$indicator))
+  expect_false(any(duplicated(weo_indicators$indicator)))
+  expect_false(anyNA(weo_indicators[, c("indicator_name", "topic", "units", "description", "countries")]))
+  expect_identical(length(unique(weo_indicators$topic)), 7L)
+  expect_true(all(nchar(weo_indicators$description) <= 180))
+  expect_true(all(weo_indicators$weo_column[!is.na(weo_indicators$weo_column)] %in% names(weo)))
+  growth <- weo_indicators[weo_indicators$indicator == "NGDP_RPCH", ]
+  expect_identical(growth$countries, 197L)
+  expect_identical(growth$weo_column, "real_gdp_growth")
+  units <- unique(weo_full[, c("indicator", "units")])
+  expect_identical(nrow(units), 44L)
+  both <- merge(units, weo_indicators[, c("indicator", "units")], by = "indicator")
+  expect_identical(both$units.x, both$units.y)
 })
 
 test_that("weo_groups has the IMF's layout and column types", {

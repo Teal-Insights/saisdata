@@ -13,7 +13,7 @@ has_tidyverse <- requireNamespace("tidyverse", quietly = TRUE) &&
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = has_tidyverse)
 ```
 
-`saisdata` puts the course data for the SAIS MIEF R workshop one line away. Everything on this page runs offline: the data are inside the package.
+`saisdata` puts the course data for the SAIS MIEF R workshop one line away: international economic data from the IMF's World Economic Outlook, on growth, prices, jobs, trade and the government's books. Everything on this page runs offline: the data are inside the package.
 
 The examples use the [tidyverse](https://tidyverse.org/), as the course does. The package itself needs nothing but R.
 
@@ -34,6 +34,68 @@ library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
 library(saisdata)  # load the course data: weo, weo_groups, wb_groups
 
 glimpse(weo) # every column, with its type and its first values
+```
+
+## Try it small first
+
+`weo_mini` is twelve rows of `weo`: six countries, two years, six indicators. It fits on one screen, so you can check a line of code by eye before you run it on the full table.
+
+```{r mini}
+weo_mini # the whole table: twelve rows, nine columns
+
+weo_mini |>                           # start with the mini table, and then
+  filter(year == 2025) |>             # keep 2025, and then
+  filter(inflation > real_gdp_growth) # keep inflation above growth
+```
+
+## Find what you can ask
+
+`weo_indicators` has one row for each of the IMF's 44 indicators, with what it measures in plain words. Start here when you have a question and do not know whether the data can answer it.
+
+```{r topics}
+weo_indicators |> # start with the indicators, and then
+  count(topic)    # count the rows in each topic
+
+weo_indicators |>                        # start with the indicators, and then
+  filter(topic == "Living standards") |> # keep one topic, and then
+  select(indicator, units, description)  # keep the columns to read
+```
+
+## Ask about growth, prices and trade
+
+Twelve of the indicators are columns of `weo`, so the commonest questions need no reshaping. This follows inflation in three countries.
+
+```{r inflation, fig.width = 7, fig.height = 3.8, out.width = "100%", fig.alt = "Line chart of consumer price inflation in Ghana, Kenya and Nigeria, in percent, from 2010 to 2031, one line per country. Kenya stays in single digits. Ghana and Nigeria rise above 20 percent in the early 2020s and fall in the IMF's projections."}
+weo |>                                        # start with the panel, and then
+  filter(code %in% c("GHA", "KEN", "NGA")) |> # keep three countries, and then
+  filter(year >= 2010) |>                     # start in 2010, and then
+  ggplot(aes(x = year, y = inflation, color = name)) + # map columns
+  geom_line() +                               # draw a line for each country
+  labs(                                       # add the words:
+    title = "Inflation ran above 20 percent in Ghana and Nigeria", # the finding
+    subtitle = "Consumer prices, percent change. The last years are IMF projections",
+    x = NULL,                                 # no x axis title
+    y = NULL,                                 # no y axis title
+    color = NULL                              # no legend title
+  ) +                                         # close labs()
+  theme_minimal(base_size = 12) +             # a clean, light theme
+  theme(legend.position = "top")              # legend above the chart
+```
+
+## Go beyond the twelve columns
+
+`weo_full` holds all 44 indicators, long: one row per country, indicator and year. Filter to the indicators you want, then send them up into columns. This puts saving beside investment for Indonesia.
+
+```{r full}
+weo_full |>                                  # start with the long table, then
+  filter(code == "IDN", year >= 2020) |>     # keep Indonesia since 2020
+  filter(year <= 2025) |>                    # stop at 2025, and then
+  filter(indicator %in% c("NGSD_NGDP", "NID_NGDP")) |> # keep two indicators
+  select(year, indicator, value) |>          # keep what the pivot needs
+  pivot_wider(                               # send the indicators up:
+    names_from = indicator,                  # one column per indicator
+    values_from = value                      # filled from value
+  )                                          # close pivot_wider()
 ```
 
 ## Start with one country
@@ -180,6 +242,6 @@ weo |>                                           # start with the panel, then
 
 ## Where to read more
 
-- `?weo`, `?weo_groups` and `?wb_groups` say what one row is, the units, the source, the vintage and what was changed.
+- `?weo`, `?weo_mini`, `?weo_full`, `?weo_indicators`, `?weo_groups` and `?wb_groups` say what one row is, the units, the source, the vintage and what was changed.
 - `citation("saisdata")` prints how to cite the package and the data.
 - `system.file("LICENSE-data.md", package = "saisdata")` is the path to the data terms. The MIT license covers the package's code and documentation, not the data.
