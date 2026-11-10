@@ -18,7 +18,8 @@ scripts <- c( # in this order: a table comes after the ones it is made from
   "weo_full.R", # imfweo download to data/weo_full.rda
   "weo_indicators.R", # weo_full and the notes to data/weo_indicators.rda
   "weo_groups.R", # extract to data/weo_groups.rda
-  "wb_groups.R" # World Bank file to data/wb_groups.rda
+  "wb_groups.R", # World Bank file to data/wb_groups.rda
+  "csv_export.R" # every table to csv/, the last-chance copies
 )
 
 for (script in scripts) { # run each one in its own empty environment

@@ -130,6 +130,21 @@ weo_groups |>                                     # start with the table, then
   )                                               # close mutate()
 ```
 
+## If the package will not install
+
+Every table is also a CSV file in this repository, as a last chance. With the tidyverse and the internet, one line reads one:
+
+```r
+library(tidyverse) # load the tidyverse, which reads CSV files
+
+# where the files live
+base <- "https://raw.githubusercontent.com/Teal-Insights/saisdata/main/csv/"
+
+weo <- read_csv(str_c(base, "weo.csv")) # the main table, read from GitHub
+```
+
+[`csv/README.md`](https://github.com/Teal-Insights/saisdata/tree/main/csv) lists every file, with the same lines for the other tables and for the Day 2 files. The course tries things in this order: a live call to the IMF or the World Bank where a lesson shows one, then the copy saved in this package, then these files.
+
 ## Code license and data terms
 
 The code and the data are under different terms.

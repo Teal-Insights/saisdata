@@ -6,6 +6,7 @@ International economic data, not only debt data.
 - `weo_full` is new: all 44 indicators the IMF publishes for the 197 countries, 2000 to 2031, tidy and long (238,459 rows).
 - `weo_indicators` is new: one row per indicator, with its topic, its units in plain words, a one-line description, how many countries report it, and its column in `weo` where it has one.
 - `weo_mini` is new: twelve rows of `weo` (six countries, two years, six indicators) that fit on one screen.
+- Every table is also a CSV file in the repository's `csv/` folder, as a last chance when the package will not install. `read_csv()` reads one straight from GitHub. The folder is not part of the installed package.
 - The new numbers come from the same October 2026 release, downloaded with the imfweo package. The build checks the download against the IMF's workbook, cell by cell, for the 13 indicators they share: no number differs.
 
 # saisdata 0.2.0

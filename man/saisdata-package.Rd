@@ -33,6 +33,16 @@ offline.
 The tables are a frozen snapshot. They do not change when the IMF or the World
 Bank publishes new numbers.
 }
+\section{Backups}{
+
+The package is the course's backup for every live call to the IMF or the
+World Bank: each lesson's numbers are saved here and need no internet. The
+package has a backup of its own. Every table is also a CSV file in the
+repository, so if \code{saisdata} will not install, \code{readr::read_csv()} reads a
+table straight from GitHub. The lines are in the README and in
+\url{https://github.com/Teal-Insights/saisdata/tree/main/csv}.
+}
+
 \section{Credit}{
 
 Print this line under every chart you make from these data:

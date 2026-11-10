@@ -29,5 +29,7 @@ jobs:
         run: Rscript data-raw/rebuild-all.R
       - name: The rebuilt panel matches the committed file, byte for byte
         run: git diff --exit-code -- data-raw/source
+      - name: The CSV copies in csv/ match the committed files
+        run: git diff --exit-code -- csv
       - name: The rebuilt tables match the first commit's tables
         run: Rscript data-raw/compare-tables.R

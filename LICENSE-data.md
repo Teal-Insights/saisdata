@@ -39,6 +39,8 @@ Neither institution has sponsored, approved or endorsed it. The terms below are 
 - `weo_indicators` lists those 44 indicators under the IMF's codes and names. Its topics, plain-language units and one-line descriptions were written for this workshop. They are not the IMF's words.
 - `weo_groups` keeps six rows of the extract and the years 2001 to 2031, renames five columns, and writes the IMF's `SCALE` and `UNIT` in plain words. No number changed.
 
+- The files in `csv/` are the package's tables written as CSV, with no value changed. The same terms apply to them.
+
 If you republish `weo` or `weo_full` itself, add this next to the credit: Reshaped and rounded to three decimals by the saisdata R package.
 
 ## The World Bank's data: `wb_groups`
