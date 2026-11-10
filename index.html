@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="index.html">saisdata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,10 +104,20 @@
 <p>The data arrive as tibbles if you have the tidyverse, and print as ordinary data frames if you do not.</p>
 </div>
 <div class="section level2">
+<h2 id="files-for-day-2">Files for Day 2<a class="anchor" aria-label="anchor" href="#files-for-day-2"></a>
+</h2>
+<p>Version 0.2.0 adds nine files for the lesson on importing data: a spreadsheet of the World Bank’s country groups, laid out the way official files often arrive, and eight saved series from the World Bank and Our World in Data. Nothing is downloaded.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://teal-insights.github.io/saisdata/">saisdata</a></span><span class="op">)</span>                    <span class="co"># load the course data</span></span>
+<span><span class="fu"><a href="reference/sais_example.html">sais_example</a></span><span class="op">(</span><span class="op">)</span>                       <span class="co"># list the nine files</span></span>
+<span><span class="fu"><a href="reference/copy_course_files.html">copy_course_files</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span> <span class="co"># copy them into your project's data folder</span></span></code></pre></div>
+<p>After that they are ordinary files in your project. Read the spreadsheet with <code><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">readxl::read_excel()</a></code> and a series with <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code>. <code>LICENSE-data.md</code> gives each file’s source and terms.</p>
+</div>
+<div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>This runs offline. It uses only base R, so it works in a brand new R library. Net interest is not a column; it is the primary balance minus the overall balance.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://teal-insights.github.io/saisdata/">saisdata</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">kenya</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">weo</span>, <span class="va">code</span> <span class="op">==</span> <span class="st">"KEN"</span> <span class="op">&amp;</span> <span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2020</span> <span class="op">&amp;</span> <span class="va">year</span> <span class="op">&lt;=</span> <span class="fl">2025</span><span class="op">)</span></span>
@@ -122,7 +132,7 @@
 <span><span class="co">#&gt; 5593 2024     67.306        5.247</span></span>
 <span><span class="co">#&gt; 5594 2025     71.269        5.447</span></span></code></pre></div>
 <p>With the tidyverse, two moves make <code>weo_groups</code> tidy, and one more gives the interest bill in dollars. Added up over the two groups, that comes to about USD 849 billion in 2001 and USD 2,371.2 billion in 2025. The <a href="https://teal-insights.github.io/saisdata/articles/saisdata.html">Getting Started article</a> has this example and a chart.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span></span>
@@ -174,8 +184,8 @@
 <h2 id="rebuilding-the-data">Rebuilding the data<a class="anchor" aria-label="anchor" href="#rebuilding-the-data"></a>
 </h2>
 <p>A clean clone rebuilds <code>data/</code> with no internet. From the package folder, with readr, dplyr, tidyr, stringr, here and usethis installed:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/rebuild-all.R</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/compare-tables.R</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/rebuild-all.R</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/compare-tables.R</span></code></pre></div>
 <p>The first line runs the scripts in <code>data-raw/</code>, from the source files in <a href="data-raw/source/README.html"><code>data-raw/source/</code></a>. The second compares the result with the original tables, using <code><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical()</a></code>, <code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> and a column-by-column type check, and fails if they differ. The output of the comparison made for this release is in <a href="data-raw/comparison/"><code>data-raw/comparison/</code></a>.</p>
 </div>
 </div>

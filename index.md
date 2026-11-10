@@ -43,6 +43,27 @@ says what each column means, the units, the source and what was changed.
 The data arrive as tibbles if you have the tidyverse, and print as
 ordinary data frames if you do not.
 
+## Files for Day 2
+
+Version 0.2.0 adds nine files for the lesson on importing data: a
+spreadsheet of the World Bank’s country groups, laid out the way
+official files often arrive, and eight saved series from the World Bank
+and Our World in Data. Nothing is downloaded.
+
+``` r
+
+library(saisdata)                    # load the course data
+sais_example()                       # list the nine files
+copy_course_files(here::here("data")) # copy them into your project's data folder
+```
+
+After that they are ordinary files in your project. Read the spreadsheet
+with
+[`readxl::read_excel()`](https://readxl.tidyverse.org/reference/read_excel.html)
+and a series with
+[`readr::read_csv()`](https://readr.tidyverse.org/reference/read_delim.html).
+`LICENSE-data.md` gives each file’s source and terms.
+
 ## Example
 
 This runs offline. It uses only base R, so it works in a brand new R
