@@ -1,7 +1,8 @@
 #' Find a file that comes with the course
 #'
 #' The package carries a few files for the Day 2 lesson on importing data: a
-#' spreadsheet of the World Bank's country groups, and eight saved series from
+#' spreadsheet of the World Bank's country groups, a spreadsheet in the IMF's
+#' own layout, and nine saved series from
 #' the World Bank and Our World in Data. `sais_example()` gives the path to
 #' one of them, the way `readxl::readxl_example()` does for readxl's files.
 #'
@@ -60,7 +61,7 @@ sais_example <- function(file = NULL) {
 #'   were copied and where.
 #' @examples
 #' folder <- file.path(tempdir(), "data") # in the course: here::here("data")
-#' copy_course_files(folder)              # copy the nine files there
+#' copy_course_files(folder)              # copy the course's files there
 #' list.files(folder)                     # see what arrived
 #' @examplesIf requireNamespace("tidyverse", quietly = TRUE)
 #' library(tidyverse) # load the tidyverse: readr, dplyr and more

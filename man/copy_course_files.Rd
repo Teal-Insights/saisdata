@@ -25,7 +25,7 @@ would a file you downloaded. Nothing is fetched from the internet.
 }
 \examples{
 folder <- file.path(tempdir(), "data") # in the course: here::here("data")
-copy_course_files(folder)              # copy the nine files there
+copy_course_files(folder)              # copy the course's files there
 list.files(folder)                     # see what arrived
 \dontshow{if (requireNamespace("tidyverse", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(tidyverse) # load the tidyverse: readr, dplyr and more

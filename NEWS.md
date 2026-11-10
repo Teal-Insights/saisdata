@@ -1,3 +1,11 @@
+# saisdata 0.3.1
+
+Two more files for the lesson on bringing in data and combining sources. No table changed.
+
+- `wdi_remittances.csv` is new: personal remittances received, in current US dollars, for 193 countries from 2000 to 2025, from the World Bank's World Development Indicators (series `BX.TRF.PWKR.CD.DT`), pulled with the wbwdi package on 10 November 2026. It is the saved copy of the lesson's one live call.
+- `imf-weo-october-2026.xlsx` is new: growth, inflation, unemployment and the current account balance for the 197 countries, in the layout of the IMF's own workbook, with one row for each country and indicator and a column for each year. Its numbers are the ones in `weo`.
+- `copy_course_files()` now copies eleven files.
+
 # saisdata 0.3.0
 
 International economic data, not only debt data.

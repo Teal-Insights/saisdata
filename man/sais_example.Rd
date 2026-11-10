@@ -16,7 +16,8 @@ the files.
 }
 \description{
 The package carries a few files for the Day 2 lesson on importing data: a
-spreadsheet of the World Bank's country groups, and eight saved series from
+spreadsheet of the World Bank's country groups, a spreadsheet in the IMF's
+own layout, and nine saved series from
 the World Bank and Our World in Data. \code{sais_example()} gives the path to
 one of them, the way \code{readxl::readxl_example()} does for readxl's files.
 }
