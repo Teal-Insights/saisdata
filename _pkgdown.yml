@@ -19,6 +19,11 @@ reference:
       - weo
       - weo_groups
       - wb_groups
+  - title: Files for Day 2
+    desc: A spreadsheet and eight saved series for the lesson on importing data, and the two functions that find and copy them.
+    contents:
+      - sais_example
+      - copy_course_files
   - title: The package
     contents:
       - saisdata-package
