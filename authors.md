@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/Teal-Insights/saisdata/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/Teal-Insights/saisdata/blob/v0.3.0/inst/CITATION)
 
 Emery T (2026). *saisdata: Course Data for the SAIS MIEF R Workshop*. R
 package version 0.3.0, <https://teal-insights.github.io/saisdata/>.
