@@ -9,6 +9,9 @@
 #' * [wb_groups]: the World Bank's region, income level and lending type for
 #'   217 countries.
 #'
+#' For Day 2, [copy_course_files()] copies a spreadsheet and eight saved
+#' series into your project, so you can practice importing files.
+#'
 #' Type `?weo`, or the name of any dataset after a question mark, to open its
 #' help page. `vignette("saisdata")` has a short worked example that runs
 #' offline.

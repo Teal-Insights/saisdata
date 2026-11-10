@@ -54,6 +54,14 @@ If you republish `weo` itself, add this next to the credit: Reshaped and rounded
 
 **What this package changed.** It keeps the 217 countries and drops the World Bank's aggregates such as "Sub-Saharan Africa"; renames the columns; and uses the IMF's codes for Kosovo (`KOS`, the World Bank's `XKX`) and West Bank and Gaza (`WBG`, the World Bank's `PSE`), so that one join matches every country. The World Bank's own code stays in `wb_code`.
 
+## The files for Day 2 (`inst/extdata/`)
+
+Version 0.2.0 adds nine files, listed by `sais_example()`.
+
+- `wb-country-classification.xlsx` holds the same 217 countries as `wb_groups`, under the World Bank's own codes and column names, with a title and a source note above the table. It is the World Bank's data under CC BY 4.0, as above. It was saved for teaching and is not a file the World Bank publishes in this layout.
+- The six `wdi_*.csv` files are series from the World Bank's World Development Indicators, retrieved through the `wbwdi` package on 3 November 2026, under CC BY 4.0 and the World Bank's Terms of Use for Datasets. What changed: countries only, the years 2000 to 2025, rows with a value only, and the IMF's codes for Kosovo (`KOS`) and West Bank and Gaza (`WBG`), so that each file joins to `weo` on `code` and `year`. Credit line: "Data: World Bank, World Development Indicators (CC BY 4.0), retrieved 3 November 2026."
+- The two `owid_*.csv` files come from Our World in Data, which publishes its charts and data under CC BY 4.0 (<https://ourworldindata.org/faqs>), retrieved through the `owidapi` package on 3 November 2026. Credit both Our World in Data and the organization that collected the data. For `owid_co2_per_capita.csv`: "Data: Global Carbon Budget (2025), with major processing by Our World in Data (CC BY 4.0)." For `owid_renewable_electricity.csv`: "Data: Ember (2026) and other sources, with major processing by Our World in Data (CC BY 4.0)." What changed: countries only, the years from 2000, a plain column name, and the IMF's codes for Kosovo and West Bank and Gaza.
+
 ## The line to print under a chart
 
 > Source: International Monetary Fund, World Economic Outlook Database, October 2026, https://data.imf.org/en/datasets/IMF.RES:WEO. Country groups: The World Bank: World Development Indicators: country and lending groups (CC BY 4.0). Net interest is the primary balance minus the overall balance, calculated for this workshop.
