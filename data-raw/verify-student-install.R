@@ -101,7 +101,9 @@ for (page in pages) {
   )
 }
 
-# The small WEO example, as the README and the vignette print it.
+# The small WEO example, in base R, because this script runs in a library that
+# holds only saisdata. The help page, the README and the vignette do the same
+# with the tidyverse, and example(weo) below is skipped without it.
 kenya <- subset(weo, code == "KEN" & year >= 2020 & year <= 2025)
 kenya$net_interest <- kenya$primary_balance - kenya$overall_balance
 print(as.data.frame(kenya[, c("year", "gross_debt", "net_interest")]))

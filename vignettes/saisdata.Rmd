@@ -8,16 +8,14 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
-has_tidyverse <- all(vapply(
-  c("dplyr", "tidyr", "ggplot2"),
-  requireNamespace,
-  logical(1),
-  quietly = TRUE
-))
+has_tidyverse <- requireNamespace("tidyverse", quietly = TRUE) &&
+  requireNamespace("readxl", quietly = TRUE)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = has_tidyverse)
 ```
 
 `saisdata` puts the course data for the SAIS MIEF R workshop one line away. Everything on this page runs offline: the data are inside the package.
+
+The examples use the [tidyverse](https://tidyverse.org/), as the course does. The package itself needs nothing but R.
 
 This package is not an official IMF or World Bank product.
 
@@ -29,112 +27,155 @@ Run this once, in the R Console:
 install.packages("saisdata", repos = "https://teal-insights.r-universe.dev")
 ```
 
-Then load it in each session. There is nothing else to read in:
+Then load it in each session, with the tidyverse. There is nothing else to read in:
 
-```{r load}
-library(saisdata)
+```{r load, message = FALSE}
+library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
+library(saisdata)  # load the course data: weo, weo_groups, wb_groups
 
-dim(weo) # rows, then columns
+glimpse(weo) # every column, with its type and its first values
 ```
 
-## A small example with nothing else installed
+## Start with one country
 
-`weo` has one row per country and year. This uses only base R, so it works in a brand new R library. Net interest is not a column; it is the primary balance minus the overall balance.
+`weo` has one row per country, or IMF group of countries, and year. Net interest is not a column: it is the primary balance minus the overall balance.
 
 ```{r kenya}
-kenya <- subset(weo, code == "KEN" & year >= 2020 & year <= 2025)
-kenya$net_interest <- kenya$primary_balance - kenya$overall_balance
-
-as.data.frame(kenya[, c("year", "gross_debt", "net_interest")])
+weo |>                                   # start with the panel, and then
+  filter(code == "KEN", year >= 2020) |> # keep Kenya from 2020 on, and then
+  filter(year <= 2025) |>                # stop at 2025, and then
+  mutate(                                # add a column:
+    net_interest = primary_balance - overall_balance # net interest
+  ) |>                                   # and then
+  select(year, gross_debt, net_interest) # keep the columns to read
 ```
 
 Kenya's interest bill took about 5.4 percent of GDP in 2025, on gross debt of about 71 percent of GDP.
+
+## Summarize by group
+
+Countries have three-letter codes, and the IMF's groups do not. This gives the typical country's debt in each year since 2020.
+
+```{r median}
+weo |>                                   # start with the panel, and then
+  filter(str_length(code) == 3) |>       # keep countries, not IMF groups
+  filter(year >= 2020, year <= 2025) |>  # keep 2020 to 2025, and then
+  group_by(year) |>                      # make one group per year, and then
+  summarize(                             # collapse each group to one row:
+    median_debt = median(gross_debt, na.rm = TRUE) # the middle value
+  )                                      # close summarize()
+```
 
 ## Join the World Bank's groups
 
 `wb_groups` joins to `weo` by `code`. This gives the typical country's gross debt in 2025 at each income level:
 
 ```{r income}
-countries_2025 <- merge(subset(weo, year == 2025), wb_groups, by = "code")
-
-aggregate(gross_debt ~ income_level, data = countries_2025, FUN = median)
+weo |>                                  # start with the IMF's panel, and then
+  filter(year == 2025) |>               # keep 2025, and then
+  inner_join(wb_groups, by = "code") |> # keep rows found in both, by code
+  group_by(income_level) |>             # one group per income level, and then
+  summarize(                            # collapse each group to one row:
+    countries = n(),                    # how many countries went in
+    median_debt = median(gross_debt, na.rm = TRUE) # their middle debt
+  )                                     # close summarize()
 ```
 
 ## Tidy the IMF's own layout
 
-`weo_groups` keeps the IMF's layout, with the years across. If you have the tidyverse, two moves make it tidy, and one more gives the world's interest bill in dollars.
+`weo_groups` keeps the IMF's layout, with the years across. Two moves make it tidy, and a few more give the world's interest bill in dollars.
 
-```{r tidy, eval = has_tidyverse, message = FALSE}
-library(dplyr)
-library(tidyr)
-library(ggplot2)
+```{r tidy}
+bill <- weo_groups |>                             # start with the table, then
+  select(group_code, indicator, `2001`:`2031`) |> # keep codes and years, then
+  pivot_longer(                                   # bring the years down:
+    cols = `2001`:`2031`,                         # every year column
+    names_to = "year",                            # their names go in year
+    names_transform = as.integer,                 # as whole numbers
+    values_to = "value"                           # their numbers go in value
+  ) |>                                            # and then
+  pivot_wider(                                    # send the indicators up:
+    names_from = indicator,                       # one column per indicator
+    values_from = value                           # filled from value
+  ) |>                                            # and then
+  mutate(                                         # add a column:
+    # primary balance minus overall balance, times GDP, in USD billions
+    net_interest_usd_bn = (GGXONLB_NGDP - GGXCNL_NGDP) / 100 * NGDPD
+  ) |>                                            # and then
+  group_by(year) |>                               # one group per year, then
+  summarize(                                      # add up the two groups:
+    net_interest_usd_bn = sum(net_interest_usd_bn) # the world's bill
+  )                                               # close summarize()
 
-bill <- weo_groups |>
-  select(-indicator_name, -units) |> # keep the codes, drop the long text
-  pivot_longer(
-    cols = `2001`:`2031`, # every year column
-    names_to = "year", # the column names become a year column
-    names_transform = as.integer, # "2025" becomes the number 2025
-    values_to = "value"
-  ) |>
-  pivot_wider(names_from = indicator, values_from = value) |> # one per indicator
-  mutate(
-    net_interest_usd_bn = (GGXONLB_NGDP - GGXCNL_NGDP) * NGDPD / 100
-  ) |>
-  summarize(net_interest_usd_bn = sum(net_interest_usd_bn), .by = year)
-
-filter(bill, year %in% c(2001, 2025))
+bill |>                               # start with the bill, and then
+  filter(year %in% c(2001, 2025))     # keep the two years to compare
 ```
 
 The two groups' balances are averages weighted by GDP, so this total is an approximation.
 
 ## Chart it, and print the credit
 
-Every chart made from these data carries a source line. From 2026 on the values are IMF projections, so the chart dashes them. This chart uses no World Bank groups, so its source line drops that sentence.
+Every chart made from these data carries a source line. From 2026 on the values are IMF projections, so the chart shades them. This chart uses no World Bank groups, so its source line drops that sentence.
 
-```{r chart, eval = has_tidyverse, fig.width = 7, fig.height = 4.2, out.width = "100%", fig.alt = "Line chart of the net interest bill of the world's governments, in billions of US dollars. It rises from about 849 in 2001 to about 2,371 in 2025, and the IMF projects about 4,665 in 2031."}
-labeled <- filter(bill, year %in% c(2001, 2025, 2031))
-labeled$label <- format(round(labeled$net_interest_usd_bn), big.mark = ",", trim = TRUE)
-
-ggplot(bill, aes(year, net_interest_usd_bn)) +
-  geom_line(data = filter(bill, year <= 2025), color = "#1F6F78", linewidth = 0.8) +
-  geom_line(
-    data = filter(bill, year >= 2025),
-    color = "#1F6F78", linewidth = 0.8, linetype = "22"
-  ) +
-  geom_point(data = labeled, color = "#1F6F78", size = 2.4) +
-  geom_text(
-    data = labeled,
-    aes(label = label),
-    hjust = c(0.5, 1.2, 0.5), # the 2025 label sits left of the line
-    vjust = c(-1, 0, -1),
-    size = 3.6,
-    color = "grey20"
-  ) +
-  scale_y_continuous(
-    limits = c(0, NA),
-    expand = expansion(mult = c(0, 0.14)),
-    labels = function(x) format(x, big.mark = ",", trim = TRUE)
-  ) +
-  labs(
+```{r chart, fig.width = 7, fig.height = 4.2, out.width = "100%", fig.alt = "Bar chart of the net interest bill of the world's governments, in billions of US dollars, one bar a year from 2001 to 2031. It rises from about 849 in 2001 to about 2,371 in 2025. The bars from 2026 on are lighter, and the IMF projects about 4,665 in 2031."}
+bill |>                                           # start with the bill, and then
+  mutate(                                         # add a column:
+    kind = if_else(year <= 2025, "Estimate", "IMF projection") # which is which
+  ) |>                                            # and then
+  ggplot(aes(x = year, y = net_interest_usd_bn, fill = kind)) + # map columns
+  geom_col() +                                    # draw one bar a year
+  scale_fill_manual(                              # choose the two colors:
+    values = c("Estimate" = "#143E5A", "IMF projection" = "#9CC9D8") # navy, pale
+  ) +                                             # close scale_fill_manual()
+  labs(                                           # add the words:
     title = "The world's net interest bill is nearly three times its 2001 level",
-    subtitle = "Net interest of governments, billions of US dollars. Dashed: IMF projections",
-    x = NULL,
-    y = NULL,
-    caption = paste(
-      "Source: International Monetary Fund, World Economic Outlook Database, October 2026,",
-      "https://data.imf.org/en/datasets/IMF.RES:WEO.\nNet interest is the primary balance",
-      "minus the overall balance, calculated for this workshop."
-    )
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(
-    panel.grid.minor = element_blank(),
-    panel.grid.major.x = element_blank(),
+    subtitle = "Net interest of governments, billions of US dollars",
+    x = NULL,                                     # no x axis title
+    y = NULL,                                     # no y axis title
+    fill = NULL,                                  # no legend title
+    caption = str_c(                              # the source line:
+      "Source: International Monetary Fund, World Economic Outlook Database, ",
+      "October 2026,\nhttps://data.imf.org/en/datasets/IMF.RES:WEO. ",
+      "Net interest is the primary balance\nminus the overall balance, ",
+      "calculated for this workshop."
+    )                                             # close str_c()
+  ) +                                             # close labs()
+  theme_minimal(base_size = 12) +                 # a clean, light theme
+  theme(                                          # adjust a few details:
+    legend.position = "top",                      # legend above the chart
+    panel.grid.minor = element_blank(),           # drop the minor lines
+    panel.grid.major.x = element_blank(),         # drop the vertical lines
     plot.caption = element_text(hjust = 0, size = 8, color = "grey35"),
-    plot.title.position = "plot",
-    plot.caption.position = "plot"
-  )
+    plot.title.position = "plot",                 # title at the left edge
+    plot.caption.position = "plot"                # caption at the left edge
+  )                                               # close theme()
+```
+
+## Read the files for Day 2
+
+Version 0.2.0 carries nine files for the lesson on importing data. `sais_example()` lists them, and `copy_course_files()` copies them into a folder of your project. In the course that folder is `here::here("data")`.
+
+```{r files, message = FALSE}
+library(readxl) # load readxl, which reads Excel files
+
+folder <- file.path(tempdir(), "data") # a stand-in for your project's data folder
+copy_course_files(folder)              # copy the nine files there
+
+groups <- read_excel(                                  # read an Excel file:
+  file.path(folder, "wb-country-classification.xlsx"), # the spreadsheet
+  skip = 3                                             # its header is on row 4
+)                                                      # close read_excel()
+groups                                                 # print it
+
+life <- read_csv(                               # read a CSV file:
+  file.path(folder, "wdi_life_expectancy.csv"), # a saved World Bank series
+  show_col_types = FALSE                        # without the column report
+)                                               # close read_csv()
+
+weo |>                                           # start with the panel, then
+  filter(str_length(code) == 3, year == 2023) |> # countries in 2023, and then
+  left_join(life, by = c("code", "year")) |>     # add life expectancy
+  select(name, gross_debt, life_expectancy_years) # keep columns to read
 ```
 
 ## Where to read more

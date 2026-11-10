@@ -80,10 +80,27 @@
 #'
 #' @seealso [weo] for every country and group, one row per entity and year.
 #'
-#' @examples
-#' # Six rows: two groups times three indicators
-#' nrow(weo_groups)
+#' @examplesIf requireNamespace("tidyverse", quietly = TRUE)
+#' library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
 #'
-#' # Five columns that describe each row, then one column per year
-#' names(weo_groups)
+#' # The IMF's layout: one row per group and indicator, with the years across
+#' weo_groups
+#'
+#' # Tidy it, then work out each group's net interest bill in dollars
+#' weo_groups |>                                     # start with the table, then
+#'   select(group_code, indicator, `2001`:`2031`) |> # keep codes and years, then
+#'   pivot_longer(                                   # bring the years down:
+#'     cols = `2001`:`2031`,                         # every year column
+#'     names_to = "year",                            # their names go in year
+#'     names_transform = as.integer,                 # as whole numbers
+#'     values_to = "value"                           # their numbers go in value
+#'   ) |>                                            # and then
+#'   pivot_wider(                                    # send the indicators up:
+#'     names_from = indicator,                       # one column per indicator
+#'     values_from = value                           # filled from value
+#'   ) |>                                            # and then
+#'   mutate(                                         # add a column:
+#'     # primary balance minus overall balance, times GDP, in USD billions
+#'     net_interest_usd_bn = (GGXONLB_NGDP - GGXCNL_NGDP) / 100 * NGDPD
+#'   )                                               # close mutate()
 "weo_groups"

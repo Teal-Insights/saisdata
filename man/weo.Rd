@@ -104,16 +104,41 @@ This package is not an official IMF or World Bank product.
 }
 
 \examples{
-# Rows, then columns
-dim(weo)
+\dontshow{if (requireNamespace("tidyverse", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
 
-# The first six rows
-head(weo)
+# Every column, with its type and its first values
+glimpse(weo)
 
 # Kenya since 2020, with its net interest bill in percent of GDP
-kenya <- subset(weo, code == "KEN" & year >= 2020 & year <= 2025)
-kenya$net_interest <- kenya$primary_balance - kenya$overall_balance
-kenya[, c("year", "gross_debt", "net_interest")]
+weo |>                                   # start with the panel, and then
+  filter(code == "KEN", year >= 2020) |> # keep Kenya from 2020 on, and then
+  filter(year <= 2025) |>                # stop at 2025, and then
+  mutate(                                # add a column:
+    net_interest = primary_balance - overall_balance # net interest
+  ) |>                                   # and then
+  select(year, gross_debt, net_interest) # keep the columns to read
+
+# The typical country's debt in each year
+weo |>                                   # start with the panel, and then
+  filter(str_length(code) == 3) |>       # keep countries, not IMF groups
+  group_by(year) |>                      # make one group per year, and then
+  summarize(                             # collapse each group to one row:
+    median_debt = median(gross_debt, na.rm = TRUE) # the middle value
+  )                                      # close summarize()
+
+# Kenya's debt over time, as a chart
+weo |>                                    # start with the panel, and then
+  filter(code == "KEN") |>                # keep Kenya's rows, and then
+  ggplot(aes(x = year, y = gross_debt)) + # years across, debt up
+  geom_line() +                           # draw a line
+  labs(                                   # add the words:
+    title = "Kenya's government debt",    # the title
+    subtitle = "Percent of GDP. The last years are IMF projections", # units
+    x = NULL,                             # no x axis title
+    y = NULL                              # no y axis title
+  )                                       # close labs()
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{weo_groups} for the IMF's own layout of its two big groups;

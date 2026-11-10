@@ -52,77 +52,113 @@ served on 3 November 2026. The tables are a frozen snapshot: they do not
 change when either institution publishes new numbers. Every help page
 says what each column means, the units, the source and what was changed.
 
-The data arrive as tibbles if you have the tidyverse, and print as
-ordinary data frames if you do not.
+The data arrive as tibbles, the tidyverse’s tables. The package itself
+needs nothing but R, so it installs fast. The examples on this site use
+the tidyverse, as the course does.
 
 ## Files for Day 2
 
-Version 0.2.0 adds nine files for the lesson on importing data: a spreadsheet of the World Bank's country groups, laid out the way official files often arrive, and eight saved series from the World Bank and Our World in Data. Nothing is downloaded.
+Version 0.2.0 adds nine files for the lesson on importing data: a
+spreadsheet of the World Bank’s country groups, laid out the way
+official files often arrive, and eight saved series from the World Bank
+and Our World in Data. Nothing is downloaded.
 
-```r
+``` r
 library(saisdata)                    # load the course data
 sais_example()                       # list the nine files
 copy_course_files(here::here("data")) # copy them into your project's data folder
 ```
 
-After that they are ordinary files in your project. Read the spreadsheet with `readxl::read_excel()` and a series with `readr::read_csv()`. `LICENSE-data.md` gives each file's source and terms.
+After that they are ordinary files in your project. Read the spreadsheet
+with `readxl::read_excel()` and a series with `readr::read_csv()`.
+`LICENSE-data.md` gives each file’s source and terms.
 
 ## Example
 
-This runs offline. It uses only base R, so it works in a brand new R
-library. Net interest is not a column; it is the primary balance minus
-the overall balance.
+This runs offline. It uses the tidyverse, as the course does. Net
+interest is not a column: it is the primary balance minus the overall
+balance.
 
 ``` r
-library(saisdata)
+library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
+library(saisdata)  # load the course data: weo, weo_groups, wb_groups
 
-kenya <- subset(weo, code == "KEN" & year >= 2020 & year <= 2025)
-kenya$net_interest <- kenya$primary_balance - kenya$overall_balance
-
-as.data.frame(kenya[, c("year", "gross_debt", "net_interest")])
-#>      year gross_debt net_interest
-#> 5589 2020     67.959        3.925
-#> 5590 2021     68.232        4.091
-#> 5591 2022     67.800        4.374
-#> 5592 2023     73.405        4.786
-#> 5593 2024     67.306        5.247
-#> 5594 2025     71.269        5.447
+weo |>                                   # start with the panel, and then
+  filter(code == "KEN", year >= 2020) |> # keep Kenya from 2020 on, and then
+  filter(year <= 2025) |>                # stop at 2025, and then
+  mutate(                                # add a column:
+    net_interest = primary_balance - overall_balance # net interest
+  ) |>                                   # and then
+  select(year, gross_debt, net_interest) # keep the columns to read
+#> # A tibble: 6 × 3
+#>    year gross_debt net_interest
+#>   <int>      <dbl>        <dbl>
+#> 1  2020       68.0         3.93
+#> 2  2021       68.2         4.09
+#> 3  2022       67.8         4.37
+#> 4  2023       73.4         4.79
+#> 5  2024       67.3         5.25
+#> 6  2025       71.3         5.45
 ```
 
-With the tidyverse, two moves make `weo_groups` tidy, and one more gives
-the interest bill in dollars. Added up over the two groups, that comes
-to about USD 849 billion in 2001 and USD 2,371.2 billion in 2025. The
-[Getting Started
+`wb_groups` joins to `weo` by `code`. This gives the typical country’s
+debt in 2025 at each income level.
+
+``` r
+weo |>                                  # start with the IMF's panel, and then
+  filter(year == 2025) |>               # keep 2025, and then
+  inner_join(wb_groups, by = "code") |> # keep rows found in both, by code
+  group_by(income_level) |>             # one group per income level, and then
+  summarize(                            # collapse each group to one row:
+    countries = n(),                    # how many countries went in
+    median_debt = median(gross_debt, na.rm = TRUE) # their middle debt
+  )                                     # close summarize()
+#> # A tibble: 4 × 3
+#>   income_level        countries median_debt
+#>   <chr>                   <int>       <dbl>
+#> 1 High income                67        55.7
+#> 2 Low income                 24        52.3
+#> 3 Lower middle income        47        49.6
+#> 4 Upper middle income        58        54.1
+```
+
+`weo_groups` keeps the IMF’s layout, with the years across. Two moves
+make it tidy, and one more gives the interest bill in dollars. Added up
+over the two groups, that comes to about USD 849 billion in 2001 and USD
+2,371.2 billion in 2025. The [Getting Started
 article](https://teal-insights.github.io/saisdata/articles/saisdata.html)
 has this example and a chart.
 
 ``` r
-library(dplyr)
-library(tidyr)
-
-weo_groups |>
-  select(-indicator_name, -units) |> # keep the codes, drop the long text
-  pivot_longer(
-    cols = `2001`:`2031`, # every year column
-    names_to = "year", # the column names become a year column
-    names_transform = as.integer, # "2025" becomes the number 2025
-    values_to = "value"
-  ) |>
-  pivot_wider(names_from = indicator, values_from = value) |> # one per indicator
-  mutate(net_interest_usd_bn = (GGXONLB_NGDP - GGXCNL_NGDP) * NGDPD / 100)
-#> # A tibble: 62 × 7
-#>    group_code group     year  NGDPD GGXCNL_NGDP GGXONLB_NGDP net_interest_usd_bn
-#>    <chr>      <chr>    <int>  <dbl>       <dbl>        <dbl>               <dbl>
-#>  1 G110       Advance…  2001 26768.       -1.72        0.572                615.
-#>  2 G110       Advance…  2002 27926.       -3.61       -1.48                 594.
-#>  3 G110       Advance…  2003 31320.       -4.06       -2.10                 614.
-#>  4 G110       Advance…  2004 34743.       -3.29       -1.44                 645.
-#>  5 G110       Advance…  2005 36571.       -2.47       -0.685                654.
-#>  6 G110       Advance…  2006 38472.       -1.43        0.278                656.
-#>  7 G110       Advance…  2007 42039.       -1.34        0.396                731.
-#>  8 G110       Advance…  2008 44432.       -3.59       -1.88                 760.
-#>  9 G110       Advance…  2009 41931.       -8.79       -7.13                 696.
-#> 10 G110       Advance…  2010 43797.       -7.84       -6.15                 744.
+weo_groups |>                                     # start with the table, then
+  select(group_code, indicator, `2001`:`2031`) |> # keep codes and years, then
+  pivot_longer(                                   # bring the years down:
+    cols = `2001`:`2031`,                         # every year column
+    names_to = "year",                            # their names go in year
+    names_transform = as.integer,                 # as whole numbers
+    values_to = "value"                           # their numbers go in value
+  ) |>                                            # and then
+  pivot_wider(                                    # send the indicators up:
+    names_from = indicator,                       # one column per indicator
+    values_from = value                           # filled from value
+  ) |>                                            # and then
+  mutate(                                         # add a column:
+    # primary balance minus overall balance, times GDP, in USD billions
+    net_interest_usd_bn = (GGXONLB_NGDP - GGXCNL_NGDP) / 100 * NGDPD
+  )                                               # close mutate()
+#> # A tibble: 62 × 6
+#>    group_code  year  NGDPD GGXCNL_NGDP GGXONLB_NGDP net_interest_usd_bn
+#>    <chr>      <int>  <dbl>       <dbl>        <dbl>               <dbl>
+#>  1 G110        2001 26768.       -1.72        0.572                615.
+#>  2 G110        2002 27926.       -3.61       -1.48                 594.
+#>  3 G110        2003 31320.       -4.06       -2.10                 614.
+#>  4 G110        2004 34743.       -3.29       -1.44                 645.
+#>  5 G110        2005 36571.       -2.47       -0.685                654.
+#>  6 G110        2006 38472.       -1.43        0.278                656.
+#>  7 G110        2007 42039.       -1.34        0.396                731.
+#>  8 G110        2008 44432.       -3.59       -1.88                 760.
+#>  9 G110        2009 41931.       -8.79       -7.13                 696.
+#> 10 G110        2010 43797.       -7.84       -6.15                 744.
 #> # ℹ 52 more rows
 ```
 

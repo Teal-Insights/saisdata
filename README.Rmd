@@ -44,7 +44,7 @@ R-universe builds ready-made copies for recent versions of R. On an older or new
 
 `weo` and `weo_groups` come from the IMF's World Economic Outlook database of October 2026. `wb_groups` comes from the World Bank, as served on 3 November 2026. The tables are a frozen snapshot: they do not change when either institution publishes new numbers. Every help page says what each column means, the units, the source and what was changed.
 
-The data arrive as tibbles if you have the tidyverse, and print as ordinary data frames if you do not.
+The data arrive as tibbles, the tidyverse's tables. The package itself needs nothing but R, so it installs fast. The examples on this site use the tidyverse, as the course does.
 
 ## Files for Day 2
 
@@ -60,33 +60,53 @@ After that they are ordinary files in your project. Read the spreadsheet with `r
 
 ## Example
 
-This runs offline. It uses only base R, so it works in a brand new R library. Net interest is not a column; it is the primary balance minus the overall balance.
+This runs offline. It uses the tidyverse, as the course does. Net interest is not a column: it is the primary balance minus the overall balance.
 
-```{r kenya}
-library(saisdata)
+```{r kenya, message = FALSE}
+library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
+library(saisdata)  # load the course data: weo, weo_groups, wb_groups
 
-kenya <- subset(weo, code == "KEN" & year >= 2020 & year <= 2025)
-kenya$net_interest <- kenya$primary_balance - kenya$overall_balance
-
-as.data.frame(kenya[, c("year", "gross_debt", "net_interest")])
+weo |>                                   # start with the panel, and then
+  filter(code == "KEN", year >= 2020) |> # keep Kenya from 2020 on, and then
+  filter(year <= 2025) |>                # stop at 2025, and then
+  mutate(                                # add a column:
+    net_interest = primary_balance - overall_balance # net interest
+  ) |>                                   # and then
+  select(year, gross_debt, net_interest) # keep the columns to read
 ```
 
-With the tidyverse, two moves make `weo_groups` tidy, and one more gives the interest bill in dollars. Added up over the two groups, that comes to about USD 849 billion in 2001 and USD 2,371.2 billion in 2025. The [Getting Started article](https://teal-insights.github.io/saisdata/articles/saisdata.html) has this example and a chart.
+`wb_groups` joins to `weo` by `code`. This gives the typical country's debt in 2025 at each income level.
 
-```{r tidy, message = FALSE}
-library(dplyr)
-library(tidyr)
+```{r income}
+weo |>                                  # start with the IMF's panel, and then
+  filter(year == 2025) |>               # keep 2025, and then
+  inner_join(wb_groups, by = "code") |> # keep rows found in both, by code
+  group_by(income_level) |>             # one group per income level, and then
+  summarize(                            # collapse each group to one row:
+    countries = n(),                    # how many countries went in
+    median_debt = median(gross_debt, na.rm = TRUE) # their middle debt
+  )                                     # close summarize()
+```
 
-weo_groups |>
-  select(-indicator_name, -units) |> # keep the codes, drop the long text
-  pivot_longer(
-    cols = `2001`:`2031`, # every year column
-    names_to = "year", # the column names become a year column
-    names_transform = as.integer, # "2025" becomes the number 2025
-    values_to = "value"
-  ) |>
-  pivot_wider(names_from = indicator, values_from = value) |> # one per indicator
-  mutate(net_interest_usd_bn = (GGXONLB_NGDP - GGXCNL_NGDP) * NGDPD / 100)
+`weo_groups` keeps the IMF's layout, with the years across. Two moves make it tidy, and one more gives the interest bill in dollars. Added up over the two groups, that comes to about USD 849 billion in 2001 and USD 2,371.2 billion in 2025. The [Getting Started article](https://teal-insights.github.io/saisdata/articles/saisdata.html) has this example and a chart.
+
+```{r tidy}
+weo_groups |>                                     # start with the table, then
+  select(group_code, indicator, `2001`:`2031`) |> # keep codes and years, then
+  pivot_longer(                                   # bring the years down:
+    cols = `2001`:`2031`,                         # every year column
+    names_to = "year",                            # their names go in year
+    names_transform = as.integer,                 # as whole numbers
+    values_to = "value"                           # their numbers go in value
+  ) |>                                            # and then
+  pivot_wider(                                    # send the indicators up:
+    names_from = indicator,                       # one column per indicator
+    values_from = value                           # filled from value
+  ) |>                                            # and then
+  mutate(                                         # add a column:
+    # primary balance minus overall balance, times GDP, in USD billions
+    net_interest_usd_bn = (GGXONLB_NGDP - GGXCNL_NGDP) / 100 * NGDPD
+  )                                               # close mutate()
 ```
 
 ## Code license and data terms

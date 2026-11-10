@@ -11,8 +11,23 @@
 #'   the files.
 #' @seealso [copy_course_files()] to copy them all into your project.
 #' @examples
-#' sais_example()
-#' sais_example("wdi_life_expectancy.csv")
+#' sais_example()                          # list every file
+#' sais_example("wdi_life_expectancy.csv") # the path to one of them
+#' @examplesIf requireNamespace("tidyverse", quietly = TRUE) && requireNamespace("readxl", quietly = TRUE)
+#' library(tidyverse) # load the tidyverse: readr, dplyr and more
+#' library(readxl)    # load readxl, which reads Excel files
+#'
+#' # A saved series from the World Bank: one row per country and year
+#' read_csv(                                  # read a CSV file:
+#'   sais_example("wdi_life_expectancy.csv"), # this one, from the package
+#'   show_col_types = FALSE                   # without the column report
+#' )                                          # close read_csv()
+#'
+#' # The spreadsheet: a title and a note sit above the table, so skip 3 rows
+#' read_excel(                                       # read an Excel file:
+#'   sais_example("wb-country-classification.xlsx"), # this one
+#'   skip = 3                                        # start at the header row
+#' )                                                 # close read_excel()
 #' @export
 sais_example <- function(file = NULL) {
   folder <- system.file("extdata", package = "saisdata")
@@ -44,9 +59,23 @@ sais_example <- function(file = NULL) {
 #' @return The paths of the copies, invisibly. A message says how many files
 #'   were copied and where.
 #' @examples
-#' folder <- file.path(tempdir(), "data")
-#' copy_course_files(folder)
-#' list.files(folder)
+#' folder <- file.path(tempdir(), "data") # in the course: here::here("data")
+#' copy_course_files(folder)              # copy the nine files there
+#' list.files(folder)                     # see what arrived
+#' @examplesIf requireNamespace("tidyverse", quietly = TRUE)
+#' library(tidyverse) # load the tidyverse: readr, dplyr and more
+#'
+#' # Read a saved series from the copy, as you would a file of your own
+#' life <- read_csv(                               # read a CSV file:
+#'   file.path(folder, "wdi_life_expectancy.csv"), # the copied series
+#'   show_col_types = FALSE                        # without the column report
+#' )                                               # close read_csv()
+#'
+#' # Join it to the IMF's countries by code and year
+#' weo |>                                           # start with the panel, then
+#'   filter(str_length(code) == 3, year == 2023) |> # countries in 2023, and then
+#'   left_join(life, by = c("code", "year")) |>     # add life expectancy
+#'   select(name, gross_debt, life_expectancy_years) # keep columns to read
 #' @export
 copy_course_files <- function(to = "data", overwrite = TRUE) {
   dir.create(to, showWarnings = FALSE, recursive = TRUE)

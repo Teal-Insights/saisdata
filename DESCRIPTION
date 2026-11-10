@@ -24,10 +24,12 @@ Suggests:
     dplyr,
     ggplot2,
     knitr,
+    readr,
     readxl,
     rmarkdown,
     testthat (>= 3.0.0),
-    tidyr
+    tidyr,
+    tidyverse
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 LazyData: true

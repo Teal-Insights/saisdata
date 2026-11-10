@@ -69,7 +69,20 @@
 #'
 #' @seealso [weo], the panel this table joins to.
 #'
-#' @examples
-#' # The first six countries
-#' head(wb_groups)
+#' @examplesIf requireNamespace("tidyverse", quietly = TRUE)
+#' library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
+#'
+#' # How many countries the World Bank puts at each income level
+#' wb_groups |>          # start with the World Bank's groups, and then
+#'   count(income_level) # count the rows at each income level
+#'
+#' # Join the groups to the IMF's 2025 rows: the typical debt by income level
+#' weo |>                                  # start with the IMF's panel, and then
+#'   filter(year == 2025) |>               # keep 2025, and then
+#'   inner_join(wb_groups, by = "code") |> # keep rows found in both, by code
+#'   group_by(income_level) |>             # one group per income level, and then
+#'   summarize(                            # collapse each group to one row:
+#'     countries = n(),                    # how many countries went in
+#'     median_debt = median(gross_debt, na.rm = TRUE) # their middle debt
+#'   )                                     # close summarize()
 "wb_groups"

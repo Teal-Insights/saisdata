@@ -21,8 +21,24 @@ the World Bank and Our World in Data. \code{sais_example()} gives the path to
 one of them, the way \code{readxl::readxl_example()} does for readxl's files.
 }
 \examples{
-sais_example()
-sais_example("wdi_life_expectancy.csv")
+sais_example()                          # list every file
+sais_example("wdi_life_expectancy.csv") # the path to one of them
+\dontshow{if (requireNamespace("tidyverse", quietly = TRUE) && requireNamespace("readxl", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+library(tidyverse) # load the tidyverse: readr, dplyr and more
+library(readxl)    # load readxl, which reads Excel files
+
+# A saved series from the World Bank: one row per country and year
+read_csv(                                  # read a CSV file:
+  sais_example("wdi_life_expectancy.csv"), # this one, from the package
+  show_col_types = FALSE                   # without the column report
+)                                          # close read_csv()
+
+# The spreadsheet: a title and a note sit above the table, so skip 3 rows
+read_excel(                                       # read an Excel file:
+  sais_example("wb-country-classification.xlsx"), # this one
+  skip = 3                                        # start at the header row
+)                                                 # close read_excel()
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=copy_course_files]{copy_course_files()}} to copy them all into your project.

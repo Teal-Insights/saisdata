@@ -24,7 +24,22 @@ yours: read them with \code{readxl::read_excel()} or \code{readr::read_csv()}, a
 would a file you downloaded. Nothing is fetched from the internet.
 }
 \examples{
-folder <- file.path(tempdir(), "data")
-copy_course_files(folder)
-list.files(folder)
+folder <- file.path(tempdir(), "data") # in the course: here::here("data")
+copy_course_files(folder)              # copy the nine files there
+list.files(folder)                     # see what arrived
+\dontshow{if (requireNamespace("tidyverse", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+library(tidyverse) # load the tidyverse: readr, dplyr and more
+
+# Read a saved series from the copy, as you would a file of your own
+life <- read_csv(                               # read a CSV file:
+  file.path(folder, "wdi_life_expectancy.csv"), # the copied series
+  show_col_types = FALSE                        # without the column report
+)                                               # close read_csv()
+
+# Join it to the IMF's countries by code and year
+weo |>                                           # start with the panel, then
+  filter(str_length(code) == 3, year == 2023) |> # countries in 2023, and then
+  left_join(life, by = c("code", "year")) |>     # add life expectancy
+  select(name, gross_debt, life_expectancy_years) # keep columns to read
+\dontshow{\}) # examplesIf}
 }
