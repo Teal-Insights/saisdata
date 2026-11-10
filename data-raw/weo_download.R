@@ -3,9 +3,11 @@
 # This is the one script here that needs the internet. Run it from the package
 # folder, once per release:
 #   LANG=en_US.UTF-8 Rscript data-raw/weo_download.R
-# It needs imfweo 0.2.0.9000 or later, the first build that knows the October
-# 2026 release:
-#   install.packages("imfweo", repos = "https://teal-insights.r-universe.dev")
+# It needs the GitHub build of imfweo, the first that knows the October 2026
+# release. The version on CRAN, 0.2.0, stops at April 2026. Install the tested
+# commit:
+#   pak::pak("Teal-Insights/r-imfweo@cf763e95b9bbd1146f65202767ecae54ea7e4392")
+# and name the release in weo_get(), as below, so a newer default cannot slip in.
 # It writes data-raw/source/weo_2026oct_imfweo.csv.gz: what weo_get() returned,
 # every entity and every series, 2000 to 2031, one row per value, with each
 # number written in its shortest form (-0.709, where the IMF's file holds

@@ -34,7 +34,7 @@ The World Bank's classification, from `wbwdi::wdi_get_entities()` (wbwdi 1.0.3) 
 
 ## `weo_2026oct_imfweo.csv.gz`
 
-The October 2026 World Economic Outlook, downloaded on 10 November 2026 by `data-raw/weo_download.R` with `imfweo::weo_get(year = 2026, release = "Fall", start_year = 2000)` (imfweo 0.2.0.9000). It is the one source file that needs the internet to make. It holds what `weo_get()` returned: seven columns, 210 entities (197 countries under their ISO codes, 13 IMF groups under numbers such as `110`), 145 series, the years 2000 to 2031, and a row only where the IMF has a value. Each number is written in its shortest form, as in the extract.
+The October 2026 World Economic Outlook, downloaded on 10 November 2026 by `data-raw/weo_download.R` with `imfweo::weo_get(year = 2026, release = "Fall", start_year = 2000)`. The download used imfweo 0.2.0.9000 at commit `914abf0`. The commit the course pins, `cf763e95b9bbd1146f65202767ecae54ea7e4392` (three commits earlier), was checked the same day and returns the same table: the same 254,710 rows, with every value equal. It is the one source file that needs the internet to make. It holds what `weo_get()` returned: seven columns, 210 entities (197 countries under their ISO codes, 13 IMF groups under numbers such as `110`), 145 series, the years 2000 to 2031, and a row only where the IMF has a value. Each number is written in its shortest form, as in the extract.
 
 The 44 series that countries report are the 44 indicators of the workbook's Countries sheet. The other 101 are commodity prices and series the IMF gives only for groups. The package's tables do not use them.
 
