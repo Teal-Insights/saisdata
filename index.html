@@ -101,7 +101,7 @@
 </tbody>
 </table>
 <p><code>weo</code> and <code>weo_groups</code> come from the IMF’s World Economic Outlook database of October 2026. <code>wb_groups</code> comes from the World Bank, as served on 3 November 2026. The tables are a frozen snapshot: they do not change when either institution publishes new numbers. Every help page says what each column means, the units, the source and what was changed.</p>
-<p>The data arrive as tibbles if you have the tidyverse, and print as ordinary data frames if you do not.</p>
+<p>The data arrive as tibbles, the tidyverse’s tables. The package itself needs nothing but R, so it installs fast. The examples on this site use the tidyverse, as the course does.</p>
 </div>
 <div class="section level2">
 <h2 id="files-for-day-2">Files for Day 2<a class="anchor" aria-label="anchor" href="#files-for-day-2"></a>
@@ -116,49 +116,75 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This runs offline. It uses only base R, so it works in a brand new R library. Net interest is not a column; it is the primary balance minus the overall balance.</p>
+<p>This runs offline. It uses the tidyverse, as the course does. Net interest is not a column: it is the primary balance minus the overall balance.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://teal-insights.github.io/saisdata/">saisdata</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># load the tidyverse: dplyr, ggplot2, tidyr and more</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://teal-insights.github.io/saisdata/">saisdata</a></span><span class="op">)</span>  <span class="co"># load the course data: weo, weo_groups, wb_groups</span></span>
 <span></span>
-<span><span class="va">kenya</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">weo</span>, <span class="va">code</span> <span class="op">==</span> <span class="st">"KEN"</span> <span class="op">&amp;</span> <span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2020</span> <span class="op">&amp;</span> <span class="va">year</span> <span class="op">&lt;=</span> <span class="fl">2025</span><span class="op">)</span></span>
-<span><span class="va">kenya</span><span class="op">$</span><span class="va">net_interest</span> <span class="op">&lt;-</span> <span class="va">kenya</span><span class="op">$</span><span class="va">primary_balance</span> <span class="op">-</span> <span class="va">kenya</span><span class="op">$</span><span class="va">overall_balance</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">kenya</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"gross_debt"</span>, <span class="st">"net_interest"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      year gross_debt net_interest</span></span>
-<span><span class="co">#&gt; 5589 2020     67.959        3.925</span></span>
-<span><span class="co">#&gt; 5590 2021     68.232        4.091</span></span>
-<span><span class="co">#&gt; 5591 2022     67.800        4.374</span></span>
-<span><span class="co">#&gt; 5592 2023     73.405        4.786</span></span>
-<span><span class="co">#&gt; 5593 2024     67.306        5.247</span></span>
-<span><span class="co">#&gt; 5594 2025     71.269        5.447</span></span></code></pre></div>
-<p>With the tidyverse, two moves make <code>weo_groups</code> tidy, and one more gives the interest bill in dollars. Added up over the two groups, that comes to about USD 849 billion in 2001 and USD 2,371.2 billion in 2025. The <a href="https://teal-insights.github.io/saisdata/articles/saisdata.html">Getting Started article</a> has this example and a chart.</p>
+<span><span class="va">weo</span> <span class="op">|&gt;</span>                                   <span class="co"># start with the panel, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"KEN"</span>, <span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep Kenya from 2020 on, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&lt;=</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span>                <span class="co"># stop at 2025, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>                                <span class="co"># add a column:</span></span>
+<span>    net_interest <span class="op">=</span> <span class="va">primary_balance</span> <span class="op">-</span> <span class="va">overall_balance</span> <span class="co"># net interest</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span>                                   <span class="co"># and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">gross_debt</span>, <span class="va">net_interest</span><span class="op">)</span> <span class="co"># keep the columns to read</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
+<span><span class="co">#&gt;    year gross_debt net_interest</span></span>
+<span><span class="co">#&gt;   &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1  2020       68.0         3.93</span></span>
+<span><span class="co">#&gt; 2  2021       68.2         4.09</span></span>
+<span><span class="co">#&gt; 3  2022       67.8         4.37</span></span>
+<span><span class="co">#&gt; 4  2023       73.4         4.79</span></span>
+<span><span class="co">#&gt; 5  2024       67.3         5.25</span></span>
+<span><span class="co">#&gt; 6  2025       71.3         5.45</span></span></code></pre></div>
+<p><code>wb_groups</code> joins to <code>weo</code> by <code>code</code>. This gives the typical country’s debt in 2025 at each income level.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">weo_groups</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">indicator_name</span>, <span class="op">-</span><span class="va">units</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep the codes, drop the long text</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span></span>
-<span>    cols <span class="op">=</span> <span class="va">`2001`</span><span class="op">:</span><span class="va">`2031`</span>, <span class="co"># every year column</span></span>
-<span>    names_to <span class="op">=</span> <span class="st">"year"</span>, <span class="co"># the column names become a year column</span></span>
-<span>    names_transform <span class="op">=</span> <span class="va">as.integer</span>, <span class="co"># "2025" becomes the number 2025</span></span>
-<span>    values_to <span class="op">=</span> <span class="st">"value"</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">indicator</span>, values_from <span class="op">=</span> <span class="va">value</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># one per indicator</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>net_interest_usd_bn <span class="op">=</span> <span class="op">(</span><span class="va">GGXONLB_NGDP</span> <span class="op">-</span> <span class="va">GGXCNL_NGDP</span><span class="op">)</span> <span class="op">*</span> <span class="va">NGDPD</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 62 × 7</span></span>
-<span><span class="co">#&gt;    group_code group     year  NGDPD GGXCNL_NGDP GGXONLB_NGDP net_interest_usd_bn</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;int&gt;  &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;               &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 G110       Advance…  2001 26768.       -1.72        0.572                615.</span></span>
-<span><span class="co">#&gt;  2 G110       Advance…  2002 27926.       -3.61       -1.48                 594.</span></span>
-<span><span class="co">#&gt;  3 G110       Advance…  2003 31320.       -4.06       -2.10                 614.</span></span>
-<span><span class="co">#&gt;  4 G110       Advance…  2004 34743.       -3.29       -1.44                 645.</span></span>
-<span><span class="co">#&gt;  5 G110       Advance…  2005 36571.       -2.47       -0.685                654.</span></span>
-<span><span class="co">#&gt;  6 G110       Advance…  2006 38472.       -1.43        0.278                656.</span></span>
-<span><span class="co">#&gt;  7 G110       Advance…  2007 42039.       -1.34        0.396                731.</span></span>
-<span><span class="co">#&gt;  8 G110       Advance…  2008 44432.       -3.59       -1.88                 760.</span></span>
-<span><span class="co">#&gt;  9 G110       Advance…  2009 41931.       -8.79       -7.13                 696.</span></span>
-<span><span class="co">#&gt; 10 G110       Advance…  2010 43797.       -7.84       -6.15                 744.</span></span>
+<code class="sourceCode R"><span><span class="va">weo</span> <span class="op">|&gt;</span>                                  <span class="co"># start with the IMF's panel, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span>               <span class="co"># keep 2025, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">wb_groups</span>, by <span class="op">=</span> <span class="st">"code"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep rows found in both, by code</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">income_level</span><span class="op">)</span> <span class="op">|&gt;</span>             <span class="co"># one group per income level, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>                            <span class="co"># collapse each group to one row:</span></span>
+<span>    countries <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>,                    <span class="co"># how many countries went in</span></span>
+<span>    median_debt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">gross_debt</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># their middle debt</span></span>
+<span>  <span class="op">)</span>                                     <span class="co"># close summarize()</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 3</span></span>
+<span><span class="co">#&gt;   income_level        countries median_debt</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                   &lt;int&gt;       &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 High income                67        55.7</span></span>
+<span><span class="co">#&gt; 2 Low income                 24        52.3</span></span>
+<span><span class="co">#&gt; 3 Lower middle income        47        49.6</span></span>
+<span><span class="co">#&gt; 4 Upper middle income        58        54.1</span></span></code></pre></div>
+<p><code>weo_groups</code> keeps the IMF’s layout, with the years across. Two moves make it tidy, and one more gives the interest bill in dollars. Added up over the two groups, that comes to about USD 849 billion in 2001 and USD 2,371.2 billion in 2025. The <a href="https://teal-insights.github.io/saisdata/articles/saisdata.html">Getting Started article</a> has this example and a chart.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weo_groups</span> <span class="op">|&gt;</span>                                     <span class="co"># start with the table, then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">group_code</span>, <span class="va">indicator</span>, <span class="va">`2001`</span><span class="op">:</span><span class="va">`2031`</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep codes and years, then</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span>                                   <span class="co"># bring the years down:</span></span>
+<span>    cols <span class="op">=</span> <span class="va">`2001`</span><span class="op">:</span><span class="va">`2031`</span>,                         <span class="co"># every year column</span></span>
+<span>    names_to <span class="op">=</span> <span class="st">"year"</span>,                            <span class="co"># their names go in year</span></span>
+<span>    names_transform <span class="op">=</span> <span class="va">as.integer</span>,                 <span class="co"># as whole numbers</span></span>
+<span>    values_to <span class="op">=</span> <span class="st">"value"</span>                           <span class="co"># their numbers go in value</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span>                                            <span class="co"># and then</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>                                    <span class="co"># send the indicators up:</span></span>
+<span>    names_from <span class="op">=</span> <span class="va">indicator</span>,                       <span class="co"># one column per indicator</span></span>
+<span>    values_from <span class="op">=</span> <span class="va">value</span>                           <span class="co"># filled from value</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span>                                            <span class="co"># and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>                                         <span class="co"># add a column:</span></span>
+<span>    <span class="co"># primary balance minus overall balance, times GDP, in USD billions</span></span>
+<span>    net_interest_usd_bn <span class="op">=</span> <span class="op">(</span><span class="va">GGXONLB_NGDP</span> <span class="op">-</span> <span class="va">GGXCNL_NGDP</span><span class="op">)</span> <span class="op">/</span> <span class="fl">100</span> <span class="op">*</span> <span class="va">NGDPD</span></span>
+<span>  <span class="op">)</span>                                               <span class="co"># close mutate()</span></span>
+<span><span class="co">#&gt; # A tibble: 62 × 6</span></span>
+<span><span class="co">#&gt;    group_code  year  NGDPD GGXCNL_NGDP GGXONLB_NGDP net_interest_usd_bn</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;               &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 G110        2001 26768.       -1.72        0.572                615.</span></span>
+<span><span class="co">#&gt;  2 G110        2002 27926.       -3.61       -1.48                 594.</span></span>
+<span><span class="co">#&gt;  3 G110        2003 31320.       -4.06       -2.10                 614.</span></span>
+<span><span class="co">#&gt;  4 G110        2004 34743.       -3.29       -1.44                 645.</span></span>
+<span><span class="co">#&gt;  5 G110        2005 36571.       -2.47       -0.685                654.</span></span>
+<span><span class="co">#&gt;  6 G110        2006 38472.       -1.43        0.278                656.</span></span>
+<span><span class="co">#&gt;  7 G110        2007 42039.       -1.34        0.396                731.</span></span>
+<span><span class="co">#&gt;  8 G110        2008 44432.       -3.59       -1.88                 760.</span></span>
+<span><span class="co">#&gt;  9 G110        2009 41931.       -8.79       -7.13                 696.</span></span>
+<span><span class="co">#&gt; 10 G110        2010 43797.       -7.84       -6.15                 744.</span></span>
 <span><span class="co">#&gt; # ℹ 52 more rows</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -184,8 +210,8 @@
 <h2 id="rebuilding-the-data">Rebuilding the data<a class="anchor" aria-label="anchor" href="#rebuilding-the-data"></a>
 </h2>
 <p>A clean clone rebuilds <code>data/</code> with no internet. From the package folder, with readr, dplyr, tidyr, stringr, here and usethis installed:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/rebuild-all.R</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/compare-tables.R</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/rebuild-all.R</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/compare-tables.R</span></code></pre></div>
 <p>The first line runs the scripts in <code>data-raw/</code>, from the source files in <a href="data-raw/source/README.html"><code>data-raw/source/</code></a>. The second compares the result with the original tables, using <code><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical()</a></code>, <code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> and a column-by-column type check, and fails if they differ. The output of the comparison made for this release is in <a href="data-raw/comparison/"><code>data-raw/comparison/</code></a>.</p>
 </div>
 </div>

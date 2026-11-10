@@ -134,19 +134,55 @@ every country and group, one row per entity and year.
 ## Examples
 
 ``` r
-# Six rows: two groups times three indicators
-nrow(weo_groups)
-#> [1] 6
+library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
 
-# Five columns that describe each row, then one column per year
-names(weo_groups)
-#>  [1] "group_code"     "group"          "indicator"      "indicator_name"
-#>  [5] "units"          "2001"           "2002"           "2003"          
-#>  [9] "2004"           "2005"           "2006"           "2007"          
-#> [13] "2008"           "2009"           "2010"           "2011"          
-#> [17] "2012"           "2013"           "2014"           "2015"          
-#> [21] "2016"           "2017"           "2018"           "2019"          
-#> [25] "2020"           "2021"           "2022"           "2023"          
-#> [29] "2024"           "2025"           "2026"           "2027"          
-#> [33] "2028"           "2029"           "2030"           "2031"          
+# The IMF's layout: one row per group and indicator, with the years across
+weo_groups
+#> # A tibble: 6 × 36
+#>   group_code group     indicator indicator_name units   `2001`   `2002`   `2003`
+#>   <chr>      <chr>     <chr>     <chr>          <chr>    <dbl>    <dbl>    <dbl>
+#> 1 G110       Advanced… NGDPD     Gross domesti… Bill…  2.68e+4  2.79e+4  3.13e+4
+#> 2 G110       Advanced… GGXCNL_N… Net lending (… Perc… -1.72e+0 -3.61e+0 -4.06e+0
+#> 3 G110       Advanced… GGXONLB_… Primary net l… Perc…  5.72e-1 -1.48e+0 -2.10e+0
+#> 4 G200       Emerging… NGDPD     Gross domesti… Bill…  7.32e+3  7.24e+3  8.15e+3
+#> 5 G200       Emerging… GGXCNL_N… Net lending (… Perc… -2.83e+0 -3.32e+0 -2.63e+0
+#> 6 G200       Emerging… GGXONLB_… Primary net l… Perc…  3.69e-1 -3.16e-1  3.42e-1
+#> # ℹ 28 more variables: `2004` <dbl>, `2005` <dbl>, `2006` <dbl>, `2007` <dbl>,
+#> #   `2008` <dbl>, `2009` <dbl>, `2010` <dbl>, `2011` <dbl>, `2012` <dbl>,
+#> #   `2013` <dbl>, `2014` <dbl>, `2015` <dbl>, `2016` <dbl>, `2017` <dbl>,
+#> #   `2018` <dbl>, `2019` <dbl>, `2020` <dbl>, `2021` <dbl>, `2022` <dbl>,
+#> #   `2023` <dbl>, `2024` <dbl>, `2025` <dbl>, `2026` <dbl>, `2027` <dbl>,
+#> #   `2028` <dbl>, `2029` <dbl>, `2030` <dbl>, `2031` <dbl>
+
+# Tidy it, then work out each group's net interest bill in dollars
+weo_groups |>                                     # start with the table, then
+  select(group_code, indicator, `2001`:`2031`) |> # keep codes and years, then
+  pivot_longer(                                   # bring the years down:
+    cols = `2001`:`2031`,                         # every year column
+    names_to = "year",                            # their names go in year
+    names_transform = as.integer,                 # as whole numbers
+    values_to = "value"                           # their numbers go in value
+  ) |>                                            # and then
+  pivot_wider(                                    # send the indicators up:
+    names_from = indicator,                       # one column per indicator
+    values_from = value                           # filled from value
+  ) |>                                            # and then
+  mutate(                                         # add a column:
+    # primary balance minus overall balance, times GDP, in USD billions
+    net_interest_usd_bn = (GGXONLB_NGDP - GGXCNL_NGDP) / 100 * NGDPD
+  )                                               # close mutate()
+#> # A tibble: 62 × 6
+#>    group_code  year  NGDPD GGXCNL_NGDP GGXONLB_NGDP net_interest_usd_bn
+#>    <chr>      <int>  <dbl>       <dbl>        <dbl>               <dbl>
+#>  1 G110        2001 26768.       -1.72        0.572                615.
+#>  2 G110        2002 27926.       -3.61       -1.48                 594.
+#>  3 G110        2003 31320.       -4.06       -2.10                 614.
+#>  4 G110        2004 34743.       -3.29       -1.44                 645.
+#>  5 G110        2005 36571.       -2.47       -0.685                654.
+#>  6 G110        2006 38472.       -1.43        0.278                656.
+#>  7 G110        2007 42039.       -1.34        0.396                731.
+#>  8 G110        2008 44432.       -3.59       -1.88                 760.
+#>  9 G110        2009 41931.       -8.79       -7.13                 696.
+#> 10 G110        2010 43797.       -7.84       -6.15                 744.
+#> # ℹ 52 more rows
 ```

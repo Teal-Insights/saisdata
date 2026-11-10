@@ -150,27 +150,30 @@ to add the World Bank's income levels and regions.
 ## Examples
 
 ``` r
-# Rows, then columns
-dim(weo)
-#> [1] 6720    9
+library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
 
-# The first six rows
-head(weo)
-#> # A tibble: 6 × 9
-#>   code  name          year gross_debt primary_balance overall_balance gdp_usd_bn
-#>   <chr> <chr>        <int>      <dbl>           <dbl>           <dbl>      <dbl>
-#> 1 AND   Andorra, Pr…  2000       NA            NA              NA           1.43
-#> 2 AND   Andorra, Pr…  2001       15.8           1.48            0.658       1.55
-#> 3 AND   Andorra, Pr…  2002       15.3           1.68            0.978       1.76
-#> 4 AND   Andorra, Pr…  2003       15.2           2.27            1.76        2.36
-#> 5 AND   Andorra, Pr…  2004       15.1           2.43            1.86        2.90
-#> 6 AND   Andorra, Pr…  2005       14.8           0.268          -0.081       3.16
-#> # ℹ 2 more variables: latest_actual <int>, fiscal_year <chr>
+# Every column, with its type and its first values
+glimpse(weo)
+#> Rows: 6,720
+#> Columns: 9
+#> $ code            <chr> "AND", "AND", "AND", "AND", "AND", "AND", "AND", "AND"…
+#> $ name            <chr> "Andorra, Principality of", "Andorra, Principality of"…
+#> $ year            <int> 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, …
+#> $ gross_debt      <dbl> NA, 15.774, 15.266, 15.163, 15.105, 14.760, 17.165, 20…
+#> $ primary_balance <dbl> NA, 1.475, 1.676, 2.273, 2.430, 0.268, -0.994, -2.046,…
+#> $ overall_balance <dbl> NA, 0.658, 0.978, 1.764, 1.855, -0.081, -1.436, -2.828…
+#> $ gdp_usd_bn      <dbl> 1.429, 1.547, 1.758, 2.362, 2.896, 3.158, 3.456, 3.952…
+#> $ latest_actual   <int> 2025, 2025, 2025, 2025, 2025, 2025, 2025, 2025, 2025, …
+#> $ fiscal_year     <chr> "January/December", "January/December", "January/Decem…
 
 # Kenya since 2020, with its net interest bill in percent of GDP
-kenya <- subset(weo, code == "KEN" & year >= 2020 & year <= 2025)
-kenya$net_interest <- kenya$primary_balance - kenya$overall_balance
-kenya[, c("year", "gross_debt", "net_interest")]
+weo |>                                   # start with the panel, and then
+  filter(code == "KEN", year >= 2020) |> # keep Kenya from 2020 on, and then
+  filter(year <= 2025) |>                # stop at 2025, and then
+  mutate(                                # add a column:
+    net_interest = primary_balance - overall_balance # net interest
+  ) |>                                   # and then
+  select(year, gross_debt, net_interest) # keep the columns to read
 #> # A tibble: 6 × 3
 #>    year gross_debt net_interest
 #>   <int>      <dbl>        <dbl>
@@ -180,4 +183,38 @@ kenya[, c("year", "gross_debt", "net_interest")]
 #> 4  2023       73.4         4.79
 #> 5  2024       67.3         5.25
 #> 6  2025       71.3         5.45
+
+# The typical country's debt in each year
+weo |>                                   # start with the panel, and then
+  filter(str_length(code) == 3) |>       # keep countries, not IMF groups
+  group_by(year) |>                      # make one group per year, and then
+  summarize(                             # collapse each group to one row:
+    median_debt = median(gross_debt, na.rm = TRUE) # the middle value
+  )                                      # close summarize()
+#> # A tibble: 32 × 2
+#>     year median_debt
+#>    <int>       <dbl>
+#>  1  2000        53.6
+#>  2  2001        52.4
+#>  3  2002        53.7
+#>  4  2003        49.8
+#>  5  2004        46.8
+#>  6  2005        43.2
+#>  7  2006        36.8
+#>  8  2007        32.9
+#>  9  2008        33.4
+#> 10  2009        36.4
+#> # ℹ 22 more rows
+
+# Kenya's debt over time, as a chart
+weo |>                                    # start with the panel, and then
+  filter(code == "KEN") |>                # keep Kenya's rows, and then
+  ggplot(aes(x = year, y = gross_debt)) + # years across, debt up
+  geom_line() +                           # draw a line
+  labs(                                   # add the words:
+    title = "Kenya's government debt",    # the title
+    subtitle = "Percent of GDP. The last years are IMF projections", # units
+    x = NULL,                             # no x axis title
+    y = NULL                              # no y axis title
+  )                                       # close labs()
 ```

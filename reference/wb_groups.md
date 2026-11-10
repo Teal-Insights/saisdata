@@ -121,15 +121,33 @@ panel this table joins to.
 ## Examples
 
 ``` r
-# The first six countries
-head(wb_groups)
-#> # A tibble: 6 × 6
-#>   code  wb_code country              region            income_level lending_type
-#>   <chr> <chr>   <chr>                <chr>             <chr>        <chr>       
-#> 1 ABW   ABW     Aruba                Latin America & … High income  Not classif…
-#> 2 AFG   AFG     Afghanistan          Middle East, Nor… Low income   IDA         
-#> 3 AGO   AGO     Angola               Sub-Saharan Afri… Lower middl… IBRD        
-#> 4 ALB   ALB     Albania              Europe & Central… Upper middl… IBRD        
-#> 5 AND   AND     Andorra              Europe & Central… High income  Not classif…
-#> 6 ARE   ARE     United Arab Emirates Middle East, Nor… High income  Not classif…
+library(tidyverse) # load the tidyverse: dplyr, ggplot2, tidyr and more
+
+# How many countries the World Bank puts at each income level
+wb_groups |>          # start with the World Bank's groups, and then
+  count(income_level) # count the rows at each income level
+#> # A tibble: 4 × 2
+#>   income_level            n
+#>   <chr>               <int>
+#> 1 High income            86
+#> 2 Low income             25
+#> 3 Lower middle income    47
+#> 4 Upper middle income    59
+
+# Join the groups to the IMF's 2025 rows: the typical debt by income level
+weo |>                                  # start with the IMF's panel, and then
+  filter(year == 2025) |>               # keep 2025, and then
+  inner_join(wb_groups, by = "code") |> # keep rows found in both, by code
+  group_by(income_level) |>             # one group per income level, and then
+  summarize(                            # collapse each group to one row:
+    countries = n(),                    # how many countries went in
+    median_debt = median(gross_debt, na.rm = TRUE) # their middle debt
+  )                                     # close summarize()
+#> # A tibble: 4 × 3
+#>   income_level        countries median_debt
+#>   <chr>                   <int>       <dbl>
+#> 1 High income                67        55.7
+#> 2 Low income                 24        52.3
+#> 3 Lower middle income        47        49.6
+#> 4 Upper middle income        58        54.1
 ```

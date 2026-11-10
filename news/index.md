@@ -13,6 +13,10 @@ Files for Day 2, so the course needs no download.
   [`copy_course_files()`](https://teal-insights.github.io/saisdata/reference/copy_course_files.md)
   copies them all into a folder of your project.
 - The three datasets are unchanged.
+- Every example now uses the tidyverse, as the course does: the help
+  pages, the README and the Getting Started article. The package still
+  needs nothing but R to install, and an example is skipped where the
+  tidyverse is not installed.
 
 ## saisdata 0.1.0
 
