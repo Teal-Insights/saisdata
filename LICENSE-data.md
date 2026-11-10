@@ -15,7 +15,7 @@ Neither institution has sponsored, approved or endorsed it. The terms
 below are a plain-language summary, read on 6 November 2026. The
 institutions’ own pages control, and they can change.
 
-## The IMF’s data: `weo` and `weo_groups`
+## The IMF’s data: `weo`, `weo_mini`, `weo_full`, `weo_indicators` and `weo_groups`
 
 **The terms.** The section “The Use of IMF Data” on the IMF’s Copyright
 and Usage page, <https://www.imf.org/en/About/copyright-and-terms>
@@ -66,16 +66,41 @@ the data as is, with no warranty.
   Groups sheets, keeps 13 of 44 indicators, the years 2000 to 2031 and 9
   of 29 descriptive columns, and writes each number in its shortest
   form. No value changed.
-- `weo` keeps four of those indicators, gives them plain names, reshapes
-  them to one row per entity and year, rounds them to three decimals,
-  and adds two columns worked out from the IMF’s labels: `latest_actual`
-  and `fiscal_year`.
+
+- `data-raw/source/weo_2026oct_imfweo.csv.gz` is the same release as the
+  [imfweo](https://github.com/Teal-Insights/r-imfweo) package returned
+  it on 10 November 2026: every country and group, every series, 2000 to
+  2031, one row per value, with each number written in its shortest
+  form. For the 13 indicators it shares with the extract, the two agree
+  cell by cell.
+
+- `weo` keeps four indicators of the extract, gives them plain names,
+  reshapes them to one row per entity and year, rounds them to three
+  decimals, and adds two columns worked out from the IMF’s labels:
+  `latest_actual` and `fiscal_year`. Since version 0.3.0 it adds eight
+  more indicators from the imfweo download, under plain names, rounded
+  the same way.
+
+- `weo_mini` is twelve rows and nine columns of `weo`. No value changed.
+
+- `weo_full` keeps the 197 countries of the imfweo download and all 44
+  of their indicators, renames the columns, writes the units in plain
+  words from the IMF’s own scale and unit, and rounds to three decimals.
+
+- `weo_indicators` lists those 44 indicators under the IMF’s codes and
+  names. Its topics, plain-language units and one-line descriptions were
+  written for this workshop. They are not the IMF’s words.
+
 - `weo_groups` keeps six rows of the extract and the years 2001 to 2031,
   renames five columns, and writes the IMF’s `SCALE` and `UNIT` in plain
   words. No number changed.
 
-If you republish `weo` itself, add this next to the credit: Reshaped and
-rounded to three decimals by the saisdata R package.
+- The files in `csv/` are the package’s tables written as CSV, with no
+  value changed. The same terms apply to them.
+
+If you republish `weo` or `weo_full` itself, add this next to the
+credit: Reshaped and rounded to three decimals by the saisdata R
+package.
 
 ## The World Bank’s data: `wb_groups`
 

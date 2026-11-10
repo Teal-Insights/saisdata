@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">saisdata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,8 +61,10 @@
     
     
 <p><code>saisdata</code> puts the course data for the SAIS MIEF R
-workshop one line away. Everything on this page runs offline: the data
-are inside the package.</p>
+workshop one line away: international economic data from the IMF’s World
+Economic Outlook, on growth, prices, jobs, trade and the government’s
+books. Everything on this page runs offline: the data are inside the
+package.</p>
 <p>The examples use the <a href="https://tidyverse.org/" class="external-link">tidyverse</a>,
 as the course does. The package itself needs nothing but R.</p>
 <p>This package is not an official IMF or World Bank product.</p>
@@ -80,16 +82,145 @@ else to read in:</p>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">weo</span><span class="op">)</span> <span class="co"># every column, with its type and its first values</span></span>
 <span><span class="co">#&gt; Rows: 6,720</span></span>
-<span><span class="co">#&gt; Columns: 9</span></span>
-<span><span class="co">#&gt; $ code            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"…</span></span>
-<span><span class="co">#&gt; $ name            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Andorra, Principality of"<span style="color: #949494;">, </span>"Andorra, Principality of"…</span></span>
-<span><span class="co">#&gt; $ year            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2000<span style="color: #949494;">, </span>2001<span style="color: #949494;">, </span>2002<span style="color: #949494;">, </span>2003<span style="color: #949494;">, </span>2004<span style="color: #949494;">, </span>2005<span style="color: #949494;">, </span>2006<span style="color: #949494;">, </span>2007<span style="color: #949494;">, </span>2008<span style="color: #949494;">, </span>…</span></span>
-<span><span class="co">#&gt; $ gross_debt      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>15.774<span style="color: #949494;">, </span>15.266<span style="color: #949494;">, </span>15.163<span style="color: #949494;">, </span>15.105<span style="color: #949494;">, </span>14.760<span style="color: #949494;">, </span>17.165<span style="color: #949494;">, </span>20…</span></span>
-<span><span class="co">#&gt; $ primary_balance <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>1.475<span style="color: #949494;">, </span>1.676<span style="color: #949494;">, </span>2.273<span style="color: #949494;">, </span>2.430<span style="color: #949494;">, </span>0.268<span style="color: #949494;">, </span>-0.994<span style="color: #949494;">, </span>-2.046<span style="color: #949494;">,</span>…</span></span>
-<span><span class="co">#&gt; $ overall_balance <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>0.658<span style="color: #949494;">, </span>0.978<span style="color: #949494;">, </span>1.764<span style="color: #949494;">, </span>1.855<span style="color: #949494;">, </span>-0.081<span style="color: #949494;">, </span>-1.436<span style="color: #949494;">, </span>-2.828…</span></span>
-<span><span class="co">#&gt; $ gdp_usd_bn      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.429<span style="color: #949494;">, </span>1.547<span style="color: #949494;">, </span>1.758<span style="color: #949494;">, </span>2.362<span style="color: #949494;">, </span>2.896<span style="color: #949494;">, </span>3.158<span style="color: #949494;">, </span>3.456<span style="color: #949494;">, </span>3.952…</span></span>
-<span><span class="co">#&gt; $ latest_actual   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>…</span></span>
-<span><span class="co">#&gt; $ fiscal_year     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "January/December"<span style="color: #949494;">, </span>"January/December"<span style="color: #949494;">, </span>"January/Decem…</span></span></code></pre></div>
+<span><span class="co">#&gt; Columns: 17</span></span>
+<span><span class="co">#&gt; $ code                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND"<span style="color: #949494;">, </span>"AND…</span></span>
+<span><span class="co">#&gt; $ name                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Andorra, Principality of"<span style="color: #949494;">, </span>"Andorra, Principa…</span></span>
+<span><span class="co">#&gt; $ year                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2000<span style="color: #949494;">, </span>2001<span style="color: #949494;">, </span>2002<span style="color: #949494;">, </span>2003<span style="color: #949494;">, </span>2004<span style="color: #949494;">, </span>2005<span style="color: #949494;">, </span>2006<span style="color: #949494;">, </span>2007…</span></span>
+<span><span class="co">#&gt; $ gross_debt              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>15.774<span style="color: #949494;">, </span>15.266<span style="color: #949494;">, </span>15.163<span style="color: #949494;">, </span>15.105<span style="color: #949494;">, </span>14.760<span style="color: #949494;">, </span>17…</span></span>
+<span><span class="co">#&gt; $ primary_balance         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>1.475<span style="color: #949494;">, </span>1.676<span style="color: #949494;">, </span>2.273<span style="color: #949494;">, </span>2.430<span style="color: #949494;">, </span>0.268<span style="color: #949494;">, </span>-0.994<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ overall_balance         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>0.658<span style="color: #949494;">, </span>0.978<span style="color: #949494;">, </span>1.764<span style="color: #949494;">, </span>1.855<span style="color: #949494;">, </span>-0.081<span style="color: #949494;">, </span>-1.436…</span></span>
+<span><span class="co">#&gt; $ gdp_usd_bn              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.429<span style="color: #949494;">, </span>1.547<span style="color: #949494;">, </span>1.758<span style="color: #949494;">, </span>2.362<span style="color: #949494;">, </span>2.896<span style="color: #949494;">, </span>3.158<span style="color: #949494;">, </span>3.45…</span></span>
+<span><span class="co">#&gt; $ latest_actual           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025<span style="color: #949494;">, </span>2025…</span></span>
+<span><span class="co">#&gt; $ fiscal_year             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "January/December"<span style="color: #949494;">, </span>"January/December"<span style="color: #949494;">, </span>"Janua…</span></span>
+<span><span class="co">#&gt; $ real_gdp_growth         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>8.119<span style="color: #949494;">, </span>4.546<span style="color: #949494;">, </span>8.694<span style="color: #949494;">, </span>8.136<span style="color: #949494;">, </span>5.398<span style="color: #949494;">, </span>4.809<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ inflation               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>3.127<span style="color: #949494;">, </span>3.056<span style="color: #949494;">, </span>2.907<span style="color: #949494;">, </span>3.526<span style="color: #949494;">, </span>3.682<span style="color: #949494;">, </span>2.6…</span></span>
+<span><span class="co">#&gt; $ unemployment_rate       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>3.000<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ current_account_balance <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span>…</span></span>
+<span><span class="co">#&gt; $ gdp_per_capita_usd      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>49030.…</span></span>
+<span><span class="co">#&gt; $ population_mn           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>0.070<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ revenue                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>27.362<span style="color: #949494;">, </span>25.977<span style="color: #949494;">, </span>25.980<span style="color: #949494;">, </span>25.545<span style="color: #949494;">, </span>23.305<span style="color: #949494;">, </span>23…</span></span>
+<span><span class="co">#&gt; $ expenditure             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>26.704<span style="color: #949494;">, </span>25.000<span style="color: #949494;">, </span>24.216<span style="color: #949494;">, </span>23.690<span style="color: #949494;">, </span>23.387<span style="color: #949494;">, </span>25…</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="try-it-small-first">Try it small first<a class="anchor" aria-label="anchor" href="#try-it-small-first"></a>
+</h2>
+<p><code>weo_mini</code> is twelve rows of <code>weo</code>: six
+countries, two years, six indicators. It fits on one screen, so you can
+check a line of code by eye before you run it on the full table.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weo_mini</span> <span class="co"># the whole table: twelve rows, nine columns</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 9</span></span></span>
+<span><span class="co">#&gt;    code  name    year gross_debt primary_balance overall_balance real_gdp_growth</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> BRA   Brazil  <span style="text-decoration: underline;">2</span>015       71.7          -<span style="color: #BB0000;">0.853</span>          -<span style="color: #BB0000;">9.28</span>           -<span style="color: #BB0000;">3.55</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> BRA   Brazil  <span style="text-decoration: underline;">2</span>025       93.3          -<span style="color: #BB0000;">0.134</span>          -<span style="color: #BB0000;">7.43</span>            2.29 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> DEU   Germa…  <span style="text-decoration: underline;">2</span>015       71.0           1.99            0.913           1.77 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> DEU   Germa…  <span style="text-decoration: underline;">2</span>025       62.7          -<span style="color: #BB0000;">2.06</span>           -<span style="color: #BB0000;">2.92</span>            0.229</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> GHA   Ghana   <span style="text-decoration: underline;">2</span>015       53.9           0.938          -<span style="color: #BB0000;">4.01</span>            2.12 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> GHA   Ghana   <span style="text-decoration: underline;">2</span>025       48.8           2.13           -<span style="color: #BB0000;">1.35</span>            5.95 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> KEN   Kenya   <span style="text-decoration: underline;">2</span>015       45.8          -<span style="color: #BB0000;">4.22</span>           -<span style="color: #BB0000;">6.68</span>            4.97 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> KEN   Kenya   <span style="text-decoration: underline;">2</span>025       71.3          -<span style="color: #BB0000;">1.04</span>           -<span style="color: #BB0000;">6.49</span>            4.63 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> NGA   Niger…  <span style="text-decoration: underline;">2</span>015       14.9          -<span style="color: #BB0000;">1.90</span>           -<span style="color: #BB0000;">2.70</span>            2.65 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> NGA   Niger…  <span style="text-decoration: underline;">2</span>025       36.1           0.807          -<span style="color: #BB0000;">1.76</span>            4.01 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> PAK   Pakis…  <span style="text-decoration: underline;">2</span>015       59.1          -<span style="color: #BB0000;">0.454</span>          -<span style="color: #BB0000;">4.74</span>            3.81 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> PAK   Pakis…  <span style="text-decoration: underline;">2</span>025       72.8           2.43           -<span style="color: #BB0000;">5.37</span>            3.18 </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: inflation &lt;dbl&gt;, gdp_per_capita_usd &lt;dbl&gt;</span></span></span>
+<span></span>
+<span><span class="va">weo_mini</span> <span class="op">|&gt;</span>                           <span class="co"># start with the mini table, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span>             <span class="co"># keep 2025, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">inflation</span> <span class="op">&gt;</span> <span class="va">real_gdp_growth</span><span class="op">)</span> <span class="co"># keep inflation above growth</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 9</span></span></span>
+<span><span class="co">#&gt;   code  name     year gross_debt primary_balance overall_balance real_gdp_growth</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> BRA   Brazil   <span style="text-decoration: underline;">2</span>025       93.3          -<span style="color: #BB0000;">0.134</span>           -<span style="color: #BB0000;">7.43</span>           2.29 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> DEU   Germany  <span style="text-decoration: underline;">2</span>025       62.7          -<span style="color: #BB0000;">2.06</span>            -<span style="color: #BB0000;">2.92</span>           0.229</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> GHA   Ghana    <span style="text-decoration: underline;">2</span>025       48.8           2.13            -<span style="color: #BB0000;">1.35</span>           5.95 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> NGA   Nigeria  <span style="text-decoration: underline;">2</span>025       36.1           0.807           -<span style="color: #BB0000;">1.76</span>           4.01 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> PAK   Pakist…  <span style="text-decoration: underline;">2</span>025       72.8           2.43            -<span style="color: #BB0000;">5.37</span>           3.18 </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: inflation &lt;dbl&gt;, gdp_per_capita_usd &lt;dbl&gt;</span></span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="find-what-you-can-ask">Find what you can ask<a class="anchor" aria-label="anchor" href="#find-what-you-can-ask"></a>
+</h2>
+<p><code>weo_indicators</code> has one row for each of the IMF’s 44
+indicators, with what it measures in plain words. Start here when you
+have a question and do not know whether the data can answer it.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weo_indicators</span> <span class="op">|&gt;</span> <span class="co"># start with the indicators, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">topic</span><span class="op">)</span>    <span class="co"># count the rows in each topic</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 2</span></span></span>
+<span><span class="co">#&gt;   topic                     n</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Government finances      14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Growth and size           8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Living standards          6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> People and jobs           3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Prices                    5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Saving and investment     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Trade and payments        6</span></span>
+<span></span>
+<span><span class="va">weo_indicators</span> <span class="op">|&gt;</span>                        <span class="co"># start with the indicators, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">topic</span> <span class="op">==</span> <span class="st">"Living standards"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep one topic, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">indicator</span>, <span class="va">units</span>, <span class="va">description</span><span class="op">)</span>  <span class="co"># keep the columns to read</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
+<span><span class="co">#&gt;   indicator  units                                      description             </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> NGDPDPC    US dollars                                 GDP in US dollars divid…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> PPPPC      International dollars                      GDP per person at purch…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> NGDPRPPPPC 2021 international dollars                 GDP per person at purch…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> NGDPPC     National currency                          GDP per person at curre…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> NGDPRPC    National currency                          GDP per person with inf…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> PPPEX      National currency per international dollar The purchasing power pa…</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="ask-about-growth-prices-and-trade">Ask about growth, prices and trade<a class="anchor" aria-label="anchor" href="#ask-about-growth-prices-and-trade"></a>
+</h2>
+<p>Twelve of the indicators are columns of <code>weo</code>, so the
+commonest questions need no reshaping. This follows inflation in three
+countries.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weo</span> <span class="op">|&gt;</span>                                        <span class="co"># start with the panel, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GHA"</span>, <span class="st">"KEN"</span>, <span class="st">"NGA"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep three countries, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2010</span><span class="op">)</span> <span class="op">|&gt;</span>                     <span class="co"># start in 2010, and then</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">inflation</span>, color <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map columns</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>                               <span class="co"># draw a line for each country</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>                                       <span class="co"># add the words:</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Inflation ran above 20 percent in Ghana and Nigeria"</span>, <span class="co"># the finding</span></span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Consumer prices, percent change. The last years are IMF projections"</span>,</span>
+<span>    x <span class="op">=</span> <span class="cn">NULL</span>,                                 <span class="co"># no x axis title</span></span>
+<span>    y <span class="op">=</span> <span class="cn">NULL</span>,                                 <span class="co"># no y axis title</span></span>
+<span>    color <span class="op">=</span> <span class="cn">NULL</span>                              <span class="co"># no legend title</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span>                                         <span class="co"># close labs()</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">+</span>             <span class="co"># a clean, light theme</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span>              <span class="co"># legend above the chart</span></span></code></pre></div>
+<p><img src="saisdata_files/figure-html/inflation-1.png" class="r-plt" alt="Line chart of consumer price inflation in Ghana, Kenya and Nigeria, in percent, from 2010 to 2031, one line per country. Kenya stays in single digits. Ghana and Nigeria rise above 20 percent in the early 2020s and fall in the IMF's projections." width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="go-beyond-the-twelve-columns">Go beyond the twelve columns<a class="anchor" aria-label="anchor" href="#go-beyond-the-twelve-columns"></a>
+</h2>
+<p><code>weo_full</code> holds all 44 indicators, long: one row per
+country, indicator and year. Filter to the indicators you want, then
+send them up into columns. This puts saving beside investment for
+Indonesia.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weo_full</span> <span class="op">|&gt;</span>                                  <span class="co"># start with the long table, then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"IDN"</span>, <span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op">|&gt;</span>     <span class="co"># keep Indonesia since 2020</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&lt;=</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span>                    <span class="co"># stop at 2025, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">indicator</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NGSD_NGDP"</span>, <span class="st">"NID_NGDP"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep two indicators</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">indicator</span>, <span class="va">value</span><span class="op">)</span> <span class="op">|&gt;</span>          <span class="co"># keep what the pivot needs</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>                               <span class="co"># send the indicators up:</span></span>
+<span>    names_from <span class="op">=</span> <span class="va">indicator</span>,                  <span class="co"># one column per indicator</span></span>
+<span>    values_from <span class="op">=</span> <span class="va">value</span>                      <span class="co"># filled from value</span></span>
+<span>  <span class="op">)</span>                                          <span class="co"># close pivot_wider()</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
+<span><span class="co">#&gt;    year NGSD_NGDP NID_NGDP</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>020      31.9     32.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>021      31.7     31.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>022      30.7     29.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>023      30.2     30.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>024      30.8     31.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>025      30.5     30.6</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="start-with-one-country">Start with one country<a class="anchor" aria-label="anchor" href="#start-with-one-country"></a>
@@ -97,7 +228,7 @@ else to read in:</p>
 <p><code>weo</code> has one row per country, or IMF group of countries,
 and year. Net interest is not a column: it is the primary balance minus
 the overall balance.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weo</span> <span class="op">|&gt;</span>                                   <span class="co"># start with the panel, and then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"KEN"</span>, <span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep Kenya from 2020 on, and then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&lt;=</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span>                <span class="co"># stop at 2025, and then</span></span>
@@ -122,7 +253,7 @@ debt of about 71 percent of GDP.</p>
 </h2>
 <p>Countries have three-letter codes, and the IMF’s groups do not. This
 gives the typical country’s debt in each year since 2020.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weo</span> <span class="op">|&gt;</span>                                   <span class="co"># start with the panel, and then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_length.html" class="external-link">str_length</a></span><span class="op">(</span><span class="va">code</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span>       <span class="co"># keep countries, not IMF groups</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2020</span>, <span class="va">year</span> <span class="op">&lt;=</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># keep 2020 to 2025, and then</span></span>
@@ -146,7 +277,7 @@ gives the typical country’s debt in each year since 2020.</p>
 <p><code>wb_groups</code> joins to <code>weo</code> by
 <code>code</code>. This gives the typical country’s gross debt in 2025
 at each income level:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weo</span> <span class="op">|&gt;</span>                                  <span class="co"># start with the IMF's panel, and then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span>               <span class="co"># keep 2025, and then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">wb_groups</span>, by <span class="op">=</span> <span class="st">"code"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep rows found in both, by code</span></span>
@@ -169,7 +300,7 @@ at each income level:</p>
 <p><code>weo_groups</code> keeps the IMF’s layout, with the years
 across. Two moves make it tidy, and a few more give the world’s interest
 bill in dollars.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bill</span> <span class="op">&lt;-</span> <span class="va">weo_groups</span> <span class="op">|&gt;</span>                             <span class="co"># start with the table, then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">group_code</span>, <span class="va">indicator</span>, <span class="va">`2001`</span><span class="op">:</span><span class="va">`2031`</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep codes and years, then</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span>                                   <span class="co"># bring the years down:</span></span>
@@ -207,7 +338,7 @@ is an approximation.</p>
 <p>Every chart made from these data carries a source line. From 2026 on
 the values are IMF projections, so the chart shades them. This chart
 uses no World Bank groups, so its source line drops that sentence.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bill</span> <span class="op">|&gt;</span>                                           <span class="co"># start with the bill, and then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>                                         <span class="co"># add a column:</span></span>
 <span>    kind <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&lt;=</span> <span class="fl">2025</span>, <span class="st">"Estimate"</span>, <span class="st">"IMF projection"</span><span class="op">)</span> <span class="co"># which is which</span></span>
@@ -249,7 +380,7 @@ uses no World Bank groups, so its source line drops that sentence.</p>
 <code><a href="../reference/copy_course_files.html">copy_course_files()</a></code> copies them into a folder of your
 project. In the course that folder is
 <code>here::here("data")</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span> <span class="co"># load readxl, which reads Excel files</span></span>
 <span></span>
 <span><span class="va">folder</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data"</span><span class="op">)</span> <span class="co"># a stand-in for your project's data folder</span></span>
@@ -304,7 +435,8 @@ project. In the course that folder is
 </h2>
 <ul>
 <li>
-<code><a href="../reference/weo.html">?weo</a></code>, <code><a href="../reference/weo_groups.html">?weo_groups</a></code> and
+<code><a href="../reference/weo.html">?weo</a></code>, <code><a href="../reference/weo_mini.html">?weo_mini</a></code>, <code><a href="../reference/weo_full.html">?weo_full</a></code>,
+<code><a href="../reference/weo_indicators.html">?weo_indicators</a></code>, <code><a href="../reference/weo_groups.html">?weo_groups</a></code> and
 <code><a href="../reference/wb_groups.html">?wb_groups</a></code> say what one row is, the units, the source, the
 vintage and what was changed.</li>
 <li>

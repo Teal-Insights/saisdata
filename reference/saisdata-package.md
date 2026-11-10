@@ -1,13 +1,24 @@
 # saisdata: course data for the SAIS MIEF R workshop
 
-Three datasets, ready to use once you run
+Six datasets, ready to use once you run
 [`library(saisdata)`](https://teal-insights.github.io/saisdata/):
 
 ## Details
 
 - [weo](https://teal-insights.github.io/saisdata/reference/weo.md): the
   IMF's World Economic Outlook of October 2026, one row per country (or
-  IMF group) and year.
+  IMF group) and year, with twelve indicators as columns: growth,
+  inflation, unemployment, the current account, GDP per person,
+  population, and the government's revenue, spending, balances and debt.
+
+- [weo_mini](https://teal-insights.github.io/saisdata/reference/weo_mini.md):
+  twelve rows of `weo` that fit on one screen.
+
+- [weo_full](https://teal-insights.github.io/saisdata/reference/weo_full.md):
+  all 44 of the IMF's indicators for every country, long.
+
+- [weo_indicators](https://teal-insights.github.io/saisdata/reference/weo_indicators.md):
+  what each of those indicators measures, in plain words.
 
 - [weo_groups](https://teal-insights.github.io/saisdata/reference/weo_groups.md):
   the same source for the IMF's two big country groups, laid out as the
@@ -17,6 +28,11 @@ Three datasets, ready to use once you run
   the World Bank's region, income level and lending type for 217
   countries.
 
+For Day 2,
+[`copy_course_files()`](https://teal-insights.github.io/saisdata/reference/copy_course_files.md)
+copies a spreadsheet and eight saved series into your project, so you
+can practice importing files.
+
 Type
 [`?weo`](https://teal-insights.github.io/saisdata/reference/weo.md), or
 the name of any dataset after a question mark, to open its help page.
@@ -25,6 +41,16 @@ has a short worked example that runs offline.
 
 The tables are a frozen snapshot. They do not change when the IMF or the
 World Bank publishes new numbers.
+
+## Backups
+
+The package is the course's backup for every live call to the IMF or the
+World Bank: each lesson's numbers are saved here and need no internet.
+The package has a backup of its own. Every table is also a CSV file in
+the repository, so if `saisdata` will not install,
+[`readr::read_csv()`](https://readr.tidyverse.org/reference/read_delim.html)
+reads a table straight from GitHub. The lines are in the README and in
+<https://github.com/Teal-Insights/saisdata/tree/main/csv>.
 
 ## Credit
 
@@ -43,10 +69,10 @@ the third if it shows no net interest.
 
 The package's code and documentation are MIT licensed. That license does
 not cover the data. The data keep their own terms: the IMF's terms for
-statistical data for `weo` and `weo_groups`, and CC BY 4.0 with the
-World Bank's added terms for `wb_groups`. Each dataset's help page
-summarizes them. The full summary is in the file `LICENSE-data.md`,
-installed with the package; find it with
+statistical data for the five `weo` tables, and CC BY 4.0 with the World
+Bank's added terms for `wb_groups`. Each dataset's help page summarizes
+them. The full summary is in the file `LICENSE-data.md`, installed with
+the package; find it with
 `system.file("LICENSE-data.md", package = "saisdata")`.
 
 This package is not an official IMF or World Bank product.

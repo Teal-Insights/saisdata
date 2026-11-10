@@ -10,8 +10,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Course Data for the SAIS MIEF R Workshop">
-<meta name="description" content="Ready-to-use data for the two-day R workshop of the Master of International Economics and Finance (MIEF) at Johns Hopkins SAIS: the International Monetary Funds World Economic Outlook of October 2026 as a tidy country panel, the same source in the IMFs own layout for its two largest country groups, and the World Banks country groups. One line, library(saisdata), loads them all. The code is MIT licensed; the data keep their own terms, set out in the file LICENSE-data.md (the IMFs terms for statistical data, and CC BY 4.0 with the World Bank's added terms). This package is not an official IMF or World Bank product.">
-<meta property="og:description" content="Ready-to-use data for the two-day R workshop of the Master of International Economics and Finance (MIEF) at Johns Hopkins SAIS: the International Monetary Funds World Economic Outlook of October 2026 as a tidy country panel, the same source in the IMFs own layout for its two largest country groups, and the World Banks country groups. One line, library(saisdata), loads them all. The code is MIT licensed; the data keep their own terms, set out in the file LICENSE-data.md (the IMFs terms for statistical data, and CC BY 4.0 with the World Bank's added terms). This package is not an official IMF or World Bank product.">
+<meta name="description" content="Ready-to-use data for the two-day R workshop of the Master of International Economics and Finance (MIEF) at Johns Hopkins SAIS: the International Monetary Funds World Economic Outlook of October 2026 as a tidy country panel of twelve indicators (growth, inflation, unemployment, the current account, GDP per person, population and the governments books), the whole release for countries in long form with a plain-language guide to its 44 indicators, a twelve-row table for first steps, the same source in the IMFs own layout for its two largest country groups, and the World Banks country groups. One line, library(saisdata), loads them all. The code is MIT licensed; the data keep their own terms, set out in the file LICENSE-data.md (the IMFs terms for statistical data, and CC BY 4.0 with the World Banks added terms). This package is not an official IMF or World Bank product.">
+<meta property="og:description" content="Ready-to-use data for the two-day R workshop of the Master of International Economics and Finance (MIEF) at Johns Hopkins SAIS: the International Monetary Funds World Economic Outlook of October 2026 as a tidy country panel of twelve indicators (growth, inflation, unemployment, the current account, GDP per person, population and the governments books), the whole release for countries in long form with a plain-language guide to its 44 indicators, a twelve-row table for first steps, the same source in the IMFs own layout for its two largest country groups, and the World Banks country groups. One line, library(saisdata), loads them all. The code is MIT licensed; the data keep their own terms, set out in the file LICENSE-data.md (the IMFs terms for statistical data, and CC BY 4.0 with the World Banks added terms). This package is not an official IMF or World Bank product.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="index.html">saisdata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,9 +82,27 @@
 <tbody>
 <tr>
 <td><code>weo</code></td>
-<td>one country (or IMF group) in one year, 2000 to 2031: gross debt, primary balance, overall balance, GDP</td>
+<td>one country (or IMF group) in one year, 2000 to 2031, with twelve indicators as columns: growth, inflation, unemployment, the current account, GDP, GDP per person, population, and the government’s revenue, spending, balances and debt</td>
 <td>6,720</td>
 <td><code><a href="reference/weo.html">?weo</a></code></td>
+</tr>
+<tr>
+<td><code>weo_mini</code></td>
+<td>twelve rows of <code>weo</code> that fit on one screen: six countries, two years, six indicators</td>
+<td>12</td>
+<td><code><a href="reference/weo_mini.html">?weo_mini</a></code></td>
+</tr>
+<tr>
+<td><code>weo_full</code></td>
+<td>one country, one indicator and one year: all 44 indicators the IMF publishes for countries</td>
+<td>238,459</td>
+<td><code><a href="reference/weo_full.html">?weo_full</a></code></td>
+</tr>
+<tr>
+<td><code>weo_indicators</code></td>
+<td>one indicator, with its topic, units and a plain-language description</td>
+<td>44</td>
+<td><code><a href="reference/weo_indicators.html">?weo_indicators</a></code></td>
 </tr>
 <tr>
 <td><code>weo_groups</code></td>
@@ -100,7 +118,7 @@
 </tr>
 </tbody>
 </table>
-<p><code>weo</code> and <code>weo_groups</code> come from the IMF’s World Economic Outlook database of October 2026. <code>wb_groups</code> comes from the World Bank, as served on 3 November 2026. The tables are a frozen snapshot: they do not change when either institution publishes new numbers. Every help page says what each column means, the units, the source and what was changed.</p>
+<p>The five <code>weo</code> tables come from the IMF’s World Economic Outlook database of October 2026. <code>wb_groups</code> comes from the World Bank, as served on 3 November 2026. The tables are a frozen snapshot: they do not change when either institution publishes new numbers. Every help page says what each column means, the units, the source and what was changed.</p>
 <p>The data arrive as tibbles, the tidyverse’s tables. The package itself needs nothing but R, so it installs fast. The examples on this site use the tidyverse, as the course does.</p>
 </div>
 <div class="section level2">
@@ -137,8 +155,44 @@
 <span><span class="co">#&gt; 4  2023       73.4         4.79</span></span>
 <span><span class="co">#&gt; 5  2024       67.3         5.25</span></span>
 <span><span class="co">#&gt; 6  2025       71.3         5.45</span></span></code></pre></div>
-<p><code>wb_groups</code> joins to <code>weo</code> by <code>code</code>. This gives the typical country’s debt in 2025 at each income level.</p>
+<p>The data are not only about debt. <code>weo_indicators</code> says what you can ask, by topic:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weo_indicators</span> <span class="op">|&gt;</span>                       <span class="co"># start with the indicators, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">topic</span> <span class="op">==</span> <span class="st">"Trade and payments"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep one topic, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">indicator</span>, <span class="va">units</span>, <span class="va">description</span><span class="op">)</span> <span class="co"># keep the columns to read</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
+<span><span class="co">#&gt;   indicator units                  description                                  </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;                  &lt;chr&gt;                                        </span></span>
+<span><span class="co">#&gt; 1 BCA_NGDPD Percent of GDP         The current account balance as a share of th…</span></span>
+<span><span class="co">#&gt; 2 BCA       Billions of US dollars The current account balance in dollars: trad…</span></span>
+<span><span class="co">#&gt; 3 TX_RPCH   Percent change         Growth in the volume of goods and services t…</span></span>
+<span><span class="co">#&gt; 4 TXG_RPCH  Percent change         Growth in the volume of goods the country ex…</span></span>
+<span><span class="co">#&gt; 5 TM_RPCH   Percent change         Growth in the volume of goods and services t…</span></span>
+<span><span class="co">#&gt; 6 TMG_RPCH  Percent change         Growth in the volume of goods the country im…</span></span></code></pre></div>
+<p>Twelve indicators are already columns of <code>weo</code>. This asks where prices rose fastest in 2025, among countries that also grew:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weo</span> <span class="op">|&gt;</span>                                  <span class="co"># start with the panel, and then</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_length.html" class="external-link">str_length</a></span><span class="op">(</span><span class="va">code</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span>      <span class="co"># keep countries, not IMF groups</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2025</span>, <span class="va">real_gdp_growth</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 2025, with a growing economy</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">inflation</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>           <span class="co"># sort, highest inflation first</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">inflation</span>, <span class="va">real_gdp_growth</span>, <span class="va">current_account_balance</span><span class="op">)</span> <span class="co"># to read</span></span>
+<span><span class="co">#&gt; # A tibble: 182 × 4</span></span>
+<span><span class="co">#&gt;    name                         inflation real_gdp_growth current_account_bala…¹</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                            &lt;dbl&gt;           &lt;dbl&gt;                  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Venezuela, República Boliva…     252.             9.01                  0.561</span></span>
+<span><span class="co">#&gt;  2 South Sudan, Republic of          97.6           41.4                  -6.44 </span></span>
+<span><span class="co">#&gt;  3 Zimbabwe                          81.4            8.29                  3.65 </span></span>
+<span><span class="co">#&gt;  4 Argentina                         41.9            4.48                 -1.14 </span></span>
+<span><span class="co">#&gt;  5 Türkiye, Republic of              34.9            3.74                 -1.88 </span></span>
+<span><span class="co">#&gt;  6 Burundi                           34.0            4.23                 -6.44 </span></span>
+<span><span class="co">#&gt;  7 Malawi                            28.4            2.49                -13.8  </span></span>
+<span><span class="co">#&gt;  8 Nigeria                           23.0            4.01                  4.83 </span></span>
+<span><span class="co">#&gt;  9 Egypt, Arab Republic of           20.4            4.39                 -4.23 </span></span>
+<span><span class="co">#&gt; 10 Angola                            20.2            3.13                  0.297</span></span>
+<span><span class="co">#&gt; # ℹ 172 more rows</span></span>
+<span><span class="co">#&gt; # ℹ abbreviated name: ¹​current_account_balance</span></span></code></pre></div>
+<p><code>wb_groups</code> joins to <code>weo</code> by <code>code</code>. This gives the typical country’s debt in 2025 at each income level.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weo</span> <span class="op">|&gt;</span>                                  <span class="co"># start with the IMF's panel, and then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span>               <span class="co"># keep 2025, and then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">wb_groups</span>, by <span class="op">=</span> <span class="st">"code"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep rows found in both, by code</span></span>
@@ -155,7 +209,7 @@
 <span><span class="co">#&gt; 3 Lower middle income        47        49.6</span></span>
 <span><span class="co">#&gt; 4 Upper middle income        58        54.1</span></span></code></pre></div>
 <p><code>weo_groups</code> keeps the IMF’s layout, with the years across. Two moves make it tidy, and one more gives the interest bill in dollars. Added up over the two groups, that comes to about USD 849 billion in 2001 and USD 2,371.2 billion in 2025. The <a href="https://teal-insights.github.io/saisdata/articles/saisdata.html">Getting Started article</a> has this example and a chart.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weo_groups</span> <span class="op">|&gt;</span>                                     <span class="co"># start with the table, then</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">group_code</span>, <span class="va">indicator</span>, <span class="va">`2001`</span><span class="op">:</span><span class="va">`2031`</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep codes and years, then</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span>                                   <span class="co"># bring the years down:</span></span>
@@ -188,6 +242,19 @@
 <span><span class="co">#&gt; # ℹ 52 more rows</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="if-the-package-will-not-install">If the package will not install<a class="anchor" aria-label="anchor" href="#if-the-package-will-not-install"></a>
+</h2>
+<p>Every table is also a CSV file in this repository, as a last chance. With the tidyverse and the internet, one line reads one:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># load the tidyverse, which reads CSV files</span></span>
+<span></span>
+<span><span class="co"># where the files live</span></span>
+<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/Teal-Insights/saisdata/main/csv/"</span></span>
+<span></span>
+<span><span class="va">weo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html" class="external-link">str_c</a></span><span class="op">(</span><span class="va">base</span>, <span class="st">"weo.csv"</span><span class="op">)</span><span class="op">)</span> <span class="co"># the main table, read from GitHub</span></span></code></pre></div>
+<p><a href="https://github.com/Teal-Insights/saisdata/tree/main/csv" class="external-link"><code>csv/README.md</code></a> lists every file, with the same lines for the other tables and for the Day 2 files. The course tries things in this order: a live call to the IMF or the World Bank where a lesson shows one, then the copy saved in this package, then these files.</p>
+</div>
+<div class="section level2">
 <h2 id="code-license-and-data-terms">Code license and data terms<a class="anchor" aria-label="anchor" href="#code-license-and-data-terms"></a>
 </h2>
 <p>The code and the data are under different terms.</p>
@@ -210,8 +277,8 @@
 <h2 id="rebuilding-the-data">Rebuilding the data<a class="anchor" aria-label="anchor" href="#rebuilding-the-data"></a>
 </h2>
 <p>A clean clone rebuilds <code>data/</code> with no internet. From the package folder, with readr, dplyr, tidyr, stringr, here and usethis installed:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/rebuild-all.R</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/compare-tables.R</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/rebuild-all.R</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="ex">Rscript</span> data-raw/compare-tables.R</span></code></pre></div>
 <p>The first line runs the scripts in <code>data-raw/</code>, from the source files in <a href="data-raw/source/README.html"><code>data-raw/source/</code></a>. The second compares the result with the original tables, using <code><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical()</a></code>, <code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> and a column-by-column type check, and fails if they differ. The output of the comparison made for this release is in <a href="data-raw/comparison/"><code>data-raw/comparison/</code></a>.</p>
 </div>
 </div>

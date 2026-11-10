@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">saisdata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,8 +51,8 @@
 </tr></tbody></table><p>This package is not an official IMF or World Bank product.</p>
 <p>Neither institution has sponsored, approved or endorsed it. The terms below are a plain-language summary, read on 6 November 2026. The institutions’ own pages control, and they can change.</p>
 <div class="section level2">
-<h2 id="the-imfs-data-weo-and-weo_groups">The IMF’s data: <code>weo</code> and <code>weo_groups</code>
-<a class="anchor" aria-label="anchor" href="#the-imfs-data-weo-and-weo_groups"></a></h2>
+<h2 id="the-imfs-data-weo-weo_mini-weo_full-weo_indicators-and-weo_groups">The IMF’s data: <code>weo</code>, <code>weo_mini</code>, <code>weo_full</code>, <code>weo_indicators</code> and <code>weo_groups</code>
+<a class="anchor" aria-label="anchor" href="#the-imfs-data-weo-weo_mini-weo_full-weo_indicators-and-weo_groups"></a></h2>
 <p><strong>The terms.</strong> The section “The Use of IMF Data” on the IMF’s Copyright and Usage page, <a href="https://www.imf.org/en/About/copyright-and-terms" class="external-link uri">https://www.imf.org/en/About/copyright-and-terms</a> (effective 11 October 2024). It names the World Economic Outlook database as covered data, and it sets aside the general limits on IMF content where it gives wider permission.</p>
 <p><strong>What you may do.</strong> Download, extract, copy, make derivative works from, publish, distribute and use the data.</p>
 <p><strong>What you must do.</strong></p>
@@ -64,13 +64,15 @@
 </ul><p><strong>Commercial reuse.</strong> The IMF asks that any potential commercial reuse start with an email to <a href="mailto:copyright@imf.org" class="email">copyright@imf.org</a> requesting permission. This package is free, and nothing in it is sold. If your own use is commercial, ask the IMF.</p>
 <p><strong>The IMF’s general terms still apply where the data terms are silent.</strong> In particular: do not imply that the IMF endorses or is affiliated with your work; do not use the IMF’s seal or identifying marks without its permission; do not bulk-download from IMF sites by automated means without its explicit permission; and do not use its content to train large language models without its explicit permission. The IMF provides the data as is, with no warranty.</p>
 <p><strong>What this package changed.</strong></p>
-<ul><li>
-<code>data-raw/source/weo_2026oct_extract.csv</code> is an extract of the IMF’s workbook <code>WEOOct2026all.xlsx</code>. It stacks the Countries and Country Groups sheets, keeps 13 of 44 indicators, the years 2000 to 2031 and 9 of 29 descriptive columns, and writes each number in its shortest form. No value changed.</li>
-<li>
-<code>weo</code> keeps four of those indicators, gives them plain names, reshapes them to one row per entity and year, rounds them to three decimals, and adds two columns worked out from the IMF’s labels: <code>latest_actual</code> and <code>fiscal_year</code>.</li>
-<li>
-<code>weo_groups</code> keeps six rows of the extract and the years 2001 to 2031, renames five columns, and writes the IMF’s <code>SCALE</code> and <code>UNIT</code> in plain words. No number changed.</li>
-</ul><p>If you republish <code>weo</code> itself, add this next to the credit: Reshaped and rounded to three decimals by the saisdata R package.</p>
+<ul><li><p><code>data-raw/source/weo_2026oct_extract.csv</code> is an extract of the IMF’s workbook <code>WEOOct2026all.xlsx</code>. It stacks the Countries and Country Groups sheets, keeps 13 of 44 indicators, the years 2000 to 2031 and 9 of 29 descriptive columns, and writes each number in its shortest form. No value changed.</p></li>
+<li><p><code>data-raw/source/weo_2026oct_imfweo.csv.gz</code> is the same release as the <a href="https://github.com/Teal-Insights/r-imfweo" class="external-link">imfweo</a> package returned it on 10 November 2026: every country and group, every series, 2000 to 2031, one row per value, with each number written in its shortest form. For the 13 indicators it shares with the extract, the two agree cell by cell.</p></li>
+<li><p><code>weo</code> keeps four indicators of the extract, gives them plain names, reshapes them to one row per entity and year, rounds them to three decimals, and adds two columns worked out from the IMF’s labels: <code>latest_actual</code> and <code>fiscal_year</code>. Since version 0.3.0 it adds eight more indicators from the imfweo download, under plain names, rounded the same way.</p></li>
+<li><p><code>weo_mini</code> is twelve rows and nine columns of <code>weo</code>. No value changed.</p></li>
+<li><p><code>weo_full</code> keeps the 197 countries of the imfweo download and all 44 of their indicators, renames the columns, writes the units in plain words from the IMF’s own scale and unit, and rounds to three decimals.</p></li>
+<li><p><code>weo_indicators</code> lists those 44 indicators under the IMF’s codes and names. Its topics, plain-language units and one-line descriptions were written for this workshop. They are not the IMF’s words.</p></li>
+<li><p><code>weo_groups</code> keeps six rows of the extract and the years 2001 to 2031, renames five columns, and writes the IMF’s <code>SCALE</code> and <code>UNIT</code> in plain words. No number changed.</p></li>
+<li><p>The files in <code>csv/</code> are the package’s tables written as CSV, with no value changed. The same terms apply to them.</p></li>
+</ul><p>If you republish <code>weo</code> or <code>weo_full</code> itself, add this next to the credit: Reshaped and rounded to three decimals by the saisdata R package.</p>
 </div>
 <div class="section level2">
 <h2 id="the-world-banks-data-wb_groups">The World Bank’s data: <code>wb_groups</code>

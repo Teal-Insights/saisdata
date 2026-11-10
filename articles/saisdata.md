@@ -1,8 +1,9 @@
 # Getting started with saisdata
 
 `saisdata` puts the course data for the SAIS MIEF R workshop one line
-away. Everything on this page runs offline: the data are inside the
-package.
+away: international economic data from the IMF’s World Economic Outlook,
+on growth, prices, jobs, trade and the government’s books. Everything on
+this page runs offline: the data are inside the package.
 
 The examples use the [tidyverse](https://tidyverse.org/), as the course
 does. The package itself needs nothing but R.
@@ -28,16 +29,156 @@ library(saisdata)  # load the course data: weo, weo_groups, wb_groups
 
 glimpse(weo) # every column, with its type and its first values
 #> Rows: 6,720
-#> Columns: 9
-#> $ code            <chr> "AND", "AND", "AND", "AND", "AND", "AND", "AND", "AND"…
-#> $ name            <chr> "Andorra, Principality of", "Andorra, Principality of"…
-#> $ year            <int> 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, …
-#> $ gross_debt      <dbl> NA, 15.774, 15.266, 15.163, 15.105, 14.760, 17.165, 20…
-#> $ primary_balance <dbl> NA, 1.475, 1.676, 2.273, 2.430, 0.268, -0.994, -2.046,…
-#> $ overall_balance <dbl> NA, 0.658, 0.978, 1.764, 1.855, -0.081, -1.436, -2.828…
-#> $ gdp_usd_bn      <dbl> 1.429, 1.547, 1.758, 2.362, 2.896, 3.158, 3.456, 3.952…
-#> $ latest_actual   <int> 2025, 2025, 2025, 2025, 2025, 2025, 2025, 2025, 2025, …
-#> $ fiscal_year     <chr> "January/December", "January/December", "January/Decem…
+#> Columns: 17
+#> $ code                    <chr> "AND", "AND", "AND", "AND", "AND", "AND", "AND…
+#> $ name                    <chr> "Andorra, Principality of", "Andorra, Principa…
+#> $ year                    <int> 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007…
+#> $ gross_debt              <dbl> NA, 15.774, 15.266, 15.163, 15.105, 14.760, 17…
+#> $ primary_balance         <dbl> NA, 1.475, 1.676, 2.273, 2.430, 0.268, -0.994,…
+#> $ overall_balance         <dbl> NA, 0.658, 0.978, 1.764, 1.855, -0.081, -1.436…
+#> $ gdp_usd_bn              <dbl> 1.429, 1.547, 1.758, 2.362, 2.896, 3.158, 3.45…
+#> $ latest_actual           <int> 2025, 2025, 2025, 2025, 2025, 2025, 2025, 2025…
+#> $ fiscal_year             <chr> "January/December", "January/December", "Janua…
+#> $ real_gdp_growth         <dbl> NA, 8.119, 4.546, 8.694, 8.136, 5.398, 4.809, …
+#> $ inflation               <dbl> NA, NA, 3.127, 3.056, 2.907, 3.526, 3.682, 2.6…
+#> $ unemployment_rate       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3.000,…
+#> $ current_account_balance <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+#> $ gdp_per_capita_usd      <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 49030.…
+#> $ population_mn           <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 0.070,…
+#> $ revenue                 <dbl> NA, 27.362, 25.977, 25.980, 25.545, 23.305, 23…
+#> $ expenditure             <dbl> NA, 26.704, 25.000, 24.216, 23.690, 23.387, 25…
+```
+
+## Try it small first
+
+`weo_mini` is twelve rows of `weo`: six countries, two years, six
+indicators. It fits on one screen, so you can check a line of code by
+eye before you run it on the full table.
+
+``` r
+
+weo_mini # the whole table: twelve rows, nine columns
+#> # A tibble: 12 × 9
+#>    code  name    year gross_debt primary_balance overall_balance real_gdp_growth
+#>    <chr> <chr>  <int>      <dbl>           <dbl>           <dbl>           <dbl>
+#>  1 BRA   Brazil  2015       71.7          -0.853          -9.28           -3.55 
+#>  2 BRA   Brazil  2025       93.3          -0.134          -7.43            2.29 
+#>  3 DEU   Germa…  2015       71.0           1.99            0.913           1.77 
+#>  4 DEU   Germa…  2025       62.7          -2.06           -2.92            0.229
+#>  5 GHA   Ghana   2015       53.9           0.938          -4.01            2.12 
+#>  6 GHA   Ghana   2025       48.8           2.13           -1.35            5.95 
+#>  7 KEN   Kenya   2015       45.8          -4.22           -6.68            4.97 
+#>  8 KEN   Kenya   2025       71.3          -1.04           -6.49            4.63 
+#>  9 NGA   Niger…  2015       14.9          -1.90           -2.70            2.65 
+#> 10 NGA   Niger…  2025       36.1           0.807          -1.76            4.01 
+#> 11 PAK   Pakis…  2015       59.1          -0.454          -4.74            3.81 
+#> 12 PAK   Pakis…  2025       72.8           2.43           -5.37            3.18 
+#> # ℹ 2 more variables: inflation <dbl>, gdp_per_capita_usd <dbl>
+
+weo_mini |>                           # start with the mini table, and then
+  filter(year == 2025) |>             # keep 2025, and then
+  filter(inflation > real_gdp_growth) # keep inflation above growth
+#> # A tibble: 5 × 9
+#>   code  name     year gross_debt primary_balance overall_balance real_gdp_growth
+#>   <chr> <chr>   <int>      <dbl>           <dbl>           <dbl>           <dbl>
+#> 1 BRA   Brazil   2025       93.3          -0.134           -7.43           2.29 
+#> 2 DEU   Germany  2025       62.7          -2.06            -2.92           0.229
+#> 3 GHA   Ghana    2025       48.8           2.13            -1.35           5.95 
+#> 4 NGA   Nigeria  2025       36.1           0.807           -1.76           4.01 
+#> 5 PAK   Pakist…  2025       72.8           2.43            -5.37           3.18 
+#> # ℹ 2 more variables: inflation <dbl>, gdp_per_capita_usd <dbl>
+```
+
+## Find what you can ask
+
+`weo_indicators` has one row for each of the IMF’s 44 indicators, with
+what it measures in plain words. Start here when you have a question and
+do not know whether the data can answer it.
+
+``` r
+
+weo_indicators |> # start with the indicators, and then
+  count(topic)    # count the rows in each topic
+#> # A tibble: 7 × 2
+#>   topic                     n
+#>   <chr>                 <int>
+#> 1 Government finances      14
+#> 2 Growth and size           8
+#> 3 Living standards          6
+#> 4 People and jobs           3
+#> 5 Prices                    5
+#> 6 Saving and investment     2
+#> 7 Trade and payments        6
+
+weo_indicators |>                        # start with the indicators, and then
+  filter(topic == "Living standards") |> # keep one topic, and then
+  select(indicator, units, description)  # keep the columns to read
+#> # A tibble: 6 × 3
+#>   indicator  units                                      description             
+#>   <chr>      <chr>                                      <chr>                   
+#> 1 NGDPDPC    US dollars                                 GDP in US dollars divid…
+#> 2 PPPPC      International dollars                      GDP per person at purch…
+#> 3 NGDPRPPPPC 2021 international dollars                 GDP per person at purch…
+#> 4 NGDPPC     National currency                          GDP per person at curre…
+#> 5 NGDPRPC    National currency                          GDP per person with inf…
+#> 6 PPPEX      National currency per international dollar The purchasing power pa…
+```
+
+## Ask about growth, prices and trade
+
+Twelve of the indicators are columns of `weo`, so the commonest
+questions need no reshaping. This follows inflation in three countries.
+
+``` r
+
+weo |>                                        # start with the panel, and then
+  filter(code %in% c("GHA", "KEN", "NGA")) |> # keep three countries, and then
+  filter(year >= 2010) |>                     # start in 2010, and then
+  ggplot(aes(x = year, y = inflation, color = name)) + # map columns
+  geom_line() +                               # draw a line for each country
+  labs(                                       # add the words:
+    title = "Inflation ran above 20 percent in Ghana and Nigeria", # the finding
+    subtitle = "Consumer prices, percent change. The last years are IMF projections",
+    x = NULL,                                 # no x axis title
+    y = NULL,                                 # no y axis title
+    color = NULL                              # no legend title
+  ) +                                         # close labs()
+  theme_minimal(base_size = 12) +             # a clean, light theme
+  theme(legend.position = "top")              # legend above the chart
+```
+
+![Line chart of consumer price inflation in Ghana, Kenya and Nigeria, in
+percent, from 2010 to 2031, one line per country. Kenya stays in single
+digits. Ghana and Nigeria rise above 20 percent in the early 2020s and
+fall in the IMF's
+projections.](saisdata_files/figure-html/inflation-1.png)
+
+## Go beyond the twelve columns
+
+`weo_full` holds all 44 indicators, long: one row per country, indicator
+and year. Filter to the indicators you want, then send them up into
+columns. This puts saving beside investment for Indonesia.
+
+``` r
+
+weo_full |>                                  # start with the long table, then
+  filter(code == "IDN", year >= 2020) |>     # keep Indonesia since 2020
+  filter(year <= 2025) |>                    # stop at 2025, and then
+  filter(indicator %in% c("NGSD_NGDP", "NID_NGDP")) |> # keep two indicators
+  select(year, indicator, value) |>          # keep what the pivot needs
+  pivot_wider(                               # send the indicators up:
+    names_from = indicator,                  # one column per indicator
+    values_from = value                      # filled from value
+  )                                          # close pivot_wider()
+#> # A tibble: 6 × 3
+#>    year NGSD_NGDP NID_NGDP
+#>   <int>     <dbl>    <dbl>
+#> 1  2020      31.9     32.3
+#> 2  2021      31.7     31.4
+#> 3  2022      30.7     29.7
+#> 4  2023      30.2     30.3
+#> 5  2024      30.8     31.4
+#> 6  2025      30.5     30.6
 ```
 
 ## Start with one country
@@ -269,6 +410,9 @@ weo |>                                           # start with the panel, then
 ## Where to read more
 
 - [`?weo`](https://teal-insights.github.io/saisdata/reference/weo.md),
+  [`?weo_mini`](https://teal-insights.github.io/saisdata/reference/weo_mini.md),
+  [`?weo_full`](https://teal-insights.github.io/saisdata/reference/weo_full.md),
+  [`?weo_indicators`](https://teal-insights.github.io/saisdata/reference/weo_indicators.md),
   [`?weo_groups`](https://teal-insights.github.io/saisdata/reference/weo_groups.md)
   and
   [`?wb_groups`](https://teal-insights.github.io/saisdata/reference/wb_groups.md)

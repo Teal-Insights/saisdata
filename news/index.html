@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">saisdata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,20 @@
       <small>Source: <a href="https://github.com/Teal-Insights/saisdata/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0" id="saisdata-030">saisdata 0.3.0<a class="anchor" aria-label="anchor" href="#saisdata-030"></a></h2>
+<p>International economic data, not only debt data.</p>
+<ul><li>
+<code>weo</code> gains eight columns: <code>real_gdp_growth</code>, <code>inflation</code>, <code>unemployment_rate</code>, <code>current_account_balance</code>, <code>gdp_per_capita_usd</code>, <code>population_mn</code>, <code>revenue</code> and <code>expenditure</code>. Its first nine columns are unchanged, to the last number, so code written for 0.2.0 gives the same answers.</li>
+<li>
+<code>weo_full</code> is new: all 44 indicators the IMF publishes for the 197 countries, 2000 to 2031, tidy and long (238,459 rows).</li>
+<li>
+<code>weo_indicators</code> is new: one row per indicator, with its topic, its units in plain words, a one-line description, how many countries report it, and its column in <code>weo</code> where it has one.</li>
+<li>
+<code>weo_mini</code> is new: twelve rows of <code>weo</code> (six countries, two years, six indicators) that fit on one screen.</li>
+<li>Every table is also a CSV file in the repository’s <code>csv/</code> folder, as a last chance when the package will not install. <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv()</a></code> reads one straight from GitHub. The folder is not part of the installed package.</li>
+<li>The new numbers come from the same October 2026 release, downloaded with the imfweo package. The build checks the download against the IMF’s workbook, cell by cell, for the 13 indicators they share: no number differs.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="saisdata-020">saisdata 0.2.0<a class="anchor" aria-label="anchor" href="#saisdata-020"></a></h2>
 <p>Files for Day 2, so the course needs no download.</p>

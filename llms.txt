@@ -30,11 +30,14 @@ data.
 
 | Dataset | What one row is | Rows | Help page |
 |----|----|----|----|
-| `weo` | one country (or IMF group) in one year, 2000 to 2031: gross debt, primary balance, overall balance, GDP | 6,720 | [`?weo`](https://teal-insights.github.io/saisdata/reference/weo.md) |
+| `weo` | one country (or IMF group) in one year, 2000 to 2031, with twelve indicators as columns: growth, inflation, unemployment, the current account, GDP, GDP per person, population, and the government’s revenue, spending, balances and debt | 6,720 | [`?weo`](https://teal-insights.github.io/saisdata/reference/weo.md) |
+| `weo_mini` | twelve rows of `weo` that fit on one screen: six countries, two years, six indicators | 12 | [`?weo_mini`](https://teal-insights.github.io/saisdata/reference/weo_mini.md) |
+| `weo_full` | one country, one indicator and one year: all 44 indicators the IMF publishes for countries | 238,459 | [`?weo_full`](https://teal-insights.github.io/saisdata/reference/weo_full.md) |
+| `weo_indicators` | one indicator, with its topic, units and a plain-language description | 44 | [`?weo_indicators`](https://teal-insights.github.io/saisdata/reference/weo_indicators.md) |
 | `weo_groups` | one IMF country group and one indicator, with the years across, the way the IMF publishes it | 6 | [`?weo_groups`](https://teal-insights.github.io/saisdata/reference/weo_groups.md) |
 | `wb_groups` | one country, with its World Bank region, income level and lending type | 217 | [`?wb_groups`](https://teal-insights.github.io/saisdata/reference/wb_groups.md) |
 
-`weo` and `weo_groups` come from the IMF’s World Economic Outlook
+The five `weo` tables come from the IMF’s World Economic Outlook
 database of October 2026. `wb_groups` comes from the World Bank, as
 served on 3 November 2026. The tables are a frozen snapshot: they do not
 change when either institution publishes new numbers. Every help page
@@ -92,6 +95,52 @@ weo |>                                   # start with the panel, and then
 #> 4  2023       73.4         4.79
 #> 5  2024       67.3         5.25
 #> 6  2025       71.3         5.45
+```
+
+The data are not only about debt. `weo_indicators` says what you can
+ask, by topic:
+
+``` r
+
+weo_indicators |>                       # start with the indicators, and then
+  filter(topic == "Trade and payments") |> # keep one topic, and then
+  select(indicator, units, description) # keep the columns to read
+#> # A tibble: 6 × 3
+#>   indicator units                  description                                  
+#>   <chr>     <chr>                  <chr>                                        
+#> 1 BCA_NGDPD Percent of GDP         The current account balance as a share of th…
+#> 2 BCA       Billions of US dollars The current account balance in dollars: trad…
+#> 3 TX_RPCH   Percent change         Growth in the volume of goods and services t…
+#> 4 TXG_RPCH  Percent change         Growth in the volume of goods the country ex…
+#> 5 TM_RPCH   Percent change         Growth in the volume of goods and services t…
+#> 6 TMG_RPCH  Percent change         Growth in the volume of goods the country im…
+```
+
+Twelve indicators are already columns of `weo`. This asks where prices
+rose fastest in 2025, among countries that also grew:
+
+``` r
+
+weo |>                                  # start with the panel, and then
+  filter(str_length(code) == 3) |>      # keep countries, not IMF groups
+  filter(year == 2025, real_gdp_growth > 0) |> # 2025, with a growing economy
+  arrange(desc(inflation)) |>           # sort, highest inflation first
+  select(name, inflation, real_gdp_growth, current_account_balance) # to read
+#> # A tibble: 182 × 4
+#>    name                         inflation real_gdp_growth current_account_bala…¹
+#>    <chr>                            <dbl>           <dbl>                  <dbl>
+#>  1 Venezuela, República Boliva…     252.             9.01                  0.561
+#>  2 South Sudan, Republic of          97.6           41.4                  -6.44 
+#>  3 Zimbabwe                          81.4            8.29                  3.65 
+#>  4 Argentina                         41.9            4.48                 -1.14 
+#>  5 Türkiye, Republic of              34.9            3.74                 -1.88 
+#>  6 Burundi                           34.0            4.23                 -6.44 
+#>  7 Malawi                            28.4            2.49                -13.8  
+#>  8 Nigeria                           23.0            4.01                  4.83 
+#>  9 Egypt, Arab Republic of           20.4            4.39                 -4.23 
+#> 10 Angola                            20.2            3.13                  0.297
+#> # ℹ 172 more rows
+#> # ℹ abbreviated name: ¹​current_account_balance
 ```
 
 `wb_groups` joins to `weo` by `code`. This gives the typical country’s
@@ -157,6 +206,27 @@ weo_groups |>                                     # start with the table, then
 #> # ℹ 52 more rows
 ```
 
+## If the package will not install
+
+Every table is also a CSV file in this repository, as a last chance.
+With the tidyverse and the internet, one line reads one:
+
+``` r
+
+library(tidyverse) # load the tidyverse, which reads CSV files
+
+# where the files live
+base <- "https://raw.githubusercontent.com/Teal-Insights/saisdata/main/csv/"
+
+weo <- read_csv(str_c(base, "weo.csv")) # the main table, read from GitHub
+```
+
+[`csv/README.md`](https://github.com/Teal-Insights/saisdata/tree/main/csv)
+lists every file, with the same lines for the other tables and for the
+Day 2 files. The course tries things in this order: a live call to the
+IMF or the World Bank where a lesson shows one, then the copy saved in
+this package, then these files.
+
 ## Code license and data terms
 
 The code and the data are under different terms.
@@ -217,14 +287,28 @@ comparison made for this release is in
 
 ## Datasets
 
-The three course tables. Each help page says what one row is, the units,
+The six course tables. Each help page says what one row is, the units,
 the source, the vintage and what was changed.
 
 - [`weo`](https://teal-insights.github.io/saisdata/reference/weo.md) :
   World Economic Outlook, October 2026: the tidy country panel
+
+- [`weo_mini`](https://teal-insights.github.io/saisdata/reference/weo_mini.md)
+  :
+
+  A mini table you can see whole: twelve rows of `weo`
+
+- [`weo_full`](https://teal-insights.github.io/saisdata/reference/weo_full.md)
+  : World Economic Outlook, October 2026: every indicator, for every
+  country
+
+- [`weo_indicators`](https://teal-insights.github.io/saisdata/reference/weo_indicators.md)
+  : What you can ask of the World Economic Outlook: its 44 indicators
+
 - [`weo_groups`](https://teal-insights.github.io/saisdata/reference/weo_groups.md)
   : World Economic Outlook, October 2026: the two big groups, as the IMF
   lays them out
+
 - [`wb_groups`](https://teal-insights.github.io/saisdata/reference/wb_groups.md)
   : The World Bank's country groups: region, income level and lending
   type
