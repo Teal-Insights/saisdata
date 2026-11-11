@@ -38,7 +38,7 @@ copied and where.
 ``` r
 folder <- file.path(tempdir(), "data") # in the course: here::here("data")
 copy_course_files(folder)              # copy the course's files there
-#> Copied 11 course files to /tmp/RtmpgFD8xG/data
+#> Copied 11 course files to /tmp/RtmpIDBKpQ/data
 list.files(folder)                     # see what arrived
 #>  [1] "imf-weo-october-2026.xlsx"      "owid_co2_per_capita.csv"       
 #>  [3] "owid_renewable_electricity.csv" "wb-country-classification.xlsx"
