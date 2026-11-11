@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">saisdata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Data terms</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Teal-Insights/saisdata/blob/v0.3.0/LICENSE-data.md" class="external-link"><code>LICENSE-data.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Teal-Insights/saisdata/blob/main/LICENSE-data.md" class="external-link"><code>LICENSE-data.md</code></a></small>
     </div>
 
 <div id="data-terms" class="section level1">
@@ -94,6 +94,11 @@
 <code>wb-country-classification.xlsx</code> holds the same 217 countries as <code>wb_groups</code>, under the World Bank’s own codes and column names, with a title and a source note above the table. It is the World Bank’s data under CC BY 4.0, as above. It was saved for teaching and is not a file the World Bank publishes in this layout.</li>
 <li>The six <code>wdi_*.csv</code> files are series from the World Bank’s World Development Indicators, retrieved through the <code>wbwdi</code> package on 3 November 2026, under CC BY 4.0 and the World Bank’s Terms of Use for Datasets. What changed: countries only, the years 2000 to 2025, rows with a value only, and the IMF’s codes for Kosovo (<code>KOS</code>) and West Bank and Gaza (<code>WBG</code>), so that each file joins to <code>weo</code> on <code>code</code> and <code>year</code>. Credit line: “Data: World Bank, World Development Indicators (CC BY 4.0), retrieved 3 November 2026.”</li>
 <li>The two <code>owid_*.csv</code> files come from Our World in Data, which publishes its charts and data under CC BY 4.0 (<a href="https://ourworldindata.org/faqs" class="external-link uri">https://ourworldindata.org/faqs</a>), retrieved through the <code>owidapi</code> package on 3 November 2026. Credit both Our World in Data and the organization that collected the data. For <code>owid_co2_per_capita.csv</code>: “Data: Global Carbon Budget (2025), with major processing by Our World in Data (CC BY 4.0).” For <code>owid_renewable_electricity.csv</code>: “Data: Ember (2026) and other sources, with major processing by Our World in Data (CC BY 4.0).” What changed: countries only, the years from 2000, a plain column name, and the IMF’s codes for Kosovo and West Bank and Gaza.</li>
+</ul><p>Version 0.3.1 adds two more.</p>
+<ul><li>
+<code>wdi_remittances.csv</code> is the World Bank’s series “Personal remittances, received (current US$)” (<code>BX.TRF.PWKR.CD.DT</code>), from the World Development Indicators, retrieved through the <code>wbwdi</code> package on 10 November 2026, under CC BY 4.0 and the World Bank’s Terms of Use for Datasets. What changed: countries only, rows with a value, values rounded to whole dollars, plain column names, and the IMF’s codes for Kosovo and for West Bank and Gaza.</li>
+<li>
+<code>imf-weo-october-2026.xlsx</code> holds four indicators of the IMF’s World Economic Outlook database, October 2026, for the 197 countries and the years 2000 to 2031, in the layout of the IMF’s own workbook. It is the IMF’s data under the terms at the top of this file. What changed: four of the 44 indicators, six of the descriptive columns, and the years from 2000 on.</li>
 </ul></div>
 <div class="section level2">
 <h2 id="the-line-to-print-under-a-chart">The line to print under a chart<a class="anchor" aria-label="anchor" href="#the-line-to-print-under-a-chart"></a></h2>

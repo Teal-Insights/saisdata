@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="index.html">saisdata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,10 +124,10 @@
 <div class="section level2">
 <h2 id="files-for-day-2">Files for Day 2<a class="anchor" aria-label="anchor" href="#files-for-day-2"></a>
 </h2>
-<p>Version 0.2.0 adds nine files for the lesson on importing data: a spreadsheet of the World Bank’s country groups, laid out the way official files often arrive, and eight saved series from the World Bank and Our World in Data. Nothing is downloaded.</p>
+<p>Version 0.2.0 adds nine files for the lesson on importing data: a spreadsheet of the World Bank’s country groups, laid out the way official files often arrive, and eight saved series from the World Bank and Our World in Data. Nothing is downloaded. Version 0.3.1 adds two more: the World Bank’s series of remittances received, and four IMF indicators in the layout of the IMF’s own workbook.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://teal-insights.github.io/saisdata/">saisdata</a></span><span class="op">)</span>                    <span class="co"># load the course data</span></span>
-<span><span class="fu"><a href="reference/sais_example.html">sais_example</a></span><span class="op">(</span><span class="op">)</span>                       <span class="co"># list the nine files</span></span>
+<span><span class="fu"><a href="reference/sais_example.html">sais_example</a></span><span class="op">(</span><span class="op">)</span>                       <span class="co"># list the course's files</span></span>
 <span><span class="fu"><a href="reference/copy_course_files.html">copy_course_files</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span> <span class="co"># copy them into your project's data folder</span></span></code></pre></div>
 <p>After that they are ordinary files in your project. Read the spreadsheet with <code><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">readxl::read_excel()</a></code> and a series with <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code>. <code>LICENSE-data.md</code> gives each file’s source and terms.</p>
 </div>

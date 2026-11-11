@@ -175,6 +175,22 @@ Version 0.2.0 adds nine files, listed by
   a plain column name, and the IMF’s codes for Kosovo and West Bank and
   Gaza.
 
+Version 0.3.1 adds two more.
+
+- `wdi_remittances.csv` is the World Bank’s series “Personal
+  remittances, received (current US\$)” (`BX.TRF.PWKR.CD.DT`), from the
+  World Development Indicators, retrieved through the `wbwdi` package on
+  10 November 2026, under CC BY 4.0 and the World Bank’s Terms of Use
+  for Datasets. What changed: countries only, rows with a value, values
+  rounded to whole dollars, plain column names, and the IMF’s codes for
+  Kosovo and for West Bank and Gaza.
+- `imf-weo-october-2026.xlsx` holds four indicators of the IMF’s World
+  Economic Outlook database, October 2026, for the 197 countries and the
+  years 2000 to 2031, in the layout of the IMF’s own workbook. It is the
+  IMF’s data under the terms at the top of this file. What changed: four
+  of the 44 indicators, six of the descriptive columns, and the years
+  from 2000 on.
+
 ## The line to print under a chart
 
 > Source: International Monetary Fund, World Economic Outlook Database,

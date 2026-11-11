@@ -52,12 +52,14 @@ the tidyverse, as the course does.
 Version 0.2.0 adds nine files for the lesson on importing data: a
 spreadsheet of the World Bank’s country groups, laid out the way
 official files often arrive, and eight saved series from the World Bank
-and Our World in Data. Nothing is downloaded.
+and Our World in Data. Nothing is downloaded. Version 0.3.1 adds two
+more: the World Bank’s series of remittances received, and four IMF
+indicators in the layout of the IMF’s own workbook.
 
 ``` r
 
 library(saisdata)                    # load the course data
-sais_example()                       # list the nine files
+sais_example()                       # list the course's files
 copy_course_files(here::here("data")) # copy them into your project's data folder
 ```
 

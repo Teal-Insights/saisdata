@@ -37,14 +37,15 @@ copied and where.
 
 ``` r
 folder <- file.path(tempdir(), "data") # in the course: here::here("data")
-copy_course_files(folder)              # copy the nine files there
-#> Copied 9 course files to /tmp/RtmpuYvkjt/data
+copy_course_files(folder)              # copy the course's files there
+#> Copied 11 course files to /tmp/RtmpgFD8xG/data
 list.files(folder)                     # see what arrived
-#> [1] "owid_co2_per_capita.csv"        "owid_renewable_electricity.csv"
-#> [3] "wb-country-classification.xlsx" "wdi_education_spending.csv"    
-#> [5] "wdi_electricity_access.csv"     "wdi_health_spending.csv"       
-#> [7] "wdi_life_expectancy.csv"        "wdi_poverty.csv"               
-#> [9] "wdi_primary_completion.csv"    
+#>  [1] "imf-weo-october-2026.xlsx"      "owid_co2_per_capita.csv"       
+#>  [3] "owid_renewable_electricity.csv" "wb-country-classification.xlsx"
+#>  [5] "wdi_education_spending.csv"     "wdi_electricity_access.csv"    
+#>  [7] "wdi_health_spending.csv"        "wdi_life_expectancy.csv"       
+#>  [9] "wdi_poverty.csv"                "wdi_primary_completion.csv"    
+#> [11] "wdi_remittances.csv"           
 library(tidyverse) # load the tidyverse: readr, dplyr and more
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 #> ✔ dplyr     1.2.1     ✔ readr     2.2.0
